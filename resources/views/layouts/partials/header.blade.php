@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
 
 <header class="w-full bg-[#ffffff] border-b border-gray-100 font-['DM_Sans']">
-    <div class="w-full flex items-center justify-between px-8 py-4">
+    <div class="w-full flex items-center justify-between px-10 py-4">
 
         {{-- ============================= --}}
         {{-- BAGIAN KIRI: Logo & Nama      --}}
@@ -56,7 +56,7 @@
             </a>
 
             <a href="{{ url('/register') }}"
-               class="rounded-full bg-[#10A4B0] text-[#ffffff] font-bold font-['DM_Sans'] text-lg px-6 py-2 hover:bg-[#0d8a95] transition-colors">
+               class="rounded-full bg-[#10A4B0] text-[#ffffff] font-bold font-['DM_Sans'] text-lg px-4 py-1 hover:bg-[#0d8a95] transition-colors">
                 Register
             </a>
         </nav>

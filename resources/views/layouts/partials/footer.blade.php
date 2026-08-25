@@ -19,7 +19,7 @@
     {{-- ================================= --}}
     {{-- AREA UTAMA FOOTER (4 Kolom)       --}}
     {{-- ================================= --}}
-    <div class="w-full bg-[#003135] px-8 py-12">
+    <div class="w-full bg-[#003135] px-10 py-8">
         <div class="flex flex-wrap items-start justify-between gap-10">
 
             {{-- ============================= --}}
@@ -44,24 +44,24 @@
             {{-- ============================= --}}
             {{-- KOLOM 2: Fondasi Kami         --}}
             {{-- ============================= --}}
-            <div class="flex flex-col gap-3">
-                <h3 class="text-2xl font-bold text-[#ffffff] font-['DM_Sans']">
+            <div class="flex flex-col gap-6">
+                <h3 class="text-[24px] font-bold text-[#ffffff] font-['DM_Sans']">
                     Fondasi Kami
                 </h3>
-                <ul class="flex flex-col gap-2">
+                <ul class="flex flex-col gap-3">
                     <li>
                         <a href="#" class="text-base text-[#ffffff] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
-                            Jalan bla bla
+                            Jl. Ahmad Yani No. 128, Pontianak
                         </a>
                     </li>
                     <li>
                         <a href="#" class="text-base text-[#ffffff] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
-                            Nomor telepon
+                            (0123) 456 7890
                         </a>
                     </li>
                     <li>
                         <a href="#" class="text-base text-[#ffffff] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
-                            Email
+                            info@ciptaju.sch.id
                         </a>
                     </li>
                 </ul>
@@ -70,11 +70,11 @@
             {{-- ============================= --}}
             {{-- KOLOM 3: Links                --}}
             {{-- ============================= --}}
-            <div class="flex flex-col gap-3">
-                <h3 class="text-2xl font-bold text-[#ffffff] font-['DM_Sans']">
+            <div class="flex flex-col gap-6">
+                <h3 class="text-[24px] font-bold text-[#ffffff] font-['DM_Sans']">
                     Links
                 </h3>
-                <ul class="flex flex-col gap-2">
+                <ul class="flex flex-col gap-3">
                     <li>
                         <a href="{{ url('/terms-of-service') }}" class="text-base text-[#ffffff] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                             Terms of Service
@@ -91,11 +91,11 @@
             {{-- ============================= --}}
             {{-- KOLOM 4: Social Networks      --}}
             {{-- ============================= --}}
-            <div class="flex flex-col gap-3">
-                <h3 class="text-2xl font-bold text-[#ffffff] font-['DM_Sans']">
+            <div class="flex flex-col gap-6">
+                <h3 class="text-[24px] font-bold text-[#ffffff] font-['DM_Sans']">
                     Social Networks
                 </h3>
-                <ul class="flex flex-col gap-2">
+                <ul class="flex flex-col gap-3">
                     <li>
                         <a href="#" target="_blank" rel="noopener noreferrer" class="text-base text-[#ffffff] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                             Yutub
@@ -120,7 +120,7 @@
     {{-- ================================= --}}
     {{-- BAR COPYRIGHT (Terpisah, Bawah)   --}}
     {{-- ================================= --}}
-    <div class="w-full bg-[#ffffff] py-3">
+    <div class="w-full bg-[#ffffff] py-1">
         <p class="text-center text-sm text-[#000000] font-['DM_Sans']">
             &copy; 2026 Ciptaju. All Rights Reserved.
         </p>
