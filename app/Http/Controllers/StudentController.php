@@ -12,4 +12,11 @@ class StudentController extends Controller
             'title' => $title,
         ] );
     }
+
+    public function visionmission(){
+        $title = "ini test";
+        return view('students.visionmission', [
+            'title' => $title,
+        ] );
+    }
 }
