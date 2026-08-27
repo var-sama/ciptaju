@@ -16,6 +16,7 @@
         {{-- Background Image Placeholder --}}
         {{-- Ganti src di bawah ini dengan gambar asli (potret, subjek fokus di kanan) --}}
         <img
+            id="vision-background"
             src="https://i.pinimg.com/1200x/d5/30/ec/d530ecad39427d843295224a597957fa.jpg"
             alt="Visi & Misi background"
             class="absolute inset-0 w-full h-full object-cover object-right"
@@ -32,7 +33,10 @@
 
             {{-- Judul Halaman + Garis Pemisah --}}
             <div class="mb-35">
-                <h1 class="text-xl text-[#ffffff] font-['DM_Sans']">
+                <h1
+                    id="vision-page-title"
+                    class="text-xl text-[#ffffff] font-['DM_Sans']"
+                >
                     Visi &amp; Misi
                 </h1>
                 <hr class="mt-3 border-t border-white/40 w-full">
@@ -40,11 +44,17 @@
 
         <div>
             {{-- Blok Visi --}}
-            <div class="max-w-3xl mb-25">
-                <h2 class="text-6xl text-[#ffffff] font-['DM_Sans'] mb-6">
+            <div id="vision-block" class="max-w-3xl mb-25">
+                <h2
+                    id="vision-title"
+                    class="text-6xl text-[#ffffff] font-['DM_Sans'] mb-6"
+                >
                     Visi
                 </h2>
-                <p class="text-xl text-[#ffffff] leading-relaxed font-['DM_Sans']">
+                <p
+                    id="vision-description"
+                    class="text-xl text-[#ffffff] leading-relaxed font-['DM_Sans']"
+                >
                     Lomen ipsum running on a jumping fox Lomen ipsum running
                     on a simping jumping fox Lomen ipsum running on a running
                     on a jumping fox
@@ -52,11 +62,17 @@
             </div>
 
             {{-- Blok Misi --}}
-            <div class="max-w-3xl mb-20">
-                <h2 class="text-6xl text-[#ffffff] font-['DM_Sans'] mb-6">
+            <div id="mission-block" class="max-w-3xl mb-20">
+                <h2
+                    id="mission-title"
+                    class="text-6xl text-[#ffffff] font-['DM_Sans'] mb-6"
+                >
                     Misi
                 </h2>
-                <p class="text-xl text-[#ffffff] leading-relaxed font-['DM_Sans']">
+                <p
+                    id="mission-description"
+                    class="text-xl text-[#ffffff] leading-relaxed font-['DM_Sans']"
+                >
                     Lomen ipsum running on a jumping fox Lomen ipsum running
                     on a simping jumping fox Lomen ipsum running on a running
                     on a jumping fox

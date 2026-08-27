@@ -19,4 +19,18 @@ class StudentController extends Controller
             'title' => $title,
         ] );
     }
+
+    public function extra(){
+        $title = "ini test";
+        return view('students.extra', [
+            'title' => $title,
+        ] );
+    }
+
+    public function trophy(){
+        $title = "ini test";
+        return view('students.trophy', [
+            'title' => $title,
+        ] );
+    }
 }
