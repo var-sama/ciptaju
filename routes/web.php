@@ -23,3 +23,28 @@ Route::name('students.')->prefix('students')->group(function(){
     //logika hapus(delete)
     Route::delete('/{id}',[StudentController::class, 'destroy'])->name('destroy');
 });
+
+// Route Halaman Login
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+// Route Halaman Register
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+// Route Halaman Profile
+Route::get('/profile', function () {
+    return view('students.profile');
+})->name('profile');
+
+// Route dummy untuk proses update form agar tidak error
+Route::put('/profile', function () {
+    return back();
+})->name('profile.update');
+
+// Redirect halaman utama ke login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
