@@ -18,7 +18,7 @@
             {{-- HEADER KONTEN: Judul + Tombol Filter           --}}
             {{-- ============================================= --}}
             <div class="prestasi-header flex items-center justify-between">
-                <h1 class="text-xl font-bold text-[#003135] font-['DM_Sans']">
+                <h1 class="text-lg font-bold text-[#003135] font-['DM_Sans']">
                     Prestasi
                 </h1>
 

@@ -36,7 +36,7 @@
 
             {{-- Judul Halaman + Garis Pemisah --}}
             <div class="mb-16">
-                <h1 class="text-xl text-[#ffffff] font-['DM_Sans']">
+                <h1 class="text-lg font-medium text-[#ffffff] font-['DM_Sans']">
                     Pilihan Ekskul
                 </h1>
                 <hr class="mt-3 border-t border-white/40 w-full">

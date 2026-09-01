@@ -35,7 +35,7 @@
             <div class="mb-35">
                 <h1
                     id="vision-page-title"
-                    class="text-xl text-[#ffffff] font-['DM_Sans']"
+                    class="text-lg font-medium text-[#ffffff] font-['DM_Sans']"
                 >
                     Visi &amp; Misi
                 </h1>

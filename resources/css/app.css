@@ -305,3 +305,149 @@
 .prestasi-card-animation {
     animation: prestasiCardIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+
+#news-banner {
+    position: relative;
+}
+
+#news-banner-image {
+    will-change: transform;
+}
+
+#news-banner-title,
+#news-banner-description,
+#news-banner-date {
+    will-change: transform;
+}
+/* =========================================================
+   NEWS BANNER - OPENING ANIMATION
+   ========================================================= */
+
+@keyframes newsBannerBackground {
+
+    from {
+        opacity: 0;
+        transform: scale(1.08);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+@keyframes newsBannerText {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes newsBannerHeading {
+
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+
+/* Background */
+
+.news-banner-bg-animation {
+
+    animation:
+        newsBannerBackground
+        900ms
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+
+}
+
+
+/* Judul / deskripsi / tanggal */
+
+.news-banner-text-animation {
+
+    animation:
+        newsBannerText
+        650ms
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+
+}
+
+.news-banner-text-transition {
+
+    animation:
+        newsBannerTextTransition
+        650ms
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+
+}
+
+
+/* "Berita Terbaru" */
+
+.news-banner-heading-animation {
+
+    animation:
+        newsBannerHeading
+        600ms
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+
+}
+
+/* =========================================================
+   NEWS SECTION 2 — OPENING ANIMATION
+   ========================================================= */
+
+.news-title-animation {
+    animation: newsTitleOpening 700ms ease-out both;
+}
+
+.news-card-animation {
+    animation: newsCardOpening 650ms ease-out both;
+}
+
+@keyframes newsTitleOpening {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes newsCardOpening {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

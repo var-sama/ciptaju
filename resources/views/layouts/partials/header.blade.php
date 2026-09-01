@@ -50,7 +50,7 @@
                 About
             </a>
 
-            <a href="{{ url('/news') }}"
+            <a href="{{ route('students.news') }}"
                class="text-lg font-bold text-[#003135] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                 News
             </a>

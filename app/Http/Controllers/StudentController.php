@@ -33,4 +33,10 @@ class StudentController extends Controller
             'title' => $title,
         ] );
     }
+    public function news(){
+        $title = "ini test";
+        return view('students.news', [
+            'title' => $title,
+        ] );
+    }
 }
