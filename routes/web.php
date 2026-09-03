@@ -11,6 +11,8 @@ Route::name('students.')->prefix('students')->group(function(){
     //daftar(index)
     Route::get('/', [StudentController::class, 'index'])->name('index');
     Route::get('/news-detail', [StudentController::class, 'newsdetail'])->name('newsdetail');
+    Route::get('/pendaftaran', [StudentController::class, 'registration'])->name('registration');
+    Route::post('/pendaftaran', [StudentController::class, 'storeRegistration'])->name('registration.store');
     // //detail(show)
     // //tambah(create)
     // Route::get('/create',[StudentController::class, 'create'])->name('create');

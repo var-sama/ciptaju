@@ -15,20 +15,20 @@
 
     <article>
         <h1 class="mb-4 text-4xl font-semibold leading-tight text-[#003135] md:text-5xl">
-            Lomen ipsum dot sit a jumping fox running on a
+            Siswa Ciptaju Berhasil Meraih Prestasi dan Membawa Pulang Piala
         </h1>
 
-        <p class="mb-6 text-sm text-slate-500 md:text-base">20/12/2099</p>
+        <p class="mb-6 text-sm text-slate-500 md:text-base">20 Desember 2025</p>
 
         <img
-            src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80"
-            alt="News detail"
+            src="https://i.pinimg.com/736x/a1/0f/17/a10f17300e0ea1cea46c22afb75481e7.jpg"
+            alt="Siswa memegang piala dan merayakan prestasi"
             class="mb-8 h-[280px] w-full object-cover md:h-[420px]"
         >
 
         <div class="text-justify text-lg leading-8 text-slate-700">
             <p>
-                Lomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on aLomen ipsum dot sit a jumping fox running on a.
+               Salah satu siswa Ciptaju berhasil meraih prestasi membanggakan dalam sebuah perlombaan dan membawa pulang piala sebagai bentuk penghargaan atas kerja kerasnya. Dengan senyum penuh kebanggaan dan semangat kemenangan, ia menunjukkan bahwa usaha yang dilakukan dengan sungguh-sungguh dapat menghasilkan pencapaian yang berarti. Prestasi ini tidak hanya menjadi kebanggaan bagi siswa dan keluarganya, tetapi juga bagi seluruh warga sekolah. Pihak sekolah memberikan apresiasi atas pencapaian tersebut dan berharap keberhasilan ini dapat menginspirasi siswa lainnya untuk berani mengikuti berbagai kegiatan, mengembangkan bakat, serta terus berusaha meraih prestasi di bidang yang mereka minati.
             </p>
         </div>
     </article>

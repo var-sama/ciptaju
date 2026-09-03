@@ -55,7 +55,7 @@
                 News
             </a>
 
-            <a href="{{ url('/register') }}"
+            <a href="{{ route('students.registration') }}"
                class="rounded-full bg-[#10A4B0] text-[#ffffff] font-bold font-['DM_Sans'] text-lg px-4 py-1 hover:bg-[#0d8a95] transition-colors">
                 Register
             </a>
