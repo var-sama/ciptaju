@@ -215,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(() => {
         background.classList.add('vision-bg-animation');
-
         pageTitle.classList.add('vision-text-animation');
         visionTitle.classList.add('vision-text-animation');
         visionDescription.classList.add('vision-text-animation');

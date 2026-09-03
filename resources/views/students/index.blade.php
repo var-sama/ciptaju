@@ -68,7 +68,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {{-- Kartu 1: Pilihan Exkul Sekolah --}}
-            <a href="{{ route('students.extra') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
+            <a href="{{ route('extracurricular.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
                     src="https://placehold.co/700x500/2b2b2b/2b2b2b?text=+"
                     alt="Pilihan Exkul Sekolah"
@@ -83,7 +83,7 @@
             </a>
 
             {{-- Kartu 2: Visi & Misi --}}
-            <a href="{{ route('students.visionmission') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
+            <a href="{{ route('vision-mission.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
                     src="https://placehold.co/700x500/3a3a3a/3a3a3a?text=+"
                     alt="Visi & Misi"
@@ -97,7 +97,7 @@
             </a>
 
             {{-- Kartu 3: Prestasi --}}
-            <a href="{{ route('students.trophy') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
+            <a href="{{ route('achievement.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
                     src="https://placehold.co/700x500/242424/242424?text=+"
                     alt="Prestasi"
