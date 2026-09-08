@@ -6,7 +6,7 @@
 <div class="relative left-1/2 -my-10 min-h-screen w-screen -translate-x-1/2 bg-white">
     <section>
         <img
-            src="https://i.pinimg.com/736x/a1/0f/17/a10f17300e0ea1cea46c22afb75481e7.jpg"
+            src="{{ Vite::asset('resources/assets/siswaprestasi.jpg') }}"
             alt="Siswa Ciptaju memegang piala"
             class="block h-80 w-full object-cover object-center"
             onerror="this.src='https://ui-avatars.com/api/?name=Siswa+Ciptaju&background=0D9488&color=fff&size=1200'"

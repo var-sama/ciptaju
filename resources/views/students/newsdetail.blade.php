@@ -21,7 +21,7 @@
         <p class="mb-6 text-sm text-slate-500 md:text-base">20 Desember 2025</p>
 
         <img
-            src="https://i.pinimg.com/736x/a1/0f/17/a10f17300e0ea1cea46c22afb75481e7.jpg"
+            src="{{ Vite::asset('resources/assets/siswaprestasi.jpg') }}"
             alt="Siswa memegang piala dan merayakan prestasi"
                 class="mb-8 h-70 w-full object-cover md:h-105"
         >
