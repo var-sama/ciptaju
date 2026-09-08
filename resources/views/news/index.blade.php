@@ -98,20 +98,17 @@
             active: 0,
             slides: {{ Illuminate\Support\Js::from([
                 [
-                    'judul' => 'Lomen',
-                    'deskripsi' => 'Lomen ipsum running on a jumping fox Lomen ipsum running on a simping jumping fox Lomen ipsum running on a running on a jumping fox',
+                    'judul' => 'Amond Aye Winning Programming Competition',
                     'tanggal' => '20/12/2099',
-                    'gambar' => 'https://i.pinimg.com/1200x/01/0d/2f/010d2f4b9ea272721690c0d962f96071.jpg',
+                    'gambar' => Vite::asset('resources/assets/banner_1.png'),
                 ],
                 [
                     'judul' => 'Lomen',
-                    'deskripsi' => 'Lomen ipsum running on a jumping fox Lomen ipsum running on a simping jumping fox Lomen ipsum running on a running on a jumping fox',
                     'tanggal' => '20/12/2099',
                     'gambar' => 'https://i.pinimg.com/736x/78/8b/d7/788bd73f3e433bca90029d91376cdbc8.jpg',
                 ],
                 [
                     'judul' => 'Lomen',
-                    'deskripsi' => 'Lomen ipsum running on a jumping fox Lomen ipsum running on a simping jumping fox Lomen ipsum running on a running on a jumping fox',
                     'tanggal' => '20/12/2099',
                     'gambar' => 'https://i.pinimg.com/1200x/01/0d/2f/010d2f4b9ea272721690c0d962f96071.jpg',
                 ],
@@ -145,9 +142,7 @@
                     </p>
                     <hr class="border-t border-white/30 mb-10 w-full">
 
-                    <h2 class="text-5xl md:text-6xl font-bold text-[#ffffff] font-['DM_Sans'] mb-6" x-text="slide.judul"></h2>
-
-                    <p class="text-lg text-[#ffffff] leading-relaxed font-['DM_Sans'] max-w-2xl mb-4" x-text="slide.deskripsi"></p>
+                    <h2 class="text-5xl md:text-6xl font-medium text-[#ffffff] font-['DM_Sans'] mb-6" x-text="slide.judul"></h2>
 
                     <p class="text-sm text-[#ffffff] font-['DM_Sans']" x-text="slide.tanggal"></p>
                 </div>
@@ -214,9 +209,25 @@
                 // Data dummy berita — ganti dengan data asli dari controller
                 // Untuk "beralih ke bawah terus", gunakan pagination (bukan carousel per baris)
                 $newsList = collect(range(1, 16))->map(function ($i) {
+                    $newsItems = [
+                        1 => [
+                            'gambar' => 'resources/assets/news1.png',
+                            'judul' => 'Informasi Beasiswa Universitas Two Win Tahun 2077',
+                        ],
+                        2 => [
+                            'gambar' => 'resources/assets/news2.png',
+                            'judul' => 'Kelulusan Angkatan Tahun 2050 Pada Tahun 2060',
+                        ],
+                        3 => [
+                            'gambar' => 'resources/assets/news3.png',
+                            'judul' => 'Mayreel Athuath Menang Kompetisi MTK Antar Daerah',
+                        ],
+                    ];
+                    $news = $newsItems[(($i - 1) % count($newsItems)) + 1];
+
                     return [
-                        'gambar'  => "https://i.pinimg.com/1200x/01/0d/2f/010d2f4b9ea272721690c0d962f96071.jpg",
-                        'judul'   => "Lomen ipsum dot sit\na jumping fox running on a",
+                        'gambar'  => $news['gambar'],
+                        'judul'   => $news['judul'],
                         'tanggal' => '20/12/2099',
                     ];
                 });
@@ -228,13 +239,13 @@
                 @foreach ($newsList as $news)
                     <a
                         href="#"
-                        class="news-card group relative shrink-0 rounded-md overflow-hidden border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl"
+                        class="news-card group relative flex h-full shrink-0 flex-col rounded-md overflow-hidden border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl"
                     >
                         {{-- FOTO --}}
-                        <div class="relative h-48 overflow-hidden">
+                        <div class="relative h-48 shrink-0 overflow-hidden">
 
                             <img
-                                src="{{ $news['gambar'] }}"
+                                src="{{ str_starts_with($news['gambar'], 'resources/') ? Vite::asset($news['gambar']) : $news['gambar'] }}"
                                 alt="Berita"
                                 class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                             >
@@ -247,9 +258,12 @@
                         </div>
 
                         {{-- TEKS --}}
-                        <div class="relative bg-[#003135] px-5 py-4">
+                        <div class="relative flex flex-1 flex-col bg-[#003135] px-5 py-4">
 
-                            <p class="text-lg text-[#ffffff] font-['DM_Sans'] leading-snug whitespace-pre-line">
+                            <p
+                                class="min-h-[2.75rem] overflow-hidden text-lg text-[#ffffff] font-['DM_Sans'] leading-snug whitespace-normal break-words line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"
+                                title="{{ $news['judul'] }}"
+                            >
                                 {{ $news['judul'] }}
                             </p>
 

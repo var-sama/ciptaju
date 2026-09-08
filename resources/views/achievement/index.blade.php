@@ -41,22 +41,22 @@
             {{-- ============================================= --}}
             @php
                 $prestasiPerTahun = [
-                    2026 => [
-                        ['gambar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeAGNn2RWxfl53GpuuYgo0bqBQbWliumipCc-jUgD_Ka06SWMychdEfkN&s=10', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/89/e4/23/89e423d7f1560fd5d9e039633fd7a01c.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                    ],
-                    2025 => [
-                        ['gambar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeAGNn2RWxfl53GpuuYgo0bqBQbWliumipCc-jUgD_Ka06SWMychdEfkN&s=10', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeAGNn2RWxfl53GpuuYgo0bqBQbWliumipCc-jUgD_Ka06SWMychdEfkN&s=10', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/89/e4/23/89e423d7f1560fd5d9e039633fd7a01c.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                    2099 => [
+                        ['gambar' => 'resources/assets/achievement1.png', 'judul' => "Meraih Pencapaian Sekolah Dengan Men's Singles Player Of The Year Badminton terbanyak", 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/acheivement2.png', 'judul' => 'Meraih Gelar Shcool of the Year Pada Tahun 2099', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement3.png', 'judul' => 'Di Cap Sebagai Sekolah Dengan Penghasil Pendebat Terbaik', 'tanggal' => '20/12/2099'],
                         ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
                     ],
-                    2024 => [
-                        ['gambar' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeAGNn2RWxfl53GpuuYgo0bqBQbWliumipCc-jUgD_Ka06SWMychdEfkN&s=10', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/89/e4/23/89e423d7f1560fd5d9e039633fd7a01c.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/89/e4/23/89e423d7f1560fd5d9e039633fd7a01c.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                    2098 => [
+                        ['gambar' => 'resources/assets/achievement4.png', 'judul' => 'Meraih Penghargaan Best Graduate Of The Year', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement5.png', 'judul' => 'Meraih Penghargaan Sebagai Sekolah Penghasil Public Speaker Terbaik', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement6.png', 'judul' => 'Sekolah Dengan Partisipasi Lomba Terbanyak Pada Tahun 2098', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                    ],
+                    2097 => [
+                        ['gambar' => 'resources/assets/achievement7.png', 'judul' => 'Sekolah Dengan Pemenang Lomba Terbanyak Pada Tahun 2097', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement8.png', 'judul' => 'Di Cap Sebagai Sekolah Dengan Guru Terbaik', 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement9.png', 'judul' => 'Meraih Pencapaian Sebagai Sekolah Dengan Partisipan Lomba Terbanyak', 'tanggal' => '20/12/2099'],
                         ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
                     ],
                 ];
@@ -104,7 +104,7 @@
                                     <div class="relative h-48 overflow-hidden">
 
                                         <img
-                                            src="{{ $prestasi['gambar'] }}"
+                                            src="{{ Vite::asset($prestasi['gambar']) }}"
                                             alt="Prestasi {{ $tahun }}"
                                             class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                                         >
@@ -119,7 +119,10 @@
                                     {{-- TEKS --}}
                                     <div class="relative bg-[#003135] px-5 py-4">
 
-                                        <p class="text-lg text-[#ffffff] font-['DM_Sans'] leading-snug whitespace-pre-line">
+                                        <p
+                                            class="min-h-[2.75rem] text-lg text-[#ffffff] font-['DM_Sans'] leading-snug whitespace-normal break-words overflow-hidden line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"
+                                            title="{{ $prestasi['judul'] }}"
+                                        >
                                             {{ $prestasi['judul'] }}
                                         </p>
 

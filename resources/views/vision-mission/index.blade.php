@@ -17,9 +17,9 @@
         {{-- Ganti src di bawah ini dengan gambar asli (potret, subjek fokus di kanan) --}}
         <img
             id="vision-background"
-            src="https://i.pinimg.com/1200x/d5/30/ec/d530ecad39427d843295224a597957fa.jpg"
+            src="{{ Vite::asset('resources/assets/landing_sub2.png')}}"
             alt="Visi & Misi background"
-            class="absolute inset-0 w-full h-full object-cover object-right"
+            class="absolute inset-0 w-full h-full scale-[1.04] object-cover object-[12%_center]"
         >
 
         {{-- Overlay Gradient: kiri (gelap) -> kanan (transparan) --}}

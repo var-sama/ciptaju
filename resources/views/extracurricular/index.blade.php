@@ -21,15 +21,15 @@
             >
                 <img
                     id="ekskul-background"
-                    src="https://i.pinimg.com/1200x/2f/96/24/2f9624b1cf31242e8d31e9d1882615be.jpg"
+                    src="{{ Vite::asset('resources/assets/badminton.avif') }}"
                     alt="Pilihan Ekskul background"
-                    class="w-full h-full object-cover object-right scale-x-[-1]"
+                    class="w-full h-full object-cover object-right"
                 >
             </div>
         </div>
 
         {{-- Overlay Gradient: kiri (gelap) -> kanan (transparan) --}}
-        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/85 via-70% to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 via-65% to-transparent"></div>
 
         {{-- Konten --}}
         <div class="relative z-10 px-8 pt-16 pb-10">
@@ -84,61 +84,70 @@
                     @php
                         $ekskuls = [
                             [
-                                'nama' => 'Lomen',
-                                'gambar' => 'https://i.pinimg.com/1200x/2f/96/24/2f9624b1cf31242e8d31e9d1882615be.jpg',
-                                'deskripsi' => 'Lomen ipsum running on a jumping fox Lomen ipsum running on a simping jumping fox.',
-                                'active' => true
+                                'nama' => 'Badminton',
+                                'gambar' => Vite::asset('resources/assets/badminton.avif'),
+                                'deskripsi' => 'Bulu tangkis atau badminton adalah cabang olahraga raket yang dimainkan oleh dua orang (tunggal) atau dua pasangan (ganda) yang saling berlawanan dengan cara memukul kok (shuttlecock) melewati atas net ke area lawan.',
+                                'active' => true,
+                                'flipBackground' => false,
                             ],
                             [
                                 'nama' => 'Basket',
-                                'gambar' => 'https://i.pinimg.com/736x/4e/04/7e/4e047e69b441044b1e80de5edb9f4064.jpg',
+                                'gambar' => Vite::asset('resources/assets/basket.avif'),
                                 'deskripsi' => 'Ekstrakurikuler basket untuk mengembangkan kemampuan olahraga, kerja sama tim, dan sportivitas.',
-                                'active' => false
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                             [
-                                'nama' => 'Futsal',
-                                'gambar' => 'https://i.pinimg.com/1200x/74/1d/4d/741d4dd7057c6e267b716b282e858cca.jpg',
-                                'deskripsi' => 'Kegiatan futsal untuk meningkatkan keterampilan bermain, kekompakan, dan semangat kompetitif.',
-                                'active' => false
+                                'nama' => 'Voli',
+                                'gambar' => Vite::asset('resources/assets/volley.jpg'),
+                                'deskripsi' => 'Kegiatan olahraga beregu yang melatih kemampuan bermain voli, kerja sama tim, dan sportivitas.',
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                             [
                                 'nama' => 'Musik',
-                                'gambar' => 'https://i.pinimg.com/736x/5d/a0/11/5da0115cbad307f2f9f6d5eb7f3ccc9d.jpg',
+                                'gambar' => Vite::asset('resources/assets/music.jpg'),
                                 'deskripsi' => 'Wadah untuk mengembangkan kreativitas dan kemampuan bermusik bersama siswa lainnya.',
-                                'active' => false
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                             [
-                                'nama' => 'Fotografi',
-                                'gambar' => 'https://i.pinimg.com/1200x/8e/d5/66/8ed56600cdd5d38c6d2d0e2e52920a5e.jpg',
-                                'deskripsi' => 'Belajar menangkap momen melalui fotografi sekaligus mengembangkan kreativitas visual.',
-                                'active' => false
+                                'nama' => 'Ilmu Komputer',
+                                'gambar' => Vite::asset('resources/assets/comp_science.jpg'),
+                                'deskripsi' => 'Wadah untuk mempelajari dasar-dasar komputer, pemrograman, teknologi, dan pemecahan masalah secara kreatif.',
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                             [
-                                'nama' => 'Pramuka',
-                                'gambar' => 'https://i.pinimg.com/736x/23/d8/18/23d818d44805a961566b2390fa1eb022.jpg',
-                                'deskripsi' => 'Kegiatan yang melatih kedisiplinan, kepemimpinan, kemandirian, dan kerja sama.',
-                                'active' => false
+                                'nama' => 'Matematika',
+                                'gambar' => Vite::asset('resources/assets/math.png'),
+                                'deskripsi' => 'Kegiatan untuk memperkuat kemampuan berpikir logis, analitis, dan kreatif melalui pembelajaran matematika.',
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                             [
-                                'nama' => 'Dance',
-                                'gambar' => 'https://i.pinimg.com/736x/8e/da/f4/8edaf4482bbcb9d582efc6470aa32549.jpg',
-                                'deskripsi' => 'Ruang untuk mengembangkan kemampuan tari, ekspresi diri, dan kreativitas.',
-                                'active' => false
+                                'nama' => 'Desain',
+                                'gambar' => Vite::asset('resources/assets/design.jpg'),
+                                'deskripsi' => 'Ruang untuk mengembangkan kreativitas visual dan kemampuan membuat karya desain yang komunikatif.',
+                                'active' => false,
+                                'flipBackground' => false,
                             ],
                         ];
                     @endphp
 
                     @foreach ($ekskuls as $ekskul)
-                            <a
-                                href="#"
-                                data-nama="{{ $ekskul['nama'] }}"
-                                data-gambar="{{ $ekskul['gambar'] }}"
-                                data-deskripsi="{{ $ekskul['deskripsi'] }}"
-                                class="ekskul-card group relative block shrink-0 w-48 h-24 rounded-[2px] overflow-hidden transition-all duration-300
-                                {{ $ekskul['active']
-                                    ? 'outline outline-3 outline-offset-2 outline-[#10A4B0]'
-                                    : 'hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#10A4B0]/50' }}"
-                            >
+                        <a
+                            href="#"
+                            data-nama="{{ $ekskul['nama'] }}"
+                            data-gambar="{{ $ekskul['gambar'] }}"
+                            data-deskripsi="{{ $ekskul['deskripsi'] }}"
+                            data-flip-background="{{ $ekskul['flipBackground'] ? 'true' : 'false' }}"
+                            class="ekskul-card group relative block shrink-0 w-48 h-24 rounded-[2px] overflow-hidden transition-all duration-300
+                            {{ $ekskul['active']
+                                ? 'is-active outline outline-3 outline-offset-2 outline-[#10A4B0]'
+                                : 'hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#10A4B0]/50' }}"
+                        >
+
                             {{-- Background gambar kartu --}}
                             <img
                                 src="{{ $ekskul['gambar'] }}"
@@ -146,17 +155,24 @@
                                 class="absolute inset-0 w-full h-full object-cover"
                             >
 
-                            <div class="ekskul-overlay absolute inset-0 transition-colors duration-300
-                                {{ $ekskul['active'] ? 'bg-[#10A4B0]' : 'bg-[#003135]/70' }}">
-                            </div>
+                            {{-- Overlay --}}
+                            <div
+                                class="ekskul-overlay absolute inset-0 transition-colors duration-300
+                                {{ $ekskul['active'] ? 'bg-[#10A4B0]' : 'bg-[#003135]/70' }}"
+                            ></div>
 
-                            <div class="absolute inset-0 bg-[#10A4B0] translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0">
-                            </div>
+                            {{-- Hover fill --}}
+                            <div
+                                class="absolute inset-0 bg-[#10A4B0] translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"
+                            ></div>
 
-                            {{-- Label nama ekskul --}}
-                            <span class="relative z-10 flex items-center justify-center w-full h-full text-xl font-bold text-[#ffffff] font-['DM_Sans']">
+                            {{-- Nama --}}
+                            <span
+                                class="relative z-10 flex items-center justify-center w-full h-full text-xl font-bold text-[#ffffff] font-['DM_Sans']"
+                            >
                                 {{ $ekskul['nama'] }}
                             </span>
+
                         </a>
                     @endforeach
                 </div>
