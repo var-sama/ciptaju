@@ -89,7 +89,7 @@
 
         <!-- Hero Image Section (Kanan) -->
         <div class="hidden lg:block lg:w-7/12 relative">
-            <img src="{{ asset('images/ciptaju-building.jpg') }}" alt="Gedung Sekolah Ciptaju"
+            <img src="{{ asset('images/ciptaju-building.png') }}" alt="Gedung Sekolah Ciptaju"
                 class="absolute inset-0 w-full h-full object-cover object-center">
         </div>
     </div>
