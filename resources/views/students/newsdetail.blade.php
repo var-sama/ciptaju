@@ -5,10 +5,8 @@
 @section('content')
 <div class="mx-auto max-w-4xl py-8">
     <div class="mb-6">
-        <a href="{{ route('students.index') }}" class="-ml-20 inline-flex items-center gap-3 rounded-sm bg-[#044952] px-12 py-3 text-lg font-semibold text-white transition hover:bg-[#03363d]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
+        <a href="{{ route('students.index') }}" class="-ml-20 inline-flex items-center gap-3 rounded-sm bg-[#044952] px-12 py-3 text-lg font-bold text-white transition hover:bg-[#03363d]">
+            &lt;--
             Back
         </a>
     </div>
@@ -18,7 +16,7 @@
             Siswa Ciptaju Berhasil Meraih Prestasi dan Membawa Pulang Piala
         </h1>
 
-        <p class="mb-6 text-sm text-slate-500 md:text-base">20 Desember 2025</p>
+        <p class="mb-6 text-sm text-slate-500 md:text-base">20/12/2099</p>
 
         <img
             src="{{ Vite::asset('resources/assets/siswaprestasi.jpg') }}"
