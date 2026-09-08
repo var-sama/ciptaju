@@ -45,7 +45,7 @@
                 Home
             </a>
 
-            <a href="{{ url('/about') }}"
+            <a href="{{ url('/aboutus') }}"
                class="text-lg font-bold text-[#003135] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                 About
             </a>

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,4 +23,18 @@ Route::name('students.')->prefix('students')->group(function(){
     Route::put('/{id}',[StudentController::class, 'update'])->name('update');
     //logika hapus(delete)
     Route::delete('/{id}',[StudentController::class, 'destroy'])->name('destroy');
+});
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::name('aboutus.')->prefix('aboutus')->group(function(){
+   
+    //daftar(index)
+    Route::get('/', [AboutController::class, 'index'])->name('index');
+    //detail(show)
+    //tambah(create)
+    Route::get('/details',[AboutController::class, 'details'])->name('details');
+    Route::get('/history',[AboutController::class, 'history'])->name('history');
 });
