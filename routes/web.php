@@ -1,18 +1,18 @@
 <?php
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('students.newsdetail');
+    return redirect()->route('news.index');
 });
 
-Route::name('students.')->prefix('students')->group(function(){
+Route::name('news.')->prefix('news')->group(function(){
    
     //daftar(index)
-    Route::get('/', [StudentController::class, 'index'])->name('index');
-    Route::get('/news-detail', [StudentController::class, 'newsdetail'])->name('newsdetail');
-    Route::get('/registration', [StudentController::class, 'registration'])->name('registration');
-    Route::post('/registration', [StudentController::class, 'storeRegistration'])->name('registration.store');
+    Route::get('/', [NewsController::class, 'index'])->name('index');
+    Route::get('/news-detail', [NewsController::class, 'view'])->name('view');
+    Route::get('/registration', [NewsController::class, 'registration'])->name('registration');
+    Route::post('/registration', [NewsController::class, 'storeRegistration'])->name('registration.store');
     // //detail(show)
     // //tambah(create)
     // Route::get('/create',[StudentController::class, 'create'])->name('create');

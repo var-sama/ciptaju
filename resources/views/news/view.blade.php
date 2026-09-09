@@ -5,8 +5,8 @@
 @section('content')
 <div class="mx-auto max-w-4xl py-8">
     <div class="mb-6">
-        <a href="{{ route('students.index') }}" class="-ml-20 inline-flex items-center gap-3 rounded-sm bg-[#044952] px-12 py-3 text-lg font-bold text-white transition hover:bg-[#03363d]">
-            &lt;--
+        <a href="{{ route('news.index') }}" class="-ml-20 inline-flex items-center gap-3 rounded-sm bg-[#044952] px-12 py-3 text-lg font-bold text-white transition hover:bg-[#03363d]">
+            &lt;-
             Back
         </a>
     </div>

@@ -4,21 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class NewsController extends Controller
 {
     public function index(){
         $title = "ini test";
-        return view('students.index', [
+        return view('news.index', [
             'title' => $title,
         ] );
     }
 
-    public function newsdetail()
+    public function view($id = 1)
     {
         $title = "Detail Berita";
-        $id = 1;
 
-        return view('students.newsdetail', [
+        return view('news.view', [
             'title' => $title,
             'id' => $id,
         ]);
@@ -26,7 +25,7 @@ class StudentController extends Controller
 
     public function registration()
     {
-        return view('students.pendaftaran');
+        return view('news.pendaftaran');
     }
 
     public function storeRegistration(Request $request)
