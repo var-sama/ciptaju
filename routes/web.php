@@ -34,12 +34,12 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-// Route Halaman Profile
+// Route untuk menampilkan Halaman Profile (sekarang auth.view)
 Route::get('/profile', function () {
-    return view('students.profile');
+    return view('auth.view');
 })->name('profile');
 
-// Route dummy untuk proses update form agar tidak error
+// Route dummy untuk submit form (biar gk error pas klik simpan)
 Route::put('/profile', function () {
     return back();
 })->name('profile.update');
@@ -48,3 +48,4 @@ Route::put('/profile', function () {
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
