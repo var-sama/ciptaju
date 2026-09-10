@@ -72,8 +72,6 @@ Route::name('about.')->prefix('about')->group(function(){
     Route::get('/view',[AboutController::class, 'view'])->name('view');
     Route::get('/discover',[AboutController::class, 'discover'])->name('discover');
 });
-    
-});
 
 
 
