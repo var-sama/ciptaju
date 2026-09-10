@@ -1,3 +1,5 @@
+import bannerImage from '../assets/banner_1.png';
+
 document.addEventListener('DOMContentLoaded', () => {
     const background = document.getElementById('ekskul-background');
     const backgroundAnimation = document.getElementById('ekskul-background-animation');

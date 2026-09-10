@@ -18,6 +18,6 @@ Route::name('news.')->prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('index');
 });
 
-Route::get('/achievement', [AchievementController::class, 'index'])->name('achievement.index');
-Route::get('/ekskul', [ExtracurricularController::class, 'index'])->name('extracurricular.index');
-Route::get('/visimisi', [VisionMissionController::class, 'index'])->name('vision-mission.index');
+Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements.index');
+Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])->name('extracurriculars.index');
+Route::get('/vision-mission', [VisionMissionController::class, 'index'])->name('vision-mission.index');

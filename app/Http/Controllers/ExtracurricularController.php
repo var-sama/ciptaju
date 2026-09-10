@@ -8,7 +8,7 @@ class ExtracurricularController extends Controller
 {   
     public function index(){
         $title = "ini test";
-        return view('extracurricular.index', [
+        return view('extracurriculars.index', [
             'title' => $title,
         ] );
     }

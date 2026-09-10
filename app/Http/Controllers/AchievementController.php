@@ -8,7 +8,7 @@ class AchievementController extends Controller
 {   
     public function index(){
         $title = "ini test";
-        return view('achievement.index', [
+        return view('achievements.index', [
             'title' => $title,
         ] );
     }

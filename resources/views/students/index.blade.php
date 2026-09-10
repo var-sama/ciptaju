@@ -65,7 +65,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {{-- Kartu 1: Pilihan Exkul Sekolah --}}
-            <a href="{{ route('extracurricular.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
+            <a href="{{ route('extracurriculars.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
                     src="{{ Vite::asset('resources/assets/landing_sub1.png') }}"
                     alt="Pilihan Ekskul Sekolah"
@@ -94,7 +94,7 @@
             </a>
 
             {{-- Kartu 3: Prestasi --}}
-            <a href="{{ route('achievement.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
+            <a href="{{ route('achievements.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
                     src="{{ Vite::asset('resources/assets/landing_sub3.png') }}"
                     alt="Prestasi"
