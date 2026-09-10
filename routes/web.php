@@ -1,25 +1,21 @@
 <?php
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::name('students.')->prefix('students')->group(function(){
+Route::name('auth.')->prefix('auth')->group(function(){
    
     //daftar(index)
-    Route::get('/', [StudentController::class, 'index'])->name('index');
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/view', [AuthController::class, 'view'])->name('view');
     //detail(show)
-    //tambah(create)
-    Route::get('/create',[StudentController::class, 'create'])->name('create');
-    //edit(edit)
-    Route::get('/{id}',[StudentController::class, 'show'])->name('show');//->whereNumber('');
-    Route::get('/{id}/edit',[StudentController::class, 'edit'])->name('edit');
-    //logika tambah(store)
-    Route::post('/',[StudentController::class, 'store'])->name('store');
-    //logika edit(update)
-    Route::put('/{id}',[StudentController::class, 'update'])->name('update');
-    //logika hapus(delete)
-    Route::delete('/{id}',[StudentController::class, 'destroy'])->name('destroy');
+    
 });
+
+
+
