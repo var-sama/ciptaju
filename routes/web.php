@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,3 +27,15 @@ Route::name('news.')->prefix('news')->group(function(){
     // //logika hapus(delete)
     // Route::delete('/{id}',[StudentController::class, 'destroy'])->name('destroy');
 });
+Route::name('auth.')->prefix('auth')->group(function(){
+   
+    //daftar(index)
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/view', [AuthController::class, 'view'])->name('view');
+    //detail(show)
+    
+});
+
+
+
