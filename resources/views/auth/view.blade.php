@@ -16,7 +16,7 @@
         <div class="flex justify-center mb-8">
             <div class="relative w-36 h-36 rounded-full overflow-hidden border-4 border-gray-200 shadow-inner bg-gray-100">
                 <img 
-                    src="{{ asset('images/avatar-student.png') }}" 
+                    src="{{ asset('assets/avatar-student.png') }}" 
                     alt="Foto Profile Siswa" 
                     class="w-full h-full object-cover object-center"
                     onerror="this.src='https://ui-avatars.com/api/?name=Siswa+Ciptaju&background=0D9488&color=fff&size=200'"

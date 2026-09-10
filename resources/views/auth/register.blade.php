@@ -9,14 +9,14 @@
 
             <!-- Logo Sekolah -->
             <div class="mb-8">
-                <img src="{{ asset('images/logo-ciptaju.png') }}" alt="Sekolah Ciptaju Logo" class="h-24 w-auto">
+                <img src="{{ asset('assets/logo-ciptaju.png') }}" alt="Sekolah Ciptaju Logo" class="h-24 w-auto">
             </div>
 
             <!-- Form Container -->
             <div class="w-full max-w-md mx-auto my-auto">
                 <h1 class="text-3xl font-bold mb-8 text-gray-900">Register</h1>
 
-                <form action="{{ route('register') }}" method="POST" class="space-y-5">
+                <form action="{{ route('auth.register') }}" method="POST" class="space-y-5">
                     @csrf
 
                     <!-- Input Email -->
@@ -81,7 +81,7 @@
             <!-- Login Link (Bottom Left) -->
             <div class="mt-8 text-sm">
                 <p class="text-teal-900 font-medium">Already have an account?</p>
-                <a href="{{ route('login') }}" class="font-bold text-gray-900 hover:underline">
+                <a href="{{ route('auth.login') }}" class="font-bold text-gray-900 hover:underline">
                     Log in here
                 </a>
             </div>
@@ -89,7 +89,7 @@
 
         <!-- Hero Image Section (Kanan) -->
         <div class="hidden lg:block lg:w-7/12 relative">
-            <img src="{{ asset('images/ciptaju-building.png') }}" alt="Gedung Sekolah Ciptaju"
+            <img src="{{ asset('assets/ciptaju-building.png') }}" alt="Gedung Sekolah Ciptaju"
                 class="absolute inset-0 w-full h-full object-cover object-center">
         </div>
     </div>

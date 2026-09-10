@@ -7,13 +7,13 @@
         <div class="w-full lg:w-5/12 flex flex-col justify-between p-8 md:p-12 lg:p-16">
 
             <div class="mb-8">
-                <img src="{{ asset('images/logo-ciptaju.png') }}" alt="Sekolah Ciptaju Logo" class="h-24 w-auto">
+                <img src="{{ asset('assets/logo-ciptaju.png') }}" alt="Sekolah Ciptaju Logo" class="h-24 w-auto">
             </div>
 
             <div class="w-full max-w-md mx-auto my-auto">
                 <h1 class="text-3xl font-bold mb-8 text-gray-900">Login</h1>
 
-                <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                <form action="{{ route('auth.login') }}" method="POST" class="space-y-6">
                     @csrf
 
                     <div>
@@ -50,14 +50,14 @@
 
             <div class="mt-8 text-sm">
                 <p class="text-teal-900 font-medium">Don't have an account yet?</p>
-                <a href="{{ route('register') }}" class="font-bold text-gray-900 hover:underline">
+                <a href="{{ route('auth.register') }}" class="font-bold text-gray-900 hover:underline">
                     Register now
                 </a>
             </div>
         </div>
 
         <div class="hidden lg:block lg:w-7/12 relative">
-            <img src="{{ asset('images/ciptaju-building.png') }}" alt="Gedung Sekolah Ciptaju"
+            <img src="{{ asset('assets/ciptaju-building.png') }}" alt="Gedung Sekolah Ciptaju"
                 class="absolute inset-0 w-full h-full object-cover object-center">
         </div>
     </div>
