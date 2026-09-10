@@ -7,12 +7,11 @@ Route::get('/', function () {
 });
 
 Route::name('news.')->prefix('news')->group(function(){
-   
-    //daftar(index)
     Route::get('/', [NewsController::class, 'index'])->name('index');
-    Route::get('/news-detail', [NewsController::class, 'view'])->name('view');
+    Route::get('/detail', [NewsController::class, 'view'])->name('view');
     Route::get('/registration', [NewsController::class, 'registration'])->name('registration');
     Route::post('/registration', [NewsController::class, 'storeRegistration'])->name('registration.store');
+
     // //detail(show)
     // //tambah(create)
     // Route::get('/create',[StudentController::class, 'create'])->name('create');

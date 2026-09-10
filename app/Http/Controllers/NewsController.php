@@ -25,7 +25,7 @@ class NewsController extends Controller
 
     public function registration()
     {
-        return view('news.pendaftaran');
+        return view('news.registration');
     }
 
     public function storeRegistration(Request $request)
@@ -39,6 +39,6 @@ class NewsController extends Controller
             'active_number' => ['required', 'string', 'max:30'],
         ]);
 
-        return redirect()->route('students.registration')->with('success', 'Pendaftaran berhasil dikirim.');
+        return redirect()->route('news.registration')->with('success', 'Pendaftaran berhasil dikirim.');
     }
 }
