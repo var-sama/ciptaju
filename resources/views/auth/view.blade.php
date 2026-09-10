@@ -30,7 +30,7 @@
         </h2>
 
         <!-- Form Biodata -->
-        <form action="{{ route('profile.update') }}" method="POST">
+        <form action="#" method="POST">
             @csrf
             @method('PUT')
 

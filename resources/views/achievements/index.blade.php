@@ -1,4 +1,4 @@
-    @extends('layouts.app')
+@extends('layouts.app')
     @section('title', 'Prestasi')
     @section('content')
 
@@ -36,28 +36,27 @@
             <hr class="mt-3 mb-10 border-t border-gray-200 pb-10">
 
             {{-- ============================================= --}}
-            {{-- DATA DUMMY: Prestasi dikelompokkan per tahun    --}}
-            {{-- Ganti dengan data asli dari controller           --}}
+            {{-- DATA PRESTASI: Dikelompokkan per tahun         --}}
             {{-- ============================================= --}}
             @php
                 $prestasiPerTahun = [
                     2099 => [
                         ['gambar' => 'resources/assets/achievement1.png', 'judul' => "Meraih Pencapaian Sekolah Dengan Men's Singles Player Of The Year Badminton terbanyak", 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/acheivement2.png', 'judul' => 'Meraih Gelar Shcool of the Year Pada Tahun 2099', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/achievement3.png', 'judul' => 'Di Cap Sebagai Sekolah Dengan Penghasil Pendebat Terbaik', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/acheivement2.png', 'judul' => 'Meraih Gelar School of the Year Pada Tahun 2099', 'tanggal' => '15/11/2099'],
+                        ['gambar' => 'resources/assets/achievement3.png', 'judul' => 'Dicap Sebagai Sekolah Dengan Penghasil Pendebat Terbaik', 'tanggal' => '10/08/2099'],
+                        ['gambar' => 'resources/assets/achievement4.png', 'judul' => 'Juara 1 Olimpiade Sains Nasional Bidang Astronomi Terbanyak Satu Asia', 'tanggal' => '05/05/2099'],
                     ],
                     2098 => [
-                        ['gambar' => 'resources/assets/achievement4.png', 'judul' => 'Meraih Penghargaan Best Graduate Of The Year', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/achievement5.png', 'judul' => 'Meraih Penghargaan Sebagai Sekolah Penghasil Public Speaker Terbaik', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/achievement6.png', 'judul' => 'Sekolah Dengan Partisipasi Lomba Terbanyak Pada Tahun 2098', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement4.png', 'judul' => 'Meraih Penghargaan Best Graduate Of The Year', 'tanggal' => '18/12/2098'],
+                        ['gambar' => 'resources/assets/achievement5.png', 'judul' => 'Meraih Penghargaan Sebagai Sekolah Penghasil Public Speaker Terbaik', 'tanggal' => '12/09/2098'],
+                        ['gambar' => 'resources/assets/achievement6.png', 'judul' => 'Sekolah Dengan Partisipasi Lomba Terbanyak Pada Tahun 2098', 'tanggal' => '01/06/2098'],
+                        ['gambar' => 'resources/assets/achievement7.png', 'judul' => 'Juara Umum Kompetisi Robotik Antar Sekolah Tingkat Nasional Terbanyak Sedunia', 'tanggal' => '14/02/2098'],
                     ],
                     2097 => [
-                        ['gambar' => 'resources/assets/achievement7.png', 'judul' => 'Sekolah Dengan Pemenang Lomba Terbanyak Pada Tahun 2097', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/achievement8.png', 'judul' => 'Di Cap Sebagai Sekolah Dengan Guru Terbaik', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'resources/assets/achievement9.png', 'judul' => 'Meraih Pencapaian Sebagai Sekolah Dengan Partisipan Lomba Terbanyak', 'tanggal' => '20/12/2099'],
-                        ['gambar' => 'https://i.pinimg.com/736x/4b/32/39/4b323962246e9e60e6d3b1d845b82d1b.jpg', 'judul' => "Lomen ipsum dot sit\na jumping fox running on a", 'tanggal' => '20/12/2099'],
+                        ['gambar' => 'resources/assets/achievement7.png', 'judul' => 'Sekolah Dengan Pemenang Lomba Terbanyak Pada Tahun 2097', 'tanggal' => '22/11/2097'],
+                        ['gambar' => 'resources/assets/achievement8.png', 'judul' => 'Dicap Sebagai Sekolah Dengan Guru Terbaik', 'tanggal' => '19/08/2097'],
+                        ['gambar' => 'resources/assets/achievement9.png', 'judul' => 'Meraih Pencapaian Sebagai Sekolah Dengan Partisipan Lomba Terbanyak', 'tanggal' => '11/04/2097'],
+                        ['gambar' => 'resources/assets/achievement1.png', 'judul' => 'Medali Emas Festival Seni Terbanyak Sepanjang Abad', 'tanggal' => '03/01/2097'],
                     ],
                 ];
             @endphp
@@ -96,7 +95,7 @@
                             @foreach ($daftarPrestasi as $prestasi)
 
                                 <a
-                                    href="#"
+                                    href="{{ route('achievements.view') }}"
                                     class="prestasi-card group relative shrink-0 w-[30%] min-w-[260px] max-w-[340px] rounded-md overflow-hidden border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl"
                                 >
 
@@ -111,7 +110,7 @@
 
                                         {{-- GRADIENT HOVER DI FOTO --}}
                                         <div
-                                            class="absolute inset-0 bg-gradient-to-t from-[#003135]/70  to-transparent opacity-0 translate-y-8 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0"
+                                            class="absolute inset-0 bg-gradient-to-t from-[#003135]/70 to-transparent opacity-0 translate-y-8 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0"
                                         ></div>
 
                                     </div>

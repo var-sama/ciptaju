@@ -14,6 +14,7 @@
 
 <section
     id="news-banner"
+    data-news-url="{{ route('news.view') }}"
     class="relative w-full h-[500px] font-['DM_Sans'] overflow-hidden px-0 py-0"
     data-autoplay="true"
     data-interval="5000"
@@ -238,7 +239,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
                 @foreach ($newsList as $news)
                     <a
-                        href="#"
+                        href="{{route("news.view")}}"
                         class="news-card group relative flex h-full shrink-0 flex-col rounded-md overflow-hidden border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl"
                     >
                         {{-- FOTO --}}

@@ -44,7 +44,7 @@
 
             <a
                 id="hero-button"
-                href="{{ url('/register') }}"
+                href="{{route('auth.registration')}}"
                 class="register-button relative inline-block mt-8 overflow-hidden rounded-full bg-[#10A4B0] text-[#ffffff] font-bold font-['DM_Sans'] text-lg px-8 py-3"
             >
                 <span class="register-button-text relative z-10">

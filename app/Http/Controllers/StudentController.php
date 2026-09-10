@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ExtracurricularController extends Controller
+class StudentController extends Controller
 {   
     public function index(){
-        $title = "Daftar Ekskul Ciptaju";
-        return view('extracurriculars.index', [
+        $title = "Halaman Utama";
+        return view('students.index', [
             'title' => $title,
         ] );
     }

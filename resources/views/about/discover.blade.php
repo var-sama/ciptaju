@@ -2,16 +2,24 @@
 @section('title', $title)
 @section('content')
 
-    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] -mt-4 md:-mt-6 h-[350px] md:h-[450px] flex items-center justify-center bg-cover bg-center grayscale mb-12 shadow-md" style="background-image: url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=1200&auto=format&fit=crop');">
+    <div class="relative w-full h-[350px] md:h-[450px] overflow-hidden mb-12 shadow-md">
+        <img
+            src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=1200&auto=format&fit=crop"
+            alt="History Banner"
+            class="absolute inset-0 w-full h-full object-cover">
+
         <div class="absolute inset-0 bg-black/50"></div>
-        <h1 class="relative z-10 text-4xl md:text-5xl font-bold text-white tracking-wider">
-            History
-        </h1>
+        <div class="absolute inset-0 z-10 flex items-center justify-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-wider">
+                History
+            </h1>
+        </div>
     </div>
 
     <!-- History Cards -->
-    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-8 lg:px-12 mb-16">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 w-full">
+    <div class="px-8 lg:px-12 mb-16 w-full">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 w-full">
 
             <!-- 1945 -->
             <div onclick="openModal(
@@ -116,6 +124,7 @@
                 </div>
             </div>
 
+        </div>
         </div>
     </div>
 

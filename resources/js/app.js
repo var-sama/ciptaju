@@ -327,6 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //news--------------------------------------------------------------------------------------------
+// =========================================================
+// NEWS SECTION 1 — BANNER / HERO SLIDER
+// =========================================================
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const banner = document.getElementById('news-banner');
@@ -339,52 +343,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('news-banner-next');
     const heading = document.getElementById('news-banner-heading');
 
+    // URL untuk semua banner
+    const newsUrl = banner.dataset.newsUrl;
+
     if (!track || !dotsContainer || !prevButton || !nextButton) {
         return;
     }
+
+    // =========================================================
+    // DATA SLIDES
+    // =========================================================
 
     const slides = [
         {
             gambar: bannerImage,
             judul: 'Amond Aye Winning Programming Competition',
-            tanggal: '20/12/2099'
+            tanggal: '20/12/2099',
         },
-
         {
             gambar: 'https://i.pinimg.com/736x/c0/f2/a8/c0f2a856e62173119c48838213144fb7.jpg',
             judul: 'Berita Kedua',
-            tanggal: '21/12/2099'
+            tanggal: '21/12/2099',
         },
-
         {
             gambar: 'https://i.pinimg.com/736x/78/8b/d7/788bd73f3e433bca90029d91376cdbc8.jpg',
             judul: 'Berita Ketiga',
-            tanggal: '22/12/2099'
+            tanggal: '22/12/2099',
         },
-
-        {
-            gambar: 'https://i.pinimg.com/736x/eb/1b/f9/eb1bf99faa953780c3e35e6044303d64.jpg',
-            judul: 'Berita Keempat',
-            tanggal: '23/12/2099'
-        },
-
-        {
-            gambar: 'https://i.pinimg.com/736x/28/14/75/2814758d070b4e6edfe143bf97fedc4f.jpg',
-            judul: 'Berita Kelima',
-            tanggal: '24/12/2099'
-        },
-
-        {
-            gambar: 'https://i.pinimg.com/736x/78/60/2b/78602b1fa491433354878fe12ed71d88.jpg',
-            judul: 'Berita Keenam',
-            tanggal: '25/12/2099'
-        },
-
-        {
-            gambar: 'https://i.pinimg.com/736x/56/b1/81/56b181f305d9fd57e81178d8ea954d6e.jpg',
-            judul: 'Berita Ketujuh',
-            tanggal: '26/12/2099'
-        }
     ];
 
     let currentIndex = 1;
@@ -411,25 +396,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================
 
     track.innerHTML = allSlides.map((slide, index) => {
-
         return `
-            <div
-                class="relative w-full h-full flex-shrink-0"
+            <a
+                href="${newsUrl}"
+                class="relative block w-full h-full flex-shrink-0 cursor-pointer"
                 data-slide-index="${index}"
             >
-
                 <img
                     src="${slide.gambar}"
                     alt="${slide.judul}"
                     class="news-banner-background absolute inset-0 w-full h-full object-cover object-right"
                 >
 
-                <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent"></div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent"
+                ></div>
 
-                <div class="relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10">
-
-                    <div class="max-w-3xl mt-4 ml-6 md:ml-8 lg:ml-18">
-
+                <div
+                    class="relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10"
+                >
+                    <div
+                        class="max-w-3xl mt-4 ml-6 md:ml-8 lg:ml-18"
+                    >
                         <h2
                             class="news-banner-title text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6"
                         >
@@ -441,14 +429,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         >
                             ${slide.tanggal}
                         </span>
-
                     </div>
-
                 </div>
-
-            </div>
+            </a>
         `;
-
     }).join('');
 
     // =========================================================
@@ -456,7 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================
 
     dotsContainer.innerHTML = slides.map((_, i) => {
-
         return `
             <button
                 type="button"
@@ -469,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 aria-label="Slide ${i + 1}"
             ></button>
         `;
-
     }).join('');
 
     const dots = document.querySelectorAll('.news-banner-dot');
@@ -523,7 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     'bg-white/40'
                 );
             }
-
         });
     }
 
@@ -551,28 +532,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Header
         if (heading) {
-            heading.classList.add('news-banner-heading-animation');
+            heading.classList.add(
+                'news-banner-heading-animation'
+            );
         }
 
         // Background
         if (background) {
-            background.classList.add('news-banner-bg-animation');
+            background.classList.add(
+                'news-banner-bg-animation'
+            );
         }
 
         // Title
         if (title) {
-            title.classList.add('news-banner-text-animation');
+            title.classList.add(
+                'news-banner-text-animation'
+            );
         }
 
         // Description
         if (description) {
-            description.classList.add('news-banner-text-animation');
+            description.classList.add(
+                'news-banner-text-animation'
+            );
+
             description.style.animationDelay = '120ms';
         }
 
         // Date
         if (date) {
-            date.classList.add('news-banner-text-animation');
+            date.classList.add(
+                'news-banner-text-animation'
+            );
+
             date.style.animationDelay = '200ms';
         }
     }
@@ -609,7 +602,6 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.add(
                 'news-banner-text-transition'
             );
-
         });
 
         if (description) {
@@ -657,9 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
             track.style.transform =
                 `translateX(-${currentIndex * 100}%)`;
 
-        }
-
-        else if (currentIndex === totalSlides + 1) {
+        } else if (currentIndex === totalSlides + 1) {
 
             track.style.transition = 'none';
 
@@ -667,7 +657,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             track.style.transform =
                 `translateX(-${currentIndex * 100}%)`;
-
         }
 
         isTransitioning = false;
@@ -745,7 +734,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resetTimer();
         });
-
     });
 
     // =========================================================
@@ -759,14 +747,23 @@ document.addEventListener('DOMContentLoaded', () => {
     resetTimer();
 
 });
+
+
 // =========================================================
 // NEWS SECTION 2 — OPENING ANIMATION
 // Sama seperti opening halaman Prestasi
 // =========================================================
+
 document.addEventListener('DOMContentLoaded', () => {
-    const newsSection = document.querySelector('.news-section');
-    const newsTitle = document.querySelector('.news-section-title');
-    const newsCards = document.querySelectorAll('.news-card');
+
+    const newsSection =
+        document.querySelector('.news-section');
+
+    const newsTitle =
+        document.querySelector('.news-section-title');
+
+    const newsCards =
+        document.querySelectorAll('.news-card');
 
     if (!newsSection || !newsCards.length) {
         return;
@@ -774,13 +771,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Header / Judul
     if (newsTitle) {
-        newsTitle.classList.add('news-title-animation');
+
+        newsTitle.classList.add(
+            'news-title-animation'
+        );
     }
 
     // Card animation
     newsCards.forEach((card, index) => {
-        card.classList.add('news-card-animation');
-        card.style.animationDelay = `${150 + (index * 80)}ms`;
-    });
-});
 
+        card.classList.add(
+            'news-card-animation'
+        );
+
+        card.style.animationDelay =
+            `${150 + (index * 80)}ms`;
+    });
+
+});

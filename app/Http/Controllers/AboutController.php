@@ -7,21 +7,21 @@ use Illuminate\Http\Request;
 class AboutController extends Controller
 {
     public function index(){
-        $title = "About Us";
+        $title = "Tentang Ciptaju";
         return view('about.index', [
             'title' => $title,
         ]);
     }
 
     public function view(){
-        $title = "About Us Details";
+        $title = "Detail Tentang Ciptaju";
         return view('about.view', [
             'title' => $title,
         ]);
     }
 
     public function discover(){
-        $title = "About Us Discover";
+        $title = "Sejarah Ciptaju";
         return view('about.discover', [
             'title' => $title,
         ]);

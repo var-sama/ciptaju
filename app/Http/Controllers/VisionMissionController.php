@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class VisionMissionController extends Controller
 {   
     public function index(){
-        $title = "ini test";
+        $title = "Visi Misi Ciptaju";
         return view('vision-mission.index', [
             'title' => $title,
         ] );
