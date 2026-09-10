@@ -40,7 +40,7 @@
         {{-- BAGIAN TENGAH: Navigasi       --}}
         {{-- ============================= --}}
         <nav class="flex items-center gap-20">
-            <a href="{{ url('/') }}"
+            <a href="{{ route('students.index') }}"
                class="text-lg font-bold text-[#003135] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                 Home
             </a>
@@ -50,7 +50,7 @@
                 About
             </a>
 
-            <a href="{{ url('/news') }}"
+            <a href="{{ route('news.index') }}"
                class="text-lg font-bold text-[#003135] font-['DM_Sans'] hover:text-[#10A4B0] transition-colors">
                 News
             </a>
