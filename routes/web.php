@@ -29,12 +29,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::name('aboutus.')->prefix('aboutus')->group(function(){
+Route::name('about.')->prefix('about')->group(function(){
    
     //daftar(index)
     Route::get('/', [AboutController::class, 'index'])->name('index');
     //detail(show)
     //tambah(create)
-    Route::get('/details',[AboutController::class, 'details'])->name('details');
-    Route::get('/history',[AboutController::class, 'history'])->name('history');
+    Route::get('/view',[AboutController::class, 'view'])->name('view');
+    Route::get('/discover',[AboutController::class, 'discover'])->name('discover');
 });

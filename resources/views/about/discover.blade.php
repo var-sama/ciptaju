@@ -17,7 +17,7 @@
             <div onclick="openModal(
                 '1945 - Pendirian Awal',
                 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop',
-                'Loremipsum kentut botol jelek sduhdfg deew wy w rewl wuirweuirheur ewuli yrey rwur uew ruew ruy ryu ry r78. Ini adalah deskripsi lengkap mengenai sejarah berdirinya pada tahun 1945.'
+                'Sekolah mulai berdiri dengan tujuan memberikan pendidikan yang baik bagi masyarakat dan menjadi tempat belajar bagi generasi muda.'
             )"
             class="bg-white p-5 rounded-lg shadow-md border border-slate-200 cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
 
@@ -43,7 +43,7 @@
             <div onclick="openModal(
                 '1950 - Perkembangan Pesat',
                 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop',
-                'Loremipsum kentut botol jelek sduhdfg deew wy w rewl wuirweuirheur ewuli yrey rwur uew ruew ruy ryu ry r78. Penambahan fasilitas dan perluasan area pembelajaran.'
+                'Sekolah mulai berkembang dengan bertambahnya jumlah siswa, tenaga pengajar, serta fasilitas yang mendukung kegiatan pembelajaran.'
             )"
             class="bg-white p-5 rounded-lg shadow-md border border-slate-200 cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
 
@@ -69,7 +69,7 @@
             <div onclick="openModal(
                 '1980 - Era Modernisasi',
                 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto=format&fit=crop',
-                'Loremipsum kentut botol jelek sduhdfg deew wy w rewl wuirweuirheur ewuli yrey rwur uew ruew ruy ryu ry r78. Pembangunan gedung baru dan laboratorium komputer pertama.'
+                'Pada periode ini, sekolah mengalami perkembangan yang cukup pesat melalui pembangunan fasilitas baru dan peningkatan kualitas pendidikan.'
             )"
             class="bg-white p-5 rounded-lg shadow-md border border-slate-200 cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
 
@@ -95,7 +95,7 @@
             <div onclick="openModal(
                 '2000 - Menuju Digitalisasi',
                 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop',
-                'Loremipsum kentut botol jelek sduhdfg deew wy w rewl wuirweuirheur ewuli yrey rwur uew ruew ruy ryu ry r78. Integrasi sistem digital penuh ke dalam kegiatan akademik.'
+                'Sekolah mulai mengikuti perkembangan teknologi dengan memanfaatkan komputer dan sistem digital dalam kegiatan belajar dan administrasi.'
             )"
             class="bg-white p-5 rounded-lg shadow-md border border-slate-200 cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
 

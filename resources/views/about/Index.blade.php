@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-    <a href="{{ route('aboutus.details') }}"
+    <a href="{{ route('about.view') }}"
        class="block w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
               h-[350px] md:h-[450px] flex items-center justify-center
               bg-cover bg-center grayscale mb-8 shadow-md
@@ -19,7 +19,7 @@
     </a>
 
 
-    <a href="{{ route('aboutus.history') }}"
+    <a href="{{ route('about.discover') }}"
        class="block w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
               h-[350px] md:h-[450px] flex items-center justify-center
               bg-cover bg-center grayscale mb-8 shadow-md

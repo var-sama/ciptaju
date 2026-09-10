@@ -8,21 +8,21 @@ class AboutController extends Controller
 {
     public function index(){
         $title = "About Us";
-        return view('aboutus.about', [
+        return view('about.index', [
             'title' => $title,
         ]);
     }
 
-    public function details(){
+    public function view(){
         $title = "About Us Details";
-        return view('aboutus.details', [
+        return view('about.view', [
             'title' => $title,
         ]);
     }
 
-    public function history(){
-        $title = "About Us History";
-        return view('aboutus.history', [
+    public function discover(){
+        $title = "About Us Discover";
+        return view('about.discover', [
             'title' => $title,
         ]);
     }
