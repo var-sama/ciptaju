@@ -1,186 +1,302 @@
 # Ciptaju
 
-Web-In is a class discussion website designed to facilitate communication and knowledge sharing among students. Through this platform, users can ask questions, share ideas, and engage in discussions related to school subjects or other relevant topics.
+**Ciptaju** is a school registration and information website developed as a school project. The website is designed to provide information about the school and present a frontend interface for student registration.
 
-This website helps students interact without needing face-to-face meetings, making discussions more flexible, efficient, and accessible anytime and anywhere.
+At this stage of development, Ciptaju focuses on the **frontend interface, page layouts, navigation, and visual presentation**. The database and backend functionality have not been implemented yet, so features such as storing registration data, authentication, and other dynamic processes are not fully functional.
+
+The project is currently being developed as part of a **midterm school assessment**, with the completed work mainly covering the website's interface and navigation.
+
+---
+
+## Current Project Status
+
+> **Development Status: Frontend / UI Prototype**
+
+The current version of Ciptaju includes:
+
+- Website layouts and user interface.
+- Navigation between available pages.
+- School information pages.
+- News and achievement pages.
+- Extracurricular information.
+- Vision & Mission page.
+- Authentication page interfaces.
+- Student registration page interface.
+- Responsive frontend styling.
+
+The following features are **not implemented yet**:
+
+- Database integration.
+- Saving student registration data.
+- User authentication logic.
+- Login and registration processing.
+- Admin dashboard and management system.
+- Dynamic data management.
+- CRUD functionality.
+
+These features are planned for further development after the current frontend stage.
 
 ---
 
 ## Installation & Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/var-sama/ciptaju.git
-    ```
+This project is built using **Laravel**, **Laravel Blade**, and **Tailwind CSS** with Vite.
 
-2. Navigate into the project folder:
-    ```bash
-    cd ciptaju
-    ```
+Please make sure the following software is installed on your system:
 
-3. Install Dependencies (for Tailwind CSS):
-    ```bash
-    npm install
-    ```
+- PHP
+- Composer
+- Node.js
+- npm
 
-4. Set up the database:
-   - Open your database tool (phpMyAdmin, MySQL Workbench, or command line).
-   - Create a new database "ta_pwl_k6".
-   - Import the provided SQL file into the database:
-    ```bash
-    mysql -u root -p ta_pwl_k6 < ta_pwl_k6.sql
-    ```
-   (Alternatively, use phpMyAdmin → Import → Choose the SQL file).
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/var-sama/ciptaju.git
+```
+
+### 2. Navigate into the project folder
+
+```bash
+cd ciptaju
+```
+
+### 3. Install Laravel / PHP Dependencies
+
+```bash
+composer install
+```
+
+### 4. Install Node Dependencies
+
+Tailwind CSS and frontend dependencies are managed using npm.
+
+```bash
+npm install
+```
+
+### 5. Environment Setup
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the Laravel application key:
+
+```bash
+php artisan key:generate
+```
+
+> **Note:** A database is not required for the current version because the project is still focused on frontend development. Database integration will be added in a future development stage.
 
 ---
 
 ## Usage
 
-To run this project properly, you need to run both the PHP server and the Tailwind CSS compiler simultaneously.
+To run the project locally, you need to run the Laravel development server and Vite simultaneously.
 
-1. Run a local PHP server using PHP built-in server:
-   ```bash
-    php -S localhost:5000 -t public
-   ```
-2. **Run Tailwind CSS (in a new tab)**:
-Open a new terminal tab/window, make sure you are in the project folder (cd STS_kelompok_6), and run:
-   ``` bash
-    npm run dev
-   ```
-3. **Access the website:**
-   - Open your browser and go to http://localhost:5000
-   - Click the Register button on the sidebar to create a new account.
-   - Complete the registration form and Login to access your dashboard or profile page.
+### 1. Run the Laravel server
 
-5. **Role-Based Access:**
-After login, users will be automatically redirected to their respective dashboard or landing page depending on their role (Admin or Regular User).
+```bash
+php artisan serve
+```
+Or
+```bash
+composer run dev
+```
 
-### Default Accounts (Testing)
-For testing and demonstration purposes, all user accounts in the seeded database use the exact same password.
-- Admin Account:
-  - Username: madakono
-  - Password: 111
-- Regular Users: (Any existing user)
-  - Password: 111
+By default, Laravel will run at:
 
-### Available Routes / Pages
-Based on the application's routing system, here are the accessible user-facing URL paths:
-   ```bash
-    /                 # Landing page (Main feed)
-    /login            # Login page
-    /register         # Register page
-    /Problemcreate    # Create a new problem/post page
-    /problem-detail   # Problem discussion detail page
-    /bookmark         # User's bookmarked problems page
-    /teams            # List of joined teams
-    /teams-create     # Form to create a new team
-    /teams-detail     # Specific team detail view
-    /tags             # List of available tags
-    /tag-result       # Search results filtered by tag
-    /profile          # User profile page
-    /dashboard        # Admin analytics & management dashboard
-   ```
-> (Note: System actions like /add-comment, /logout, /toggle-like, and /admin/... are handled via POST/GET requests behind the scenes).
+```text
+http://localhost:8000
+```
+
+### 2. Run Vite
+
+Open a new terminal tab/window, make sure you are inside the project folder, then run:
+
+```bash
+npm run dev
+```
+
+Vite is used to compile and serve the frontend assets, including Tailwind CSS.
+
+### 3. Access the website
+
+Open your browser and visit:
+
+```text
+http://localhost:8000/students/
+```
+
+You can navigate through the available pages and explore the current frontend interface.
+
+---
+
+## Available Pages / Routes
+
+The current application contains the following main routes:
+
+```text
+/                       # Redirects to the News page
+/students               # Landing page
+/achievements           # Achievements page
+/achievements/detail    # Achievement detail page
+/extracurriculars       # Extracurricular page
+/vision-mission         # Vision & Mission page
+/news                   # News page
+/news/detail            # News detail page
+/auth/login             # Login page
+/auth/register          # Register page
+/auth/view              # Authentication-related view
+/auth/registration      # Student registration page
+/about                  # About page
+/about/view             # About detail view
+/about/discover         # About discover page
+```
+
+> **Note:** Some routes currently only display the frontend interface. Backend processing and database functionality have not been implemented yet.
 
 ---
 
 ## Architecture
 
-```Project structure
-STS_kelompok_6/
-├── package.json                        # NPM dependencies & scripts (Tailwind)
-├── README.md                           # Project documentation
-├── ta_pwl_k6.sql                       # Database file
+Ciptaju uses the **Laravel MVC (Model-View-Controller)** architecture.
+
+The project uses **Blade** as the templating engine for its frontend views and **Tailwind CSS** for styling.
+
+```text
+ciptaju/
 ├── app/
-│   ├── config/
-│   │   └── app.php                     # App configurations
-│   ├── controllers/                    # Application Logic (MVC Controllers)
-│   │   ├── AdminController.php         # Handle admin dashboard & features
-│   │   ├── AuthController.php          # Handle authentication (login/register/logout)
-│   │   ├── landingController.php       # Handle main feed & user actions (likes, bookmarks)
-│   │   ├── ProblemController.php       # Handle problem feature, creation & detailed views
-│   │   ├── profileController.php       # Handle user profile & image uploads
-│   │   └── TeamController.php          # Handle team creation & team details
-│   ├── core/
-│   │   ├── database.php                # Database connection setup
-│   │   └── Router.php                  # Simple routing system
-│   ├── models/                         # Database Interactions (MVC Models)
-│   │   ├── admin.php                   # Admin-related queries
-│   │   ├── problem.php                 # Post/Problem-related queries
-│   │   └── Team.php                    # Team-related queries
-│   ├── resources/
-│   │   └── css/
-│   │       └── input.css               # Tailwind source CSS file
-│   └── views/                          # User Interface (MVC Views)
-│       ├── bookmark.php                # Bookmarked posts view
-│       ├── create team.php             # Form to create a new team
-│       ├── dashboard.php               # Admin dashboard layout
-│       ├── detail.php                  # Detailed discussion view
-│       ├── landing.php                 # Main timeline/feed view
-│       ├── Problemcreate.php           # Form to post a new problem
-│       ├── profile.php                 # User profile view
-│       ├── tag_result.php              # Search results by tag view
-│       ├── Tags.php                    # List of available tags view
-│       ├── teams detail.php            # Inside a specific team view
-│       ├── teams.php                   # List of joined teams view
-│       ├── auth/
-│       │   ├── login.php               # Login page UI
-│       │   └── register.php            # Register page UI
-│       └── components/
-│           └── navbar.php              # Reusable navigation bar
-└── public/                             # Publicly accessible files (Document Root)
-    ├── index.php                       # Entry point (Main routing file)
-    ├── css/                            # Compiled & custom CSS files
-    │   ├── Login.css
-    │   ├── Navbar.css
-    │   ├── output.css                  # Compiled Tailwind CSS output
-    │   ├── Problem.css
-    │   ├── profile.css
-    │   ├── Register.css
-    │   └── tag.css
-    ├── icons/                          # Static icon assets
-    ├── js/                             # JavaScript files for interactivity
-    │   ├── createteams.js
-    │   ├── detail.js
-    │   ├── detailtim.js
-    │   ├── landing.js
-    │   └── tim.js
-    └── uploads/                        # Directory for user uploaded images (Profiles, Teams)
+│   ├── Http/
+│   │   └── Controllers/                         # Application logic and page controllers
+│   │       ├── AboutController.php              # Handles About page and related views
+│   │       ├── AchievementController.php        # Handles achievement pages and detail views
+│   │       ├── AuthController.php               # Handles login, register, and authentication views
+│   │       ├── ExtracurricularController.php    # Handles extracurricular page
+│   │       ├── NewsController.php               # Handles news pages and detail views
+│   │       ├── StudentController.php            # Handles student-related pages
+│   │       └── VisionMissionController.php      # Handles Vision & Mission page
+│   │
+│   ├── Models/                                  # Database models
+│   │   └── User.php                             # Laravel user model
+│   │
+│   ├── Providers/
+│   │   └── AppServiceProvider.php               # Application service configuration
+│   │
+│   └── View/
+│       └── Components/                          # Reusable Blade view components
+│
+├── bootstrap/                                   # Laravel application bootstrap files
+│
+├── config/                                      # Laravel application configuration
+│
+├── database/                                    # Database migrations, seeders, and factories
+│                                                 # Reserved for future database development
+│
+├── public/                                      # Publicly accessible files and assets
+│
+├── resources/                                   # Frontend resources
+│   ├── css/                                     # CSS and Tailwind CSS resources
+│   ├── js/                                      # JavaScript files for frontend interactions
+│   │   └── app.js                               # Main JavaScript entry point
+│   │
+│   └── views/                                   # Blade templates and website pages
+│       ├── about/                               # About page views
+│       ├── achievements/                        # Achievement page views
+│       ├── auth/                                # Login and registration views
+│       ├── extracurriculars/                    # Extracurricular page views
+│       ├── layouts/                             # Shared layouts such as navbar and footer
+│       ├── news/                                # News page and detail views
+│       ├── students/                            # Student-related views
+│       └── vision-mission/                      # Vision & Mission page views
+│
+├── routes/                                      # Application route definitions
+│   ├── console.php                              # Laravel console routes
+│   └── web.php                                  # Main website routes and navigation
+│
+├── storage/                                     # Application storage, logs, and cache
+│
+├── tests/                                       # Automated application tests
+│
+├── vendor/                                      # PHP dependencies installed by Composer
+│
+├── .editorconfig                                # Code formatting configuration
+├── .env                                         # Environment configuration
+├── .gitattributes                               # Git attribute configuration
+├── .gitignore                                   # Files and folders ignored by Git
+├── .npmrc                                       # NPM configuration
+├── AGENTS.md                                    # Project development guidelines
+├── artisan                                      # Laravel command-line interface
+├── boost.json                                   # Laravel Boost configuration
+├── composer.json                                # PHP and Laravel dependency configuration
+├── composer.lock                                # Locked PHP dependency versions
+├── package.json                                 # Node.js dependencies and scripts
+├── package-lock.json                            # Locked Node.js dependency versions
+├── phpunit.xml                                  # PHPUnit testing configuration
+├── vite.config.js                               # Vite frontend build configuration
+└── README.md                                    # Project documentation
 ```
+
+### Main Components
+
+- **app/Http/Controllers/** — Contains controllers responsible for handling each section of the website and returning the appropriate views.
+- **resources/views/** — Contains the Blade templates used to build the website interface.
+- **resources/css/** — Contains CSS and Tailwind CSS resources used for styling.
+- **resources/js/** — Contains JavaScript used for frontend interactions.
+- **routes/web.php** — Contains the main routes used to navigate between pages.
+- **public/** — Contains files that can be accessed directly by the browser.
+- **database/** — Reserved for future database implementation. The current project does not yet use a database for its main functionality.
+- **storage/** — Used by Laravel for application storage, logs, and cache.
+- **vendor/** — Contains PHP dependencies installed through Composer.
+- **composer.json** — Defines the PHP and Laravel dependencies used by the project.
+- **package.json** — Defines frontend dependencies and npm scripts such as `npm run dev`.
+- **vite.config.js** — Configures Vite for frontend asset development.
 
 ---
 
 ## Contributing
 
-We welcome contributions from anyone who wants to help improve Web-In school problem discusion Website!
-Whether you are fixing bugs, adding new features, enhancing the design, or improving documentation, your contributions are highly appreciated.
-
-### How to Contribute
-
-1. Fork this repository.
-2. Create a new branch for your feature or bugfix.
-3. Commit your changes with a clear and descriptive message.
-4. Push your branch and open a Pull Request.
-5. Wait for review and feedback before merging.
+This project is currently being developed as a school project. Contributions and suggestions for improving the interface, navigation, code structure, and future functionality are welcome.
 
 ### Contribution Guidelines
-- Keep your code clean, structured, and well-documented.
-- Ensure that any new features or fixes are properly tested.
-- Maintain consistency with the existing project structure.
-- Be respectful, collaborative, and constructive in discussions.
 
-> Together, we can make Web-In a more accessible and user-friendly platform for school discusion! 
+1. Keep the code clean and structured.
+2. Maintain consistency with the existing Laravel project structure.
+3. Make sure new pages and components follow the existing design.
+4. Test frontend changes before committing them.
+5. Use clear and descriptive commit messages.
+
+---
+
+## Future Development
+
+After the frontend stage is completed, the following features are planned for future development:
+
+- Database integration.
+- Functional student registration.
+- User authentication.
+- Login and logout functionality.
+- Admin dashboard.
+- Student data management.
+- CRUD functionality.
+- Dynamic news and achievement management.
+- Dynamic extracurricular information.
+- Form validation and data processing.
 
 ---
 
 ## License
-This project is licensed under the MIT License.
-You are free to use, modify, and redistribute it as long as proper credit is given.
+
+This project is currently developed for educational purposes as part of a school project.
 
 ---
 
 ## Team Members
+
 1. Gervasio Velasques
 2. Edwin Jonathan
-3. Michael Leo Nardo
-4. Willyansen Alexander Jonathan
+3. Louis Garcia
+4. Wilson Christian
