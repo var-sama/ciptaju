@@ -102,10 +102,6 @@ To run the project locally, you need to run the Laravel development server and V
 ```bash
 php artisan serve
 ```
-Or
-```bash
-composer run dev
-```
 
 By default, Laravel will run at:
 
