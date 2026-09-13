@@ -20,18 +20,14 @@
         {{-- BAGIAN KIRI: Logo & Nama      --}}
         {{-- ============================= --}}
         <div class="flex items-center gap-3">
-            <svg
-                class="w-10 h-10 lg:w-12 lg:h-12 shrink-0"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-label="Logo Sekolah Ciptaju"
+            <img
+                src="{{ asset('assets/logo-ciptaju.png') }}"
+                alt="Sekolah Ciptaju Logo"
+                class="w-10 h-10 lg:w-12 lg:h-12 shrink-0 object-contain"
             >
-                <circle cx="24" cy="24" r="24" fill="#10A4B0" />
-            </svg>
 
             <span class="text-xl lg:text-2xl font-bold text-[#003135] font-['DM_Sans']">
-                Logo
+                CIPTAJU
             </span>
         </div>
 
