@@ -2,18 +2,23 @@
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VisionMissionController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('news.index');
-});
+// Route::get('/', function () {
+//     return redirect()->route('news.index');
+// });
 
 Route::name('students.')->prefix('students')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('index');
+});
+
+Route::name('admins.')->prefix('admins')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
 });
 
 Route::name('achievements.')->prefix('achievements')->group(function () {
@@ -23,6 +28,7 @@ Route::name('achievements.')->prefix('achievements')->group(function () {
 
 Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])->name('extracurriculars.index');
 Route::get('/vision-mission', [VisionMissionController::class, 'index'])->name('vision-mission.index');
+Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
 
 Route::name('news.')->prefix('news')->group(function(){
     Route::get('/', [NewsController::class, 'index'])->name('index');
@@ -63,6 +69,4 @@ Route::name('about.')->prefix('about')->group(function(){
     Route::get('/view',[AboutController::class, 'view'])->name('view');
     Route::get('/discover',[AboutController::class, 'discover'])->name('discover');
 });
-
-
 
