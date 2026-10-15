@@ -30,6 +30,7 @@ Route::name('news.')->prefix('news')->group(function(){
 });
 Route::name('auth.')->prefix('auth')->group(function(){
    
+<<<<<<< HEAD
     //daftar(index)
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -66,3 +67,10 @@ Route::name('about.')->prefix('about')->group(function(){
 
 
 
+=======
+
+    Route::get('/', [StudentController::class, 'index'])->name('index');
+    Route::get('/vision-mission',[StudentController::class, 'visionmission'])->name('visionmission');
+
+});
+>>>>>>> 3cae856 (feat:implement landing, vision&mission page ui)
