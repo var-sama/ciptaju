@@ -789,3 +789,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const password = document.getElementById('password');
+    const confirmation = document.getElementById('password_confirmation');
+    const toggle = document.querySelector('[data-toggle-password]');
+
+    if (!password || !toggle) return;
+
+    toggle.addEventListener('click', () => {
+        const show = password.type === 'password';
+
+        password.type = show ? 'text' : 'password';
+
+        if (confirmation) {
+            confirmation.type = show ? 'text' : 'password';
+        }
+    });
+});

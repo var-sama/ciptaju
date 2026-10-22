@@ -31,7 +31,19 @@
                 <div class="w-full max-w-md">
                     <h1 class="text-3xl font-bold mb-8 text-gray-900">Login</h1>
 
-                    <form action="{{ route('auth.login') }}" method="POST" class="space-y-6">
+                    @if (session('success'))
+                        <div class="mb-4 rounded-lg bg-green-100 px-4 py-3 text-sm text-green-700">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="mb-4 rounded-lg bg-red-100 px-4 py-3 text-sm text-red-700">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('auth.login.submit') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <div>
@@ -53,6 +65,20 @@
                             @enderror
                         </div>
 
+                        <div class="flex items-center justify-between">
+                            <label for="remember" class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    name="remember"
+                                    value="1"
+                                    @checked(old('remember'))
+                                    class="w-4 h-4 rounded border-gray-300 text-teal-700 focus:ring-teal-600"
+                                >
+                                Remember me
+                            </label>
+                        </div>
+
                         {{-- Tombol Submit Ditengahkan --}}
                         <div class="pt-2 flex justify-center">
                             <button type="submit"
@@ -70,8 +96,8 @@
 
             {{-- Footer Kiri (Dengan Margin Halaman) --}}
             <div class="px-6 md:px-10 pb-8 text-sm">
-                <p class="text-teal-900 font-medium">Don't have an account yet?</p>
-                <a href="{{ route('auth.register') }}" class="font-bold text-gray-900 hover:underline">
+                <p class="text-grey-900 font-medium">Don't have an account yet?</p>
+                <a href="{{ route('auth.register') }}" class="font-bold text-teal-900 hover:underline">
                     Register now
                 </a>
             </div>

@@ -8,10 +8,6 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('news.index');
-});
-
 Route::name('students.')->prefix('students')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('index');
 });
@@ -28,27 +24,40 @@ Route::name('news.')->prefix('news')->group(function(){
     Route::get('/', [NewsController::class, 'index'])->name('index');
     Route::get('/detail', [NewsController::class, 'view'])->name('view');
 });
-Route::name('auth.')->prefix('auth')->group(function(){
-   
-    //daftar(index)
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::get('/register', [AuthController::class, 'register'])->name('register');
-    Route::get('/view', [AuthController::class, 'view'])->name('view');
-    Route::get('/registration', [AuthController::class, 'registration'])->name('registration');
-    Route::post('/registration', [AuthController::class, 'storeRegistration'])->name('registration.store');
-    //detail(show)
-    //tambah(create)
-    // Route::get('/create',[StudentController::class, 'create'])->name('create');
-    // //edit(edit)
-    // Route::get('/{id}',[StudentController::class, 'show'])->name('show');//->whereNumber('');
-    // Route::get('/{id}/edit',[StudentController::class, 'edit'])->name('edit');
-    // //logika tambah(store)
-    // Route::post('/',[StudentController::class, 'store'])->name('store');
-    // //logika edit(update)
-    // Route::put('/{id}',[StudentController::class, 'update'])->name('update');
-    // //logika hapus(delete)
-    // Route::delete('/{id}',[StudentController::class, 'destroy'])->name('destroy');
+
+
+Route::name('auth.')->prefix('auth')->group(function () {
+    Route::get('/login', [AuthController::class, 'loginView'])
+        ->name('login')
+        ->middleware('guest');
+
+    Route::post('/login', [AuthController::class, 'loginPost'])
+        ->name('login.submit')
+        ->middleware('guest');
+
+    Route::get('/register', [AuthController::class, 'registerView'])
+        ->name('register')
+        ->middleware('guest');
+
+    Route::post('/register', [AuthController::class, 'registerPost'])
+        ->name('register.submit')
+        ->middleware('guest');
+
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('logout')
+        ->middleware('auth');
+
+    Route::get('/view', [AuthController::class, 'view'])
+        ->name('view');
+
+    Route::get('/registration', [AuthController::class, 'registration'])
+        ->name('registration');
+
+    Route::post('/registration', [AuthController::class, 'storeRegistration'])
+        ->name('registration.store');
 });
+
+
 
 Route::get('/', function () {
     return view('welcome');
