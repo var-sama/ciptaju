@@ -1,4 +1,3 @@
-```blade
 @extends('layouts.auth')
 
 @section('title', 'Register - Sekolah Ciptaju')
@@ -171,4 +170,3 @@
         </div>
     </div>
 @endsection
-```

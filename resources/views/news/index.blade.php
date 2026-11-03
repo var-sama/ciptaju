@@ -1,18 +1,9 @@
-```blade
 @extends('layouts.app')
 @section('title', 'News')
 @section('content')
 
     @php
-        /*
-        |--------------------------------------------------------------------------
-        | Simulasi Role Admin dan User
-        |--------------------------------------------------------------------------
-        | Ubah menjadi 'user' untuk menguji tampilan pengguna biasa.
-        | Ini hanya simulasi frontend, belum memakai sistem login.
-        */
-        $currentRole = 'admin';
-        $isAdmin = $currentRole === 'admin';
+        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
 
     {{--
@@ -685,4 +676,3 @@
     </script>
 
 @endsection
-```

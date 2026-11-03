@@ -1,19 +1,20 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class NewsController extends Controller    
+class NewsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $title = "Daftar Berita Ciptaju";
+
         return view('news.index', [
             'title' => $title,
-        ] );
+        ]);
     }
 
-    public function view($id = 1)
+    public function view($id)
     {
         $title = "Detail Berita";
 

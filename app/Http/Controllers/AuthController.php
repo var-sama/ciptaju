@@ -27,6 +27,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+
+            if ($user->role === 'student') {
+                return redirect()->intended(route('students.index'));
+            }
+
+            // Untuk role selain student
             return redirect()->intended(route('students.index'));
         }
 
@@ -58,6 +65,7 @@ class AuthController extends Controller
             'name' => $validatedRequest['name'],
             'email' => $validatedRequest['email'],
             'password' => $validatedRequest['password'],
+            'role' => 'student',
         ]);
 
         return redirect()
