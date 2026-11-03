@@ -1,4 +1,5 @@
 import bannerImage from '../assets/banner_1.png';
+import './admin-users.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const background = document.getElementById('ekskul-background');
