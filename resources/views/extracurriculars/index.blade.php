@@ -2,7 +2,7 @@
 @section('title', 'Pilihan Ekskul')
 @section('content')
     @php
-        $isAdminPreview = request()->boolean('admin');
+        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
 
     {{--
@@ -42,7 +42,7 @@
                 <h1 class="text-lg font-medium text-[#ffffff] font-['DM_Sans']">
                     Pilihan Ekskul
                 </h1>
-                @if ($isAdminPreview)
+                @if ($isAdmin)
                     <button
                         type="button"
                         id="ekskul-create"
@@ -57,7 +57,7 @@
                 <hr class="mt-3 border-t border-white/40 w-full">
             </div>
 
-            @if ($isAdminPreview)
+            @if ($isAdmin)
                 <p class="-mt-8 mb-10 rounded-md border border-[#10A4B0]/40 bg-[#003135]/80 px-4 py-3 text-sm text-white/90" role="status">
                     Mode preview admin. Perubahan CRUD hanya tersimpan sementara di halaman ini.
                 </p>
@@ -196,7 +196,7 @@
                                 {{ $ekskul['nama'] }}
                             </button>
 
-                            @if ($isAdminPreview)
+                            @if ($isAdmin)
                                 <div class="absolute right-2 top-2 z-20 flex gap-1">
                                     <button
                                         type="button"
@@ -243,7 +243,7 @@
         </div>
     </section>
 
-    @if ($isAdminPreview)
+    @if ($isAdmin)
         <dialog
             id="ekskul-dialog"
             class="m-auto w-[min(92vw,36rem)] max-w-none rounded-xl border border-[#10A4B0]/40 bg-[#003135] p-0 text-white shadow-2xl backdrop:bg-black/70"
@@ -381,7 +381,7 @@
                 selectCard(initialCard);
             }
 
-            @if ($isAdminPreview)
+            @if ($isAdmin)
                 const dialog = document.getElementById('ekskul-dialog');
                 const form = document.getElementById('ekskul-form');
                 const formTitle = document.getElementById('ekskul-dialog-title');
