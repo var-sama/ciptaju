@@ -4,8 +4,7 @@
 @section('content')
 
 @php
-    $currentRole = 'admin';
-    $isAdmin = $currentRole === 'admin';
+    $isAdmin = auth()->check() && auth()->user()->role === 'admin';
 
     $prestasiPerTahun = [
         2099 => [
