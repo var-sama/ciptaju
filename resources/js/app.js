@@ -344,34 +344,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('news-banner-next');
     const heading = document.getElementById('news-banner-heading');
 
-    // URL untuk semua banner
-    const newsUrl = banner.dataset.newsUrl;
-
     if (!track || !dotsContainer || !prevButton || !nextButton) {
         return;
     }
 
-    // =========================================================
-    // DATA SLIDES
-    // =========================================================
+    const slides = JSON.parse(banner.dataset.newsSlides);
 
-    const slides = [
-        {
-            gambar: bannerImage,
-            judul: 'Amond Aye Winning Programming Competition',
-            tanggal: '20/12/2099',
-        },
-        {
-            gambar: 'https://i.pinimg.com/736x/c0/f2/a8/c0f2a856e62173119c48838213144fb7.jpg',
-            judul: 'Berita Kedua',
-            tanggal: '21/12/2099',
-        },
-        {
-            gambar: 'https://i.pinimg.com/736x/78/8b/d7/788bd73f3e433bca90029d91376cdbc8.jpg',
-            judul: 'Berita Ketiga',
-            tanggal: '22/12/2099',
-        },
-    ];
+    if (!slides.length) return;
 
     let currentIndex = 1;
     let isTransitioning = false;
@@ -396,66 +375,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // GENERATE SLIDES
     // =========================================================
 
-    track.innerHTML = allSlides.map((slide, index) => {
-        return `
-            <a
-                href="${newsUrl}"
-                class="relative block w-full h-full flex-shrink-0 cursor-pointer"
-                data-slide-index="${index}"
-            >
-                <img
-                    src="${slide.gambar}"
-                    alt="${slide.judul}"
-                    class="news-banner-background absolute inset-0 w-full h-full object-cover object-right"
-                >
+    allSlides.forEach((slide, index) => {
+        const link = document.createElement('a');
+        link.href = slide.url;
+        link.className = 'relative block w-full h-full flex-shrink-0 cursor-pointer';
+        link.dataset.slideIndex = index;
 
-                <div
-                    class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent"
-                ></div>
+        const image = document.createElement('img');
+        image.src = slide.image;
+        image.alt = slide.title;
+        image.className = 'news-banner-background absolute inset-0 w-full h-full object-cover object-right';
 
-                <div
-                    class="relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10"
-                >
-                    <div
-                        class="max-w-3xl mt-4 ml-6 md:ml-8 lg:ml-18"
-                    >
-                        <h2
-                            class="news-banner-title text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6"
-                        >
-                            ${slide.judul}
-                        </h2>
+        const overlay = document.createElement('div');
+        overlay.className = 'absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent';
 
-                        <span
-                            class="news-banner-date text-white/60 text-sm"
-                        >
-                            ${slide.tanggal}
-                        </span>
-                    </div>
-                </div>
-            </a>
-        `;
-    }).join('');
+        const content = document.createElement('div');
+        content.className = 'relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10';
+
+        const text = document.createElement('div');
+        text.className = 'max-w-3xl mt-4 ml-6 md:ml-8 lg:ml-18';
+
+        const title = document.createElement('h2');
+        title.className = 'news-banner-title text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6';
+        title.textContent = slide.title;
+
+        const date = document.createElement('span');
+        date.className = 'news-banner-date text-white/60 text-sm';
+        date.textContent = slide.date;
+
+        text.append(title, date);
+        content.appendChild(text);
+        link.append(image, overlay, content);
+        track.appendChild(link);
+    });
 
     // =========================================================
     // GENERATE DOTS
     // =========================================================
 
-    dotsContainer.innerHTML = slides.map((_, i) => {
-        return `
-            <button
-                type="button"
-                data-slide="${i}"
-                class="news-banner-dot h-2.5 rounded-full transition-all duration-300 ease-in-out ${
-                    i === 0
-                        ? 'w-8 bg-[#10A4B0]'
-                        : 'w-2.5 bg-white/40 hover:bg-white/70'
-                }"
-                aria-label="Slide ${i + 1}"
-            ></button>
-        `;
-    }).join('');
+    slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.dataset.slide = index;
+        dot.className = `news-banner-dot h-2.5 rounded-full transition-all duration-300 ease-in-out ${
+            index === 0
+                ? 'w-8 bg-[#10A4B0]'
+                : 'w-2.5 bg-white/40 hover:bg-white/70'
+        }`;
+        dot.setAttribute('aria-label', `Slide ${index + 1}`);
+        dotsContainer.appendChild(dot);
+    });
 
-    const dots = document.querySelectorAll('.news-banner-dot');
+    const dots = dotsContainer.querySelectorAll('.news-banner-dot');
 
     // =========================================================
     // POSISI AWAL
@@ -809,4 +780,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('news-modal');
+    const openButton = document.querySelector('[data-news-modal-open]');
 
+    if (!modal) return;
+
+    const openModal = () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('news-title')?.focus();
+    };
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    openButton?.addEventListener('click', openModal);
+
+    modal.querySelectorAll('[data-news-modal-close]').forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    modal.addEventListener('click', event => {
+        if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && modal.classList.contains('flex')) {
+            closeModal();
+        }
+    });
+
+    if (modal.classList.contains('flex')) {
+        document.body.classList.add('overflow-hidden');
+    }
+
+    const imageInput = document.getElementById('news-image');
+    const imagePreview = document.getElementById('news-image-preview');
+
+    imageInput?.addEventListener('change', () => {
+        const image = imageInput.files?.[0];
+
+        if (!image || !imagePreview) {
+            imagePreview?.classList.add('hidden');
+            imagePreview?.removeAttribute('src');
+            return;
+        }
+
+        const previewUrl = URL.createObjectURL(image);
+        imagePreview.src = previewUrl;
+        imagePreview.classList.remove('hidden');
+        imagePreview.onload = () => URL.revokeObjectURL(previewUrl);
+    });
+});

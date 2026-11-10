@@ -32,7 +32,8 @@ Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users
 
 Route::name('news.')->prefix('news')->group(function(){
     Route::get('/', [NewsController::class, 'index'])->name('index');
-    Route::get('/detail', [NewsController::class, 'view'])->name('view');
+    Route::get('/{id}', [NewsController::class, 'view'])->whereNumber('id')->name('view');
+    Route::post('/', [NewsController::class, 'store'])->middleware('auth')->name('store');
 });
 
 
@@ -82,4 +83,3 @@ Route::name('about.')->prefix('about')->group(function(){
     Route::get('/view',[AboutController::class, 'view'])->name('view');
     Route::get('/discover',[AboutController::class, 'discover'])->name('discover');
 });
-
