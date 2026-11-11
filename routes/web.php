@@ -25,7 +25,10 @@ Route::name('admins.')->prefix('admins')->group(function () {
 
 Route::name('achievements.')->prefix('achievements')->group(function () {
     Route::get('/', [AchievementController::class, 'index'])->name('index');
-    Route::get('/detail', [AchievementController::class, 'view'])->name('view');
+    Route::get('/{achievement}', [AchievementController::class, 'view'])->whereNumber('achievement')->name('view');
+    Route::post('/', [AchievementController::class, 'store'])->middleware('auth')->name('store');
+    Route::put('/{achievement}', [AchievementController::class, 'update'])->middleware('auth')->name('update');
+    Route::delete('/{achievement}', [AchievementController::class, 'destroy'])->middleware('auth')->name('destroy');
 });
 
 Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])->name('extracurriculars.index');
