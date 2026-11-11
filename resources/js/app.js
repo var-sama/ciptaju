@@ -1,4 +1,3 @@
-import bannerImage from '../assets/banner_1.png';
 import './admin-users.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -399,11 +398,15 @@ document.addEventListener('DOMContentLoaded', () => {
         title.className = 'news-banner-title text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6';
         title.textContent = slide.title;
 
+        const description = document.createElement('p');
+        description.className = 'news-banner-description line-clamp-3 max-w-2xl text-base leading-relaxed text-white/85';
+        description.textContent = slide.description;
+
         const date = document.createElement('span');
         date.className = 'news-banner-date text-white/60 text-sm';
         date.textContent = slide.date;
 
-        text.append(title, date);
+        text.append(title, description, date);
         content.appendChild(text);
         link.append(image, overlay, content);
         track.appendChild(link);
@@ -783,14 +786,26 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('news-modal');
     const openButton = document.querySelector('[data-news-modal-open]');
+    const form = document.getElementById('news-form');
 
-    if (!modal) return;
+    if (!modal || !form) return;
+
+    const titleInput = document.getElementById('news-title');
+    const dateInput = document.getElementById('news-date');
+    const contentInput = document.getElementById('news-content');
+    const imageInput = document.getElementById('news-image');
+    const imagePreview = document.getElementById('news-image-preview');
+    const imageRequired = document.getElementById('news-image-required');
+    const editingNewsId = document.getElementById('editing-news-id');
+    const modalTitle = document.getElementById('news-modal-title');
+    const modalDescription = modal.querySelector('.text-sm.text-gray-500');
+    const submitButton = form.querySelector('button[type="submit"]');
 
     const openModal = () => {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.classList.add('overflow-hidden');
-        document.getElementById('news-title')?.focus();
+        titleInput?.focus();
     };
 
     const closeModal = () => {
@@ -799,7 +814,61 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('overflow-hidden');
     };
 
-    openButton?.addEventListener('click', openModal);
+    const resetToCreate = () => {
+        form.action = form.dataset.createAction;
+        form.reset();
+        editingNewsId.value = '';
+        titleInput.value = '';
+        dateInput.value = form.dataset.defaultDate;
+        contentInput.value = '';
+        imageInput.required = true;
+        imageRequired.classList.remove('hidden');
+        imagePreview.removeAttribute('src');
+        imagePreview.classList.add('hidden');
+        imagePreview.alt = 'Preview gambar berita';
+        imagePreview.dataset.originalUrl = '';
+        form.querySelector('input[name="_method"]')?.remove();
+        modalTitle.textContent = 'Add News';
+        modalDescription.textContent = 'Masukkan informasi berita yang ingin ditambahkan.';
+        submitButton.textContent = 'Save News';
+    };
+
+    const openForEdit = (button) => {
+        form.action = button.dataset.updateUrl;
+        editingNewsId.value = button.dataset.newsId;
+        titleInput.value = button.dataset.title;
+        dateInput.value = button.dataset.publishedAt;
+        contentInput.value = button.dataset.content;
+        imageInput.value = '';
+        imageInput.required = false;
+        imageRequired.classList.add('hidden');
+        imagePreview.src = button.dataset.imageUrl;
+        imagePreview.dataset.originalUrl = button.dataset.imageUrl;
+        imagePreview.alt = button.dataset.title;
+        imagePreview.classList.remove('hidden');
+
+        if (!form.querySelector('input[name="_method"]')) {
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'PUT';
+            form.append(method);
+        }
+
+        modalTitle.textContent = 'Edit News';
+        modalDescription.textContent = 'Perbarui informasi berita.';
+        submitButton.textContent = 'Simpan Perubahan';
+        openModal();
+    };
+
+    openButton?.addEventListener('click', () => {
+        resetToCreate();
+        openModal();
+    });
+
+    document.querySelectorAll('[data-news-edit]').forEach(button => {
+        button.addEventListener('click', () => openForEdit(button));
+    });
 
     modal.querySelectorAll('[data-news-modal-close]').forEach(button => {
         button.addEventListener('click', closeModal);
@@ -819,15 +888,144 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('overflow-hidden');
     }
 
-    const imageInput = document.getElementById('news-image');
-    const imagePreview = document.getElementById('news-image-preview');
-
     imageInput?.addEventListener('change', () => {
         const image = imageInput.files?.[0];
 
         if (!image || !imagePreview) {
+            if (editingNewsId.value) {
+                imagePreview.src = imagePreview.dataset.originalUrl;
+                return;
+            }
+
             imagePreview?.classList.add('hidden');
             imagePreview?.removeAttribute('src');
+            return;
+        }
+
+        const previewUrl = URL.createObjectURL(image);
+        imagePreview.src = previewUrl;
+        imagePreview.classList.remove('hidden');
+        imagePreview.onload = () => URL.revokeObjectURL(previewUrl);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('banner-modal');
+    const openButton = document.querySelector('[data-banner-modal-open]');
+    const form = document.getElementById('banner-form');
+
+    if (!modal || !form) return;
+
+    const imageInput = document.getElementById('banner-image');
+    const imagePreview = document.getElementById('banner-image-preview');
+    const imageRequired = document.getElementById('banner-image-required');
+    const editingBannerId = document.getElementById('editing-banner-id');
+    const titleInput = document.getElementById('banner-title');
+    const dateInput = document.getElementById('banner-date');
+    const contentInput = document.getElementById('banner-content');
+    const modalTitle = document.getElementById('banner-modal-title');
+    const modalDescription = document.getElementById('banner-modal-description');
+    const submitButton = document.getElementById('banner-submit');
+
+    const openModal = () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+        imageInput.focus();
+    };
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    const resetToCreate = () => {
+        form.action = form.dataset.createAction;
+        form.reset();
+        editingBannerId.value = '';
+        titleInput.value = '';
+        dateInput.value = form.dataset.defaultDate;
+        contentInput.value = '';
+        imageInput.value = '';
+        imageInput.required = true;
+        imageRequired.classList.remove('hidden');
+        imagePreview.removeAttribute('src');
+        imagePreview.dataset.originalUrl = '';
+        imagePreview.alt = 'Preview gambar banner';
+        imagePreview.classList.add('hidden');
+        form.querySelector('input[name="_method"]')?.remove();
+        modalTitle.textContent = 'Tambah Banner';
+        modalDescription.textContent = 'Unggah gambar untuk banner halaman News.';
+        submitButton.textContent = 'Simpan Banner';
+    };
+
+    const openForEdit = (button) => {
+        form.action = button.dataset.updateUrl;
+        editingBannerId.value = button.dataset.bannerId;
+        titleInput.value = button.dataset.title;
+        dateInput.value = button.dataset.publishedAt;
+        contentInput.value = button.dataset.content;
+        imageInput.value = '';
+        imageInput.required = false;
+        imageRequired.classList.add('hidden');
+        imagePreview.src = button.dataset.imageUrl;
+        imagePreview.dataset.originalUrl = button.dataset.imageUrl;
+        imagePreview.alt = `Preview banner ${button.dataset.bannerId}`;
+        imagePreview.classList.remove('hidden');
+
+        if (!form.querySelector('input[name="_method"]')) {
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'PUT';
+            form.append(method);
+        }
+
+        modalTitle.textContent = 'Edit Banner';
+        modalDescription.textContent = 'Ganti gambar banner jika diperlukan.';
+        submitButton.textContent = 'Simpan Perubahan';
+        openModal();
+    };
+
+    openButton?.addEventListener('click', () => {
+        resetToCreate();
+        openModal();
+    });
+
+    document.querySelectorAll('[data-banner-edit]').forEach(button => {
+        button.addEventListener('click', () => openForEdit(button));
+    });
+
+    modal.querySelectorAll('[data-banner-modal-close]').forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    modal.addEventListener('click', event => {
+        if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && modal.classList.contains('flex')) {
+            closeModal();
+        }
+    });
+
+    if (modal.classList.contains('flex')) {
+        document.body.classList.add('overflow-hidden');
+    }
+
+    imageInput.addEventListener('change', () => {
+        const image = imageInput.files?.[0];
+
+        if (!image) {
+            if (editingBannerId.value) {
+                imagePreview.src = imagePreview.dataset.originalUrl;
+            } else {
+                imagePreview.removeAttribute('src');
+                imagePreview.classList.add('hidden');
+            }
+
             return;
         }
 

@@ -28,8 +28,6 @@
 
                 <div class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500 md:text-base">
                     <span>{{ $news->published_at->format('d/m/Y') }}</span>
-                    <span>{{ $news->category }}</span>
-                    <span>{{ $news->author->name }}</span>
                 </div>
 
                 <img

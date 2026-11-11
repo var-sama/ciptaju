@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\News;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,11 +18,8 @@ class NewsFactory extends Factory
     public function definition(): array
     {
         return [
-            'author_id' => User::factory(),
-            'category' => fake()->word(),
             'content' => fake()->paragraphs(3, true),
             'image_path' => 'news/'.fake()->uuid().'.jpg',
-            'is_featured' => false,
             'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'title' => fake()->sentence(6),
         ];
