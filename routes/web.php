@@ -8,6 +8,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\VisionMissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,17 @@ Route::name('achievements.')->prefix('achievements')->group(function () {
 });
 
 Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])->name('extracurriculars.index');
+Route::post('/extracurriculars', [ExtracurricularController::class, 'store'])->middleware('auth')->name('extracurriculars.store');
+Route::put('/extracurriculars/{extracurricular}', [ExtracurricularController::class, 'update'])->middleware('auth')->name('extracurriculars.update');
+Route::delete('/extracurriculars/{extracurricular}', [ExtracurricularController::class, 'destroy'])->middleware('auth')->name('extracurriculars.destroy');
 Route::get('/vision-mission', [VisionMissionController::class, 'index'])->name('vision-mission.index');
 Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+
+Route::middleware('auth')->prefix('admin/registrations')->name('admin.registrations.')->group(function () {
+    Route::get('/', [StudentRegistrationController::class, 'index'])->name('index');
+    Route::get('/{studentRegistration}', [StudentRegistrationController::class, 'show'])->name('show');
+    Route::patch('/{studentRegistration}/status', [StudentRegistrationController::class, 'updateStatus'])->name('status');
+});
 
 Route::name('news.')->prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('index');

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRegistrationRequest;
+use App\Models\StudentRegistration;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -95,7 +99,7 @@ class AuthController extends Controller
     }
 
     // Halaman pendaftaran siswa
-    public function registration()
+    public function registration(): View
     {
         return view('auth.registration', [
             'title' => 'Halaman Registrasi',
@@ -103,16 +107,9 @@ class AuthController extends Controller
     }
 
     // Memproses pendaftaran siswa
-    public function storeRegistration(Request $request)
+    public function storeRegistration(StoreStudentRegistrationRequest $request): RedirectResponse
     {
-        $request->validate([
-            'school_target' => ['required', 'string', 'max:100'],
-            'school_year' => ['required', 'string', 'max:20'],
-            'student_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'active_number' => ['required', 'string', 'max:30'],
-        ]);
+        StudentRegistration::create($request->validated());
 
         return redirect()
             ->route('auth.registration')

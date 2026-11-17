@@ -3,6 +3,13 @@
 @section('content')
     @php
         $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+        $initialExtracurricular = $initialExtracurricular ?? null;
+        $editingExtracurricular = $isAdmin
+            && $errors->any()
+            && old('extracurricular_form')
+            && old('editing_extracurricular_id')
+                ? $extracurriculars->firstWhere('id', (int) old('editing_extracurricular_id'))
+                : null;
     @endphp
 
     {{--
@@ -24,7 +31,7 @@
             >
                 <img
                     id="ekskul-background"
-                    src="{{ Vite::asset('resources/assets/badminton.avif') }}"
+                    src="{{ $initialExtracurricular ? Illuminate\Support\Facades\Storage::disk('public')->url($initialExtracurricular->image_path) : Vite::asset('resources/assets/badminton.avif') }}"
                     alt="Pilihan Ekskul background"
                     class="w-full h-full object-cover object-right"
                 >
@@ -59,7 +66,7 @@
 
             @if ($isAdmin)
                 <p class="-mt-8 mb-10 rounded-md border border-[#10A4B0]/40 bg-[#003135]/80 px-4 py-3 text-sm text-white/90" role="status">
-                    Mode preview admin. Perubahan CRUD hanya tersimpan sementara di halaman ini.
+                    Perubahan ekstrakurikuler tersimpan di database.
                 </p>
             @endif
 
@@ -69,14 +76,13 @@
                     id="ekskul-title"
                     class="text-5xl text-[#ffffff] font-['DM_Sans'] mb-6"
                 >
-                    Lomen
+                    {{ $initialExtracurricular?->name ?? 'Belum ada ekskul' }}
                 </h2>
                 <p
                     id="ekskul-description"
                     class="text-lg text-[#ffffff] leading-relaxed font-['DM_Sans']"
                 >
-                    Lomen ipsum running on a jumping fox Lomen ipsum running on a simping
-                    jumping fox Lomen ipsum running on a running on a jumping fox
+                    {{ $initialExtracurricular?->description ?? 'Tambahkan ekstrakurikuler untuk mulai mengisi daftar.' }}
                 </p>
             </div>
 
@@ -102,84 +108,35 @@
                     id="ekskul-track"
                     class="flex items-stretch gap-3 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden px-3 py-1"
                 >
-                    @php
-                        $ekskuls = [
-                            [
-                                'nama' => 'Badminton',
-                                'gambar' => Vite::asset('resources/assets/badminton.avif'),
-                                'deskripsi' => 'Bulu tangkis atau badminton adalah cabang olahraga raket yang dimainkan oleh dua orang (tunggal) atau dua pasangan (ganda) yang saling berlawanan dengan cara memukul kok (shuttlecock) melewati atas net ke area lawan.',
-                                'active' => true,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Basket',
-                                'gambar' => Vite::asset('resources/assets/basket.avif'),
-                                'deskripsi' => 'Ekstrakurikuler basket untuk mengembangkan kemampuan olahraga, kerja sama tim, dan sportivitas.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Voli',
-                                'gambar' => Vite::asset('resources/assets/volley.jpg'),
-                                'deskripsi' => 'Kegiatan olahraga beregu yang melatih kemampuan bermain voli, kerja sama tim, dan sportivitas.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Musik',
-                                'gambar' => Vite::asset('resources/assets/music.jpg'),
-                                'deskripsi' => 'Wadah untuk mengembangkan kreativitas dan kemampuan bermusik bersama siswa lainnya.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Ilmu Komputer',
-                                'gambar' => Vite::asset('resources/assets/comp_science.jpg'),
-                                'deskripsi' => 'Wadah untuk mempelajari dasar-dasar komputer, pemrograman, teknologi, dan pemecahan masalah secara kreatif.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Matematika',
-                                'gambar' => Vite::asset('resources/assets/math.png'),
-                                'deskripsi' => 'Kegiatan untuk memperkuat kemampuan berpikir logis, analitis, dan kreatif melalui pembelajaran matematika.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                            [
-                                'nama' => 'Desain',
-                                'gambar' => Vite::asset('resources/assets/design.jpg'),
-                                'deskripsi' => 'Ruang untuk mengembangkan kreativitas visual dan kemampuan membuat karya desain yang komunikatif.',
-                                'active' => false,
-                                'flipBackground' => false,
-                            ],
-                        ];
-                    @endphp
-
-                    @foreach ($ekskuls as $ekskul)
+                    @foreach ($extracurriculars as $extracurricular)
+                        @php
+                            $imageUrl = Illuminate\Support\Facades\Storage::disk('public')->url($extracurricular->image_path);
+                            $isSelected = $initialExtracurricular?->is($extracurricular) ?? false;
+                        @endphp
                         <div
-                            data-ekskul-id="{{ $loop->index }}"
-                            data-nama="{{ $ekskul['nama'] }}"
-                            data-gambar="{{ $ekskul['gambar'] }}"
-                            data-deskripsi="{{ $ekskul['deskripsi'] }}"
-                            data-flip-background="{{ $ekskul['flipBackground'] ? 'true' : 'false' }}"
+                            data-ekskul-id="{{ $extracurricular->id }}"
+                            data-update-url="{{ route('extracurriculars.update', $extracurricular) }}"
+                            data-nama="{{ $extracurricular->name }}"
+                            data-gambar="{{ $imageUrl }}"
+                            data-deskripsi="{{ $extracurricular->description }}"
+                            data-flip-background="{{ $extracurricular->flip_background ? 'true' : 'false' }}"
                             class="ekskul-card group relative block h-24 w-48 shrink-0 overflow-hidden rounded-[2px] transition-all duration-300 hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#10A4B0]/50
-                            {{ $ekskul['active']
+                            {{ $isSelected
                                 ? 'is-active outline outline-3 outline-offset-2 outline-[#10A4B0]'
                                 : '' }}"
                         >
 
                             {{-- Background gambar kartu --}}
                             <img
-                                src="{{ $ekskul['gambar'] }}"
-                                alt="{{ $ekskul['nama'] }}"
+                                src="{{ $imageUrl }}"
+                                alt="{{ $extracurricular->name }}"
                                 class="absolute inset-0 w-full h-full object-cover"
                             >
 
                             {{-- Overlay --}}
                             <div
                                 class="ekskul-overlay absolute inset-0 transition-colors duration-300
-                                {{ $ekskul['active'] ? 'bg-[#10A4B0]' : 'bg-[#003135]/70' }}"
+                                {{ $isSelected ? 'bg-[#10A4B0]' : 'bg-[#003135]/70' }}"
                             ></div>
 
                             {{-- Hover fill --}}
@@ -190,36 +147,46 @@
                             {{-- Nama --}}
                             <button
                                 type="button"
-                                data-ekskul-select="{{ $loop->index }}"
+                                data-ekskul-select="{{ $extracurricular->id }}"
                                 class="relative z-10 flex h-full w-full items-center justify-center text-xl font-bold text-[#ffffff] font-['DM_Sans'] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
                             >
-                                {{ $ekskul['nama'] }}
+                                {{ $extracurricular->name }}
                             </button>
 
                             @if ($isAdmin)
                                 <div class="absolute right-2 top-2 z-20 flex gap-1">
                                     <button
                                         type="button"
-                                        data-ekskul-edit="{{ $loop->index }}"
-                                        class="flex h-8 w-8 items-center justify-center rounded bg-[#003135]/90 text-white transition-colors hover:bg-[#10A4B0] focus-visible:outline-2 focus-visible:outline-white"
-                                        aria-label="Edit {{ $ekskul['nama'] }}"
+                                        data-ekskul-edit="{{ $extracurricular->id }}"
+                                        class="group/edit flex h-8 w-8 items-center justify-center rounded bg-[#003135]/90 text-white transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-white"
+                                        aria-label="Edit {{ $extracurricular->name }}"
                                         title="Edit ekskul"
                                     >
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <svg class="h-4 w-4 transition-colors group-hover/edit:text-[#044952]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16 4 4 4M4 20l4-.8L19 8a2.12 2.12 0 0 0-3-3L5 16l-1 4Z"></path>
                                         </svg>
                                     </button>
                                     <button
-                                        type="button"
-                                        data-ekskul-delete="{{ $loop->index }}"
+                                        type="submit"
+                                        form="ekskul-delete-{{ $extracurricular->id }}"
                                         class="flex h-8 w-8 items-center justify-center rounded bg-[#003135]/90 text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-white"
-                                        aria-label="Hapus {{ $ekskul['nama'] }}"
+                                        aria-label="Hapus {{ $extracurricular->name }}"
                                         title="Hapus ekskul"
                                     >
                                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18m-2 0-.9 14H5.9L5 6m4 0V4h6v2m-5 4v6m4-6v6"></path>
                                         </svg>
                                     </button>
+                                    <form
+                                        id="ekskul-delete-{{ $extracurricular->id }}"
+                                        action="{{ route('extracurriculars.destroy', $extracurricular) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Apakah kamu yakin ingin menghapus ekskul ini?')"
+                                        class="hidden"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </div>
                             @endif
                         </div>
@@ -249,10 +216,24 @@
             class="m-auto w-[min(92vw,36rem)] max-w-none rounded-xl border border-[#10A4B0]/40 bg-[#003135] p-0 text-white shadow-2xl backdrop:bg-black/70"
             aria-labelledby="ekskul-dialog-title"
         >
-            <form id="ekskul-form" class="space-y-5 p-6 sm:p-8">
+            <form
+                id="ekskul-form"
+                action="{{ $editingExtracurricular ? route('extracurriculars.update', $editingExtracurricular) : route('extracurriculars.store') }}"
+                data-create-action="{{ route('extracurriculars.store') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="space-y-5 p-6 sm:p-8"
+            >
+                @csrf
+                @if ($editingExtracurricular)
+                    @method('PUT')
+                @endif
+                <input type="hidden" name="extracurricular_form" value="1">
+                <input type="hidden" name="editing_extracurricular_id" value="{{ $editingExtracurricular?->id ?? '' }}">
+
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <h2 id="ekskul-dialog-title" class="text-2xl font-bold text-white">Tambah Ekskul</h2>
+                        <h2 id="ekskul-dialog-title" class="text-2xl font-bold text-white">{{ $editingExtracurricular ? 'Edit Ekskul' : 'Tambah Ekskul' }}</h2>
                         <p class="mt-1 text-sm text-white/70">Lengkapi informasi ekstrakurikuler.</p>
                     </div>
                     <button
@@ -267,43 +248,58 @@
                     </button>
                 </div>
 
-                <input type="hidden" name="id">
-
                 <label class="block space-y-1.5 text-sm font-medium">
                     <span>Nama ekskul</span>
                     <input
-                        name="nama"
+                        name="name"
                         type="text"
                         required
                         maxlength="100"
+                        value="{{ old('name', $editingExtracurricular?->name) }}"
                         class="w-full rounded-md border border-white/20 bg-white px-3 py-2.5 text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/40"
                     >
+                    @error('name')
+                        <span class="block text-sm text-red-300">{{ $message }}</span>
+                    @enderror
                 </label>
 
                 <label class="block space-y-1.5 text-sm font-medium">
                     <span>Gambar ekskul</span>
                     <input
-                        name="gambar"
+                        name="image"
                         type="file"
                         accept="image/*"
-                        required
+                        @required(! $editingExtracurricular)
                         class="w-full cursor-pointer rounded-md border border-white/20 bg-white text-sm text-[#003135] outline-none transition file:mr-4 file:border-0 file:bg-[#10A4B0] file:px-4 file:py-2.5 file:font-semibold file:text-white hover:file:bg-[#0d8a95] focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/40"
                     >
-                    <span class="block text-xs font-normal text-white/70">Pilih file gambar dari perangkat Anda.</span>
+                    <span class="block text-xs font-normal text-white/70">
+                        {{ $editingExtracurricular ? 'Pilih gambar baru jika ingin mengganti gambar saat ini.' : 'Pilih file gambar dari perangkat Anda.' }}
+                    </span>
+                    @error('image')
+                        <span class="block text-sm text-red-300">{{ $message }}</span>
+                    @enderror
                 </label>
 
-                <img id="ekskul-image-preview" class="hidden max-h-48 w-full rounded-md border border-white/20 object-cover" alt="Pratinjau gambar ekskul">
+                <img
+                    id="ekskul-image-preview"
+                    src="{{ $editingExtracurricular ? Illuminate\Support\Facades\Storage::disk('public')->url($editingExtracurricular->image_path) : '' }}"
+                    class="{{ $editingExtracurricular ? '' : 'hidden' }} max-h-48 w-full rounded-md border border-white/20 object-cover"
+                    alt="Pratinjau gambar ekskul"
+                >
                 <p id="ekskul-image-error" class="hidden text-sm text-red-300" role="alert"></p>
 
                 <label class="block space-y-1.5 text-sm font-medium">
                     <span>Deskripsi</span>
                     <textarea
-                        name="deskripsi"
+                        name="description"
                         required
                         rows="4"
                         maxlength="1000"
                         class="w-full resize-y rounded-md border border-white/20 bg-white px-3 py-2.5 text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/40"
-                    ></textarea>
+                    >{{ old('description', $editingExtracurricular?->description) }}</textarea>
+                    @error('description')
+                        <span class="block text-sm text-red-300">{{ $message }}</span>
+                    @enderror
                 </label>
 
                 <div class="flex justify-end gap-3 pt-2">
@@ -336,7 +332,6 @@
                 return;
             }
 
-            const cardTemplate = track.querySelector('.ekskul-card')?.cloneNode(true);
             const cards = () => Array.from(track.querySelectorAll('.ekskul-card'));
             const selectCard = (card) => {
                 cards().forEach((item) => {
@@ -366,14 +361,19 @@
                 }
 
                 const selectButton = target.closest('[data-ekskul-select]');
-                if (!selectButton) {
-                    return;
+                if (selectButton) {
+                    const card = selectButton.closest('.ekskul-card');
+                    if (card) {
+                        selectCard(card);
+                    }
                 }
 
-                const card = selectButton.closest('.ekskul-card');
-                if (card) {
-                    selectCard(card);
-                }
+                @if ($isAdmin)
+                    const editButton = target.closest('[data-ekskul-edit]');
+                    if (editButton) {
+                        openForm(editButton.closest('.ekskul-card'));
+                    }
+                @endif
             });
 
             const initialCard = track.querySelector('.ekskul-card.is-active');
@@ -386,20 +386,21 @@
                 const form = document.getElementById('ekskul-form');
                 const formTitle = document.getElementById('ekskul-dialog-title');
                 const createButton = document.getElementById('ekskul-create');
-                const formId = form.elements.namedItem('id');
-                const imageInput = form.elements.namedItem('gambar');
+                const formId = form.elements.namedItem('editing_extracurricular_id');
+                const nameInput = form.elements.namedItem('name');
+                const descriptionInput = form.elements.namedItem('description');
+                const imageInput = form.elements.namedItem('image');
                 const imagePreview = document.getElementById('ekskul-image-preview');
                 const imageError = document.getElementById('ekskul-image-error');
-                let selectedImageUrl = null;
                 let temporaryImageUrl = null;
-                let nextId = cards().length;
+                let methodInput = form.querySelector('input[name="_method"]');
+                const validationFailed = @json($errors->any() && old('extracurricular_form'));
 
                 const clearTemporaryImage = () => {
                     if (temporaryImageUrl) {
                         URL.revokeObjectURL(temporaryImageUrl);
                         temporaryImageUrl = null;
                     }
-                    selectedImageUrl = null;
                 };
 
                 const showImageError = (message = '') => {
@@ -407,29 +408,37 @@
                     imageError.classList.toggle('hidden', message === '');
                 };
 
+                const setRequestMethod = (isEditing) => {
+                    if (isEditing && !methodInput) {
+                        methodInput = document.createElement('input');
+                        methodInput.type = 'hidden';
+                        methodInput.name = '_method';
+                        methodInput.value = 'PUT';
+                        form.append(methodInput);
+                    } else if (!isEditing && methodInput) {
+                        methodInput.remove();
+                        methodInput = null;
+                    }
+                };
+
                 const openForm = (card = null) => {
                     clearTemporaryImage();
                     form.reset();
+                    form.action = card?.dataset.updateUrl ?? form.dataset.createAction;
                     formId.value = card?.dataset.ekskulId ?? '';
-                    form.elements.namedItem('nama').value = card?.dataset.nama ?? '';
-                    form.elements.namedItem('deskripsi').value = card?.dataset.deskripsi ?? '';
+                    nameInput.value = card?.dataset.nama ?? '';
+                    descriptionInput.value = card?.dataset.deskripsi ?? '';
                     imageInput.required = !card;
                     showImageError();
-                    imagePreview.src = card?.dataset.gambar ?? '';
+                    if (card) {
+                        imagePreview.src = card.dataset.gambar;
+                    } else {
+                        imagePreview.removeAttribute('src');
+                    }
                     imagePreview.classList.toggle('hidden', !card);
+                    setRequestMethod(Boolean(card));
                     formTitle.textContent = card ? 'Edit Ekskul' : 'Tambah Ekskul';
                     dialog.showModal();
-                };
-
-                const updateCard = (card, values) => {
-                    card.dataset.nama = values.nama;
-                    card.dataset.gambar = values.gambar;
-                    card.dataset.deskripsi = values.deskripsi;
-                    card.querySelector('img').src = values.gambar;
-                    card.querySelector('img').alt = values.nama;
-                    card.querySelector('[data-ekskul-select]').textContent = values.nama;
-                    card.querySelector('[data-ekskul-edit]').setAttribute('aria-label', `Edit ${values.nama}`);
-                    card.querySelector('[data-ekskul-delete]').setAttribute('aria-label', `Hapus ${values.nama}`);
                 };
 
                 const closeForm = () => {
@@ -455,8 +464,7 @@
                     }
 
                     temporaryImageUrl = URL.createObjectURL(file);
-                    selectedImageUrl = temporaryImageUrl;
-                    imagePreview.src = selectedImageUrl;
+                    imagePreview.src = temporaryImageUrl;
                     imagePreview.classList.remove('hidden');
                 });
 
@@ -464,90 +472,15 @@
                 document.getElementById('ekskul-dialog-close').addEventListener('click', closeForm);
                 document.getElementById('ekskul-dialog-cancel').addEventListener('click', closeForm);
 
-                track.addEventListener('click', (event) => {
-                    const target = event.target;
-                    if (!(target instanceof Element)) {
-                        return;
-                    }
-
-                    const editButton = target.closest('[data-ekskul-edit]');
-                    if (editButton) {
-                        openForm(editButton.closest('.ekskul-card'));
-                        return;
-                    }
-
-                    const deleteButton = target.closest('[data-ekskul-delete]');
-                    if (!deleteButton) {
-                        return;
-                    }
-
-                    const card = deleteButton.closest('.ekskul-card');
-                    if (!card || !window.confirm(`Hapus ekskul "${card.dataset.nama}" dari preview ini?`)) {
-                        return;
-                    }
-
-                    const wasSelected = card.classList.contains('is-active');
-                    card.remove();
-                    const remainingCards = cards();
-                    if (wasSelected && remainingCards.length > 0) {
-                        selectCard(remainingCards[0]);
-                    } else if (remainingCards.length === 0) {
-                        title.textContent = 'Belum ada ekskul';
-                        description.textContent = 'Tambahkan ekstrakurikuler untuk mulai mengisi daftar.';
-                        background.removeAttribute('src');
-                    }
-                });
-
-                form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-
-                    const editingId = formId.value;
-                    const currentCard = editingId !== ''
-                        ? cards().find((item) => item.dataset.ekskulId === editingId)
-                        : null;
-                    const imageUrl = selectedImageUrl ?? currentCard?.dataset.gambar;
-                    if (!imageUrl) {
-                        showImageError('Pilih gambar untuk ekskul ini.');
-                        return;
-                    }
-
-                    const values = {
-                        nama: form.elements.namedItem('nama').value.trim(),
-                        gambar: imageUrl,
-                        deskripsi: form.elements.namedItem('deskripsi').value.trim(),
-                    };
-                    let card;
-
-                    if (editingId !== '') {
-                        card = currentCard;
-                        if (!card) {
-                            showImageError('Ekskul yang akan diedit tidak ditemukan.');
-                            return;
-                        }
-                        updateCard(card, values);
-                    } else {
-                        card = cardTemplate?.cloneNode(true);
-                        if (!card) {
-                            showImageError('Tidak dapat membuat kartu ekskul baru.');
-                            return;
-                        }
-
-                        card.dataset.ekskulId = String(nextId++);
-                        updateCard(card, values);
-                        track.append(card);
-                    }
-
-                    selectCard(card);
-                    temporaryImageUrl = null;
-                    selectedImageUrl = null;
-                    closeForm();
-                });
-
                 dialog.addEventListener('click', (event) => {
                     if (event.target === dialog) {
                         closeForm();
                     }
                 });
+
+                if (validationFailed) {
+                    dialog.showModal();
+                }
             @endif
         });
     </script>

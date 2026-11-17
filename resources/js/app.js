@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         card.addEventListener('click', (event) => {
 
-            event.preventDefault();
+            if (!(event.target instanceof Element) || !event.target.closest('[data-ekskul-select]')) {
+                return;
+            }
 
             const nama = card.dataset.nama;
             const gambar = card.dataset.gambar;
