@@ -19,7 +19,7 @@
                         class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-[#10A4B0] px-5 py-3 font-bold text-[#003135] transition hover:bg-[#10A4B0]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
                     >
                         Pendaftaran murid
-                    </a>
+                    </a>    
                     <button
                         type="button"
                         id="user-create"

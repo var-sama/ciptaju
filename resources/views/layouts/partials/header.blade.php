@@ -4,9 +4,9 @@
     Deskripsi: Header responsif dengan Smart Scroll (Hide on down, Show on up) & Mobile Hamburger Menu.
     Font: DM Sans (Google Fonts)
     Palet Warna:
-        - Dark Teal (teks utama)   : #003135
-        - Bright Teal / Cyan (aksen): #10A4B0
-        - Putih (bg / teks tombol) : #ffffff
+- Dark Teal (teks utama)   : #003135
+- Bright Teal / Cyan (aksen): #10A4B0
+- Putih (bg / teks tombol) : #ffffff
 --}}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@
         {{-- ============================= --}}
         {{-- BAGIAN TENGAH: Navigasi (Desktop) --}}
         {{-- ============================= --}}
-        <nav class="hidden lg:absolute lg:left-1/2 lg:top-1/2 lg:flex lg:-translate-x-1/2 lg:-translate-y-1/2 items-center gap-8 xl:gap-14">
+        <nav class="hidden lg:absolute lg:left-1/2 lg:top-1/2 lg:flex lg:-translate-x-1/2 lg:-translate-y-1/2 items-center gap-30 xl:gap-14">
             <a href="{{ route('students.index') }}"
                class="text-lg font-bold font-['DM_Sans'] px-4 py-2 rounded-full transition-all duration-200 hover:bg-gray-100 active:bg-gray-200 {{ request()->routeIs('students.index') ? 'text-[#10A4B0]' : 'text-[#003135] hover:text-[#10A4B0]' }}">
                 Home
@@ -53,7 +53,7 @@
             <div class="flex items-center gap-3">
                 @if (Auth::check() && Auth::user()->role === 'admin')
                     <a href="{{ route('admin.users.index') }}"
-                       class="rounded-full bg-[#10A4B0] px-5 py-2 font-['DM_Sans'] text-lg font-bold text-white shadow-sm transition-all duration-200 hover:bg-[#0d8a95]">
+                       class="-ml-12 rounded-full bg-[#10A4B0] px-5 py-2 font-['DM_Sans'] text-lg font-bold text-white shadow-sm transition-all duration-200 hover:bg-[#0d8a95]">
                         Dashboard
                     </a>
                 @endif
@@ -181,4 +181,4 @@
             mobileMenu.classList.toggle("flex");
         });
     });
-</script>   
+</script>
