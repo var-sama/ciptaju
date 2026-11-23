@@ -6,6 +6,7 @@
         $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
 
+    @if ($bannerSlides->isNotEmpty())
     {{--
         =========================================================
         SECTION 1: BERITA TERBARU (Hero Slider / Carousel)
@@ -14,7 +15,7 @@
 
     <section
         id="news-banner"
-        data-news-url="{{ route('news.view') }}"
+        data-news-slides="{{ json_encode($bannerSlides) }}"
         class="relative w-full h-[500px] font-['DM_Sans'] overflow-hidden px-0 py-0"
         data-autoplay="true"
         data-interval="5000"
@@ -67,43 +68,30 @@
             class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3"
         ></div>
     </section>
+    @endif
 
     {{-- Hero Slider --}}
+    @if ($latestNews->isNotEmpty())
     <section
         class="relative w-full overflow-hidden font-['DM_Sans']"
         x-data="{
             active: 0,
-            slides: {{ Illuminate\Support\Js::from([
-                [
-                    'judul' => 'Amond Aye Winning Programming Competition',
-                    'tanggal' => '20/12/2099',
-                    'gambar' => Vite::asset('resources/assets/banner_1.png'),
-                ],
-                [
-                    'judul' => 'Lomen',
-                    'tanggal' => '20/12/2099',
-                    'gambar' => 'https://i.pinimg.com/736x/78/8b/d7/788bd73f3e433bca90029d91376cdbc8.jpg',
-                ],
-                [
-                    'judul' => 'Lomen',
-                    'tanggal' => '20/12/2099',
-                    'gambar' => 'https://i.pinimg.com/1200x/01/0d/2f/010d2f4b9ea272721690c0d962f96071.jpg',
-                ],
-            ]) }}
+            slides: {{ Illuminate\Support\Js::from($latestNews) }}
         }"
         x-init="setInterval(() => { active = (active + 1) % slides.length }, 6000)"
     >
         {{-- Track Slide --}}
         <template x-for="(slide, index) in slides" :key="index">
-            <div
+            <a
+                :href="slide.url"
                 x-show="active === index"
                 x-transition:enter="transition ease-out duration-500"
                 x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100"
-                class="relative w-full h-[620px]"
+                class="relative block w-full h-[620px]"
             >
                 <img
-                    :src="slide.gambar"
+                    :src="slide.image"
                     alt="Berita Terbaru"
                     class="absolute inset-0 w-full h-full object-cover object-right"
                 >
@@ -121,15 +109,15 @@
 
                     <h2
                         class="text-5xl md:text-6xl font-medium text-white font-['DM_Sans'] mb-6"
-                        x-text="slide.judul"
+                        x-text="slide.title"
                     ></h2>
 
                     <p
                         class="text-sm text-white font-['DM_Sans']"
-                        x-text="slide.tanggal"
+                        x-text="slide.date"
                     ></p>
                 </div>
-            </div>
+            </a>
         </template>
 
         {{-- Navigasi Panah Kiri --}}
@@ -169,6 +157,7 @@
             </template>
         </div>
     </section>
+    @endif
 
     {{--
         =========================================================
@@ -185,46 +174,6 @@
                 News
             </h1>
 
-            @php
-                /*
-                |--------------------------------------------------------------------------
-                | Data Dummy Berita
-                |--------------------------------------------------------------------------
-                | Data ini hanya untuk tampilan frontend.
-                */
-                $newsItems = [
-                    [
-                        'id' => 1,
-                        'gambar' => 'resources/assets/news1.png',
-                        'judul' => 'Informasi Beasiswa Universitas Two Win Tahun 2077',
-                        'tanggal' => '20/12/2099',
-                    ],
-                    [
-                        'id' => 2,
-                        'gambar' => 'resources/assets/news2.png',
-                        'judul' => 'Kelulusan Angkatan Tahun 2050 Pada Tahun 2060',
-                        'tanggal' => '20/12/2099',
-                    ],
-                    [
-                        'id' => 3,
-                        'gambar' => 'resources/assets/news3.png',
-                        'judul' => 'Mayreel Athuath Menang Kompetisi MTK Antar Daerah',
-                        'tanggal' => '20/12/2099',
-                    ],
-                    [
-                        'id' => 4,
-                        'gambar' => 'resources/assets/news1.png',
-                        'judul' => 'Informasi Beasiswa Universitas Two Win Tahun 2077',
-                        'tanggal' => '20/12/2099',
-                    ],
-                ];
-
-                // Mengulangi data dummy agar jumlah kartu tetap seperti sebelumnya.
-                $newsList = collect(range(1, 16))->map(function ($i) use ($newsItems) {
-                    return $newsItems[($i - 1) % count($newsItems)];
-                });
-            @endphp
-
             {{-- GRID BERITA --}}
             <div id="news-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
 
@@ -233,7 +182,7 @@
                     <button
                         id="add-news-button"
                         type="button"
-                        onclick="openNewsModal()"
+                        data-news-modal-open
                         class="group flex min-h-[360px] flex-col items-center justify-center rounded-md border-2 border-dashed border-[#10A4B0] bg-white p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:bg-[#003135] hover:shadow-xl"
                     >
                         <span class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#10A4B0] text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[#003135]">
@@ -261,21 +210,40 @@
                             Tambahkan berita baru
                         </span>
                     </button>
+
+                    <button
+                        id="manage-banners-button"
+                        type="button"
+                        data-banner-modal-open
+                        class="group flex min-h-[360px] flex-col items-center justify-center rounded-md border-2 border-dashed border-[#10A4B0] bg-white p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:bg-[#003135] hover:shadow-xl"
+                    >
+                        <span class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#10A4B0] text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[#003135]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </span>
+                        <span class="text-xl font-bold text-[#003135] transition-colors duration-300 group-hover:text-white">
+                            Kelola Banner
+                        </span>
+                        <span class="mt-2 text-sm text-gray-500 transition-colors duration-300 group-hover:text-white/70">
+                            Tambah dan atur banner
+                        </span>
+                    </button>
                 @endif
 
                 {{-- DAFTAR BERITA --}}
-                @foreach ($newsList as $news)
+                @forelse ($news as $item)
 
                     <div class="news-card group relative flex h-full min-w-0 flex-col overflow-hidden rounded-md border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl">
 
                         {{-- Link berita --}}
-                        <a href="{{ route('news.view') }}" class="block">
+                        <a href="{{ route('news.view', $item->id) }}" class="block">
 
                             {{-- FOTO --}}
                             <div class="relative h-48 overflow-hidden">
                                 <img
-                                    src="{{ str_starts_with($news['gambar'], 'resources/') ? Vite::asset($news['gambar']) : $news['gambar'] }}"
-                                    alt="{{ $news['judul'] }}"
+                                    src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($item->image_path) }}"
+                                    alt="{{ $item->title }}"
                                     class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                                 >
 
@@ -287,13 +255,13 @@
                             <div class="relative flex flex-col bg-[#003135] px-5 py-4">
                                 <p
                                     class="min-h-[2.75rem] overflow-hidden text-lg text-white font-['DM_Sans'] leading-snug whitespace-normal break-words line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"
-                                    title="{{ $news['judul'] }}"
+                                    title="{{ $item->title }}"
                                 >
-                                    {{ $news['judul'] }}
+                                    {{ $item->title }}
                                 </p>
 
                                 <p class="mt-3 text-sm text-white/60 font-['DM_Sans']">
-                                    {{ $news['tanggal'] }}
+                                    {{ $item->published_at->format('d/m/Y') }}
                                 </p>
                             </div>
                         </a>
@@ -305,7 +273,13 @@
                                 {{-- EDIT --}}
                                 <button
                                     type="button"
-                                    onclick="alert('Form edit berita belum tersedia. Tombol ini masih berupa simulasi frontend.')"
+                                    data-news-edit
+                                    data-news-id="{{ $item->id }}"
+                                    data-update-url="{{ route('news.update', $item) }}"
+                                    data-title="{{ $item->title }}"
+                                    data-published-at="{{ $item->published_at->format('Y-m-d') }}"
+                                    data-content="{{ $item->content }}"
+                                    data-image-url="{{ Illuminate\Support\Facades\Storage::disk('public')->url($item->image_path) }}"
                                     class="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#10A4B0] px-3 py-2 text-sm font-medium text-white transition duration-300 hover:bg-white hover:text-[#003135]"
                                 >
                                     <svg
@@ -326,34 +300,46 @@
                                 </button>
 
                                 {{-- DELETE --}}
-                                <button
-                                    type="button"
-                                    onclick="if (confirm('Apakah kamu yakin ingin menghapus berita ini?')) { alert('Fitur hapus belum tersedia. Data dummy tidak dihapus.') }"
-                                    class="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/40 px-3 py-2 text-sm font-medium text-white transition duration-300 hover:border-red-500 hover:bg-red-500"
+                                <form
+                                    action="{{ route('news.destroy', $item) }}"
+                                    method="POST"
+                                    class="flex flex-1"
+                                    onsubmit="return confirm('Hapus berita ini?')"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        stroke-width="2"
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        type="submit"
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/40 px-3 py-2 text-sm font-medium text-white transition duration-300 hover:border-red-500 hover:bg-red-500"
                                     >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M6 7h12m-10 0V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13H9L8 7m2 3v6m4-6v6"
-                                        />
-                                    </svg>
-                                    Delete
-                                </button>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M6 7h12m-10 0V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13H9L8 7m2 3v6m4-6v6"
+                                            />
+                                        </svg>
+                                        Delete
+                                    </button>
+                                </form>
 
                             </div>
                         @endif
 
                     </div>
 
-                @endforeach
+                @empty
+                    <p class="col-span-full text-center text-slate-500">
+                        Belum ada berita yang tersedia.
+                    </p>
+                @endforelse
 
             </div>
 
@@ -365,9 +351,15 @@
          Bagian asli di atas tetap dipertahankan.
          ========================================================= --}}
     @if ($isAdmin)
+        @php
+            $editingNews = $errors->any() && old('editing_news_id')
+                ? $news->firstWhere('id', (int) old('editing_news_id'))
+                : null;
+        @endphp
+
         <div
             id="news-modal"
-            class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 px-4 py-6"
+            class="fixed inset-0 z-[100] {{ $errors->any() && old('news_form') ? 'flex' : 'hidden' }} items-center justify-center bg-black/60 px-4 py-6"
             role="dialog"
             aria-modal="true"
             aria-labelledby="news-modal-title"
@@ -378,16 +370,16 @@
                 <div class="mb-6 flex items-center justify-between border-b border-gray-200 pb-4">
                     <div>
                         <h2 id="news-modal-title" class="text-2xl font-bold text-[#003135]">
-                            Add News
+                            {{ $editingNews ? 'Edit News' : 'Add News' }}
                         </h2>
                         <p class="mt-1 text-sm text-gray-500">
-                            Masukkan informasi berita yang ingin ditambahkan.
+                            {{ $editingNews ? 'Perbarui informasi berita.' : 'Masukkan informasi berita yang ingin ditambahkan.' }}
                         </p>
                     </div>
 
                     <button
                         type="button"
-                        onclick="closeNewsModal()"
+                        data-news-modal-close
                         class="flex h-9 w-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-red-500"
                         aria-label="Tutup popup"
                     >
@@ -397,8 +389,27 @@
                     </button>
                 </div>
 
-                {{-- Form Tambah Berita --}}
-                <form id="news-form" class="space-y-5">
+                {{-- Form Tambah dan Edit Berita --}}
+                <form
+                    id="news-form"
+                    action="{{ $editingNews ? route('news.update', $editingNews) : route('news.store') }}"
+                    data-create-action="{{ route('news.store') }}"
+                    data-default-date="{{ now()->toDateString() }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="space-y-5"
+                >
+                    @csrf
+                    <input type="hidden" name="news_form" value="1">
+                    @if ($editingNews)
+                        @method('PUT')
+                    @endif
+                    <input
+                        id="editing-news-id"
+                        type="hidden"
+                        name="editing_news_id"
+                        value="{{ $editingNews?->id ?? '' }}"
+                    >
 
                     {{-- Judul --}}
                     <div>
@@ -407,13 +418,17 @@
                         </label>
                         <input
                             id="news-title"
-                            name="judul"
+                            name="title"
                             type="text"
                             maxlength="150"
                             required
                             placeholder="Masukkan judul berita"
+                            value="{{ old('title', $editingNews?->title) }}"
                             class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
                         >
+                        @error('title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     {{-- Tanggal --}}
@@ -423,43 +438,76 @@
                         </label>
                         <input
                             id="news-date"
-                            name="tanggal"
+                            name="published_at"
                             type="date"
                             required
+                            value="{{ old('published_at', $editingNews?->published_at->toDateString() ?? now()->toDateString()) }}"
                             class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
                         >
+                        @error('published_at')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                    {{-- Gambar Berita --}}
                 <div>
                     <label for="news-image" class="mb-2 block text-sm font-semibold text-[#003135]">
-                        Gambar Berita
+                    Gambar Berita <span id="news-image-required" class="text-red-500 {{ $editingNews ? 'hidden' : '' }}">*</span>
                     </label>
 
                     <input
                         id="news-image"
-                        name="gambar"
+                        name="image"
                         type="file"
                         accept="image/*"
+                        {{ $editingNews ? '' : 'required' }}
                         class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm
                             file:mr-4 file:rounded-md file:border-0 file:bg-[#10A4B0]
                             file:px-4 file:py-2 file:text-white"
                     >
+                    @error('image')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
 
                     <img
                         id="news-image-preview"
-                        class="hidden mt-4 h-40 w-full rounded-md object-cover"
-                        alt="Preview gambar berita"
+                        src="{{ $editingNews ? Illuminate\Support\Facades\Storage::disk('public')->url($editingNews->image_path) : '' }}"
+                        data-original-url="{{ $editingNews ? Illuminate\Support\Facades\Storage::disk('public')->url($editingNews->image_path) : '' }}"
+                        class="{{ $editingNews ? '' : 'hidden' }} mt-4 h-40 w-full rounded-md object-cover"
+                        alt="{{ $editingNews ? $editingNews->title : 'Preview gambar berita' }}"
                     >
                 </div>
+
+                    {{-- Isi Berita --}}
+                    <div>
+                        <label for="news-content" class="mb-2 block text-sm font-semibold text-[#003135]">
+                            Isi Berita <span class="text-red-500">*</span>
+                        </label>
+                        <textarea
+                            id="news-content"
+                            name="content"
+                            rows="6"
+                            required
+                            placeholder="Masukkan isi berita"
+                            class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
+                        >{{ old('content', $editingNews?->content) }}</textarea>
+                        @error('content')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- Pesan Validasi --}}
-                    <p id="news-form-error" class="hidden text-sm text-red-600"></p>
+                    @if ($errors->any())
+                        <p id="news-form-error" class="text-sm text-red-600">
+                            Periksa kembali data berita yang dimasukkan.
+                        </p>
+                    @endif
 
                     {{-- Tombol Popup --}}
                     <div class="flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:justify-end">
                         <button
                             type="button"
-                            onclick="closeNewsModal()"
+                            data-news-modal-close
                             class="rounded-md border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100"
                         >
                             Cancel
@@ -469,7 +517,7 @@
                             type="submit"
                             class="rounded-md bg-[#10A4B0] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#003135]"
                         >
-                            Save News
+                            {{ $editingNews ? 'Simpan Perubahan' : 'Save News' }}
                         </button>
                     </div>
 
@@ -478,201 +526,211 @@
         </div>
     @endif
 
-    {{-- =========================================================
-         TAMBAHAN: JAVASCRIPT POPUP DAN SIMULASI ADD NEWS
-         ========================================================= --}}
-    <script>
-        function openNewsModal() {
-            const modal = document.getElementById('news-modal');
+    @if ($isAdmin)
+        @php
+            $editingBanner = $errors->any() && old('banner_form') && old('editing_banner_id')
+                ? $banners->firstWhere('id', (int) old('editing_banner_id'))
+                : null;
+        @endphp
 
-            if (!modal) return;
+        <div
+            id="banner-modal"
+            class="fixed inset-0 z-[100] {{ $errors->any() && old('banner_form') ? 'flex' : 'hidden' }} items-center justify-center bg-black/60 px-4 py-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="banner-modal-title"
+        >
+            <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 md:p-8 shadow-2xl">
+                <div class="mb-6 flex items-center justify-between border-b border-gray-200 pb-4">
+                    <div>
+                        <h2 id="banner-modal-title" class="text-2xl font-bold text-[#003135]">
+                            {{ $editingBanner ? 'Edit Banner' : 'Tambah Banner' }}
+                        </h2>
+                        <p id="banner-modal-description" class="mt-1 text-sm text-gray-500">
+                            {{ $editingBanner ? 'Ganti gambar banner jika diperlukan.' : 'Unggah gambar untuk banner halaman News.' }}
+                        </p>
+                    </div>
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
+                    <button
+                        type="button"
+                        data-banner-modal-close
+                        class="flex h-9 w-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-red-500"
+                        aria-label="Tutup popup banner"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
 
-            setTimeout(() => {
-                document.getElementById('news-title')?.focus();
-            }, 100);
-        }
+                <form
+                    id="banner-form"
+                    action="{{ $editingBanner ? route('banners.update', $editingBanner) : route('banners.store') }}"
+                    data-create-action="{{ route('banners.store') }}"
+                    data-default-date="{{ now()->toDateString() }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="space-y-5"
+                >
+                    @csrf
+                    @if ($editingBanner)
+                        @method('PUT')
+                    @endif
+                    <input type="hidden" name="banner_form" value="1">
+                    <input
+                        id="editing-banner-id"
+                        type="hidden"
+                        name="editing_banner_id"
+                        value="{{ $editingBanner?->id ?? '' }}"
+                    >
 
-        function closeNewsModal() {
-            const modal = document.getElementById('news-modal');
+                    <div>
+                        <label for="banner-title" class="mb-2 block text-sm font-semibold text-[#003135]">
+                            Judul Berita <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            id="banner-title"
+                            name="title"
+                            type="text"
+                            maxlength="150"
+                            required
+                            placeholder="Masukkan judul berita"
+                            value="{{ old('title', $editingBanner?->title) }}"
+                            class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
+                        >
+                        @error('title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            if (!modal) return;
+                    <div>
+                        <label for="banner-date" class="mb-2 block text-sm font-semibold text-[#003135]">
+                            Tanggal Berita <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            id="banner-date"
+                            name="published_at"
+                            type="date"
+                            required
+                            value="{{ old('published_at', $editingBanner?->published_at?->toDateString() ?? now()->toDateString()) }}"
+                            class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
+                        >
+                        @error('published_at')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.classList.remove('overflow-hidden');
-        }
+                    <div>
+                        <label for="banner-image" class="mb-2 block text-sm font-semibold text-[#003135]">
+                            Gambar Banner <span id="banner-image-required" class="text-red-500 {{ $editingBanner ? 'hidden' : '' }}">*</span>
+                        </label>
+                        <input
+                            id="banner-image"
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                            {{ $editingBanner ? '' : 'required' }}
+                            class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-[#10A4B0] file:px-4 file:py-2 file:text-white"
+                        >
+                        @error('image')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        <img
+                            id="banner-image-preview"
+                            src="{{ $editingBanner ? Illuminate\Support\Facades\Storage::disk('public')->url($editingBanner->image_path) : '' }}"
+                            data-original-url="{{ $editingBanner ? Illuminate\Support\Facades\Storage::disk('public')->url($editingBanner->image_path) : '' }}"
+                            alt="{{ $editingBanner ? 'Preview banner '.$editingBanner->id : 'Preview gambar banner' }}"
+                            class="{{ $editingBanner ? '' : 'hidden' }} mt-4 h-40 w-full rounded-md object-cover"
+                        >
+                    </div>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('news-modal');
-            const form = document.getElementById('news-form');
-            const grid = document.getElementById('news-grid');
-            const addButton = document.getElementById('add-news-button');
-            const errorMessage = document.getElementById('news-form-error');
+                    <div>
+                        <label for="banner-content" class="mb-2 block text-sm font-semibold text-[#003135]">
+                            Isi Berita <span class="text-red-500">*</span>
+                        </label>
+                        <textarea
+                            id="banner-content"
+                            name="content"
+                            rows="6"
+                            required
+                            placeholder="Masukkan isi berita"
+                            class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20"
+                        >{{ old('content', $editingBanner?->content) }}</textarea>
+                        @error('content')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            // Berhenti jika popup tidak tersedia, misalnya saat role adalah user.
-            if (!modal || !form || !grid || !addButton) return;
+                    @if ($errors->any() && old('banner_form'))
+                        <p class="text-sm text-red-600">Periksa kembali informasi banner yang dimasukkan.</p>
+                    @endif
 
-            // Mengisi tanggal dengan tanggal hari ini.
-            const today = new Date();
-            const localToday = new Date(
-                today.getTime() - today.getTimezoneOffset() * 60000
-            ).toISOString().slice(0, 10);
+                    <div class="flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:justify-end">
+                        <button
+                            type="button"
+                            data-banner-modal-close
+                            class="rounded-md border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100"
+                        >
+                            Batal
+                        </button>
+                        <button
+                            id="banner-submit"
+                            type="submit"
+                            class="rounded-md bg-[#10A4B0] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#003135]"
+                        >
+                            {{ $editingBanner ? 'Simpan Perubahan' : 'Simpan Banner' }}
+                        </button>
+                    </div>
+                </form>
 
-            document.getElementById('news-date').value = localToday;
-
-            // Menutup popup saat area di luar form diklik.
-            modal.addEventListener('click', function (event) {
-                if (event.target === modal) {
-                    closeNewsModal();
-                }
-            });
-
-            // Menutup popup dengan tombol Escape.
-            document.addEventListener('keydown', function (event) {
-                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
-                    closeNewsModal();
-                }
-            });
-
-            // Proses penambahan berita secara frontend.
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const title = document.getElementById('news-title').value.trim();
-                const dateValue = document.getElementById('news-date').value;
-                const imageUrl = document.getElementById('news-image').value.trim();
-                const content = document.getElementById('news-content').value.trim();
-
-                errorMessage.textContent = '';
-                errorMessage.classList.add('hidden');
-
-                if (!title || !dateValue || !content) {
-                    errorMessage.textContent = 'Judul, tanggal, dan isi berita wajib diisi.';
-                    errorMessage.classList.remove('hidden');
-                    return;
-                }
-
-                // Format tanggal menjadi DD/MM/YYYY.
-                const [year, month, day] = dateValue.split('-');
-                const formattedDate = `${day}/${month}/${year}`;
-
-                // Membuat kartu berita baru tanpa mengubah kartu yang sudah ada.
-                const card = document.createElement('div');
-
-                card.className = 'news-card group relative flex h-full min-w-0 flex-col overflow-hidden rounded-md border border-gray-200 bg-white transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl';
-
-                // Link berita.
-                const link = document.createElement('a');
-                link.href = @json(route('news.view'));
-                link.className = 'block';
-
-                // Bagian gambar.
-                const imageContainer = document.createElement('div');
-                imageContainer.className = 'relative h-48 overflow-hidden';
-
-                if (imageUrl) {
-                    const image = document.createElement('img');
-
-                    image.src = imageUrl;
-                    image.alt = title;
-                    image.className = 'h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105';
-
-                    image.addEventListener('error', function () {
-                        image.remove();
-
-                        const fallback = document.createElement('div');
-                        fallback.className = 'flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-500';
-                        fallback.textContent = 'Gambar tidak tersedia';
-
-                        imageContainer.appendChild(fallback);
-                    }, { once: true });
-
-                    imageContainer.appendChild(image);
-                } else {
-                    imageContainer.classList.add('bg-gray-100', 'flex', 'items-center', 'justify-center');
-
-                    const placeholder = document.createElement('span');
-                    placeholder.className = 'text-sm text-gray-500';
-                    placeholder.textContent = 'No Image';
-
-                    imageContainer.appendChild(placeholder);
-                }
-
-                // Gradient hover gambar.
-                const gradient = document.createElement('div');
-                gradient.className = 'absolute inset-0 bg-gradient-to-t from-[#003135]/70 to-transparent opacity-0 translate-y-8 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0';
-
-                imageContainer.appendChild(gradient);
-                link.appendChild(imageContainer);
-
-                // Bagian teks berita.
-                const textContainer = document.createElement('div');
-                textContainer.className = 'relative flex flex-col bg-[#003135] px-5 py-4';
-
-                const titleElement = document.createElement('p');
-                titleElement.className = 'min-h-[2.75rem] overflow-hidden text-lg text-white font-[\'DM_Sans\'] leading-snug whitespace-normal break-words line-clamp-2';
-                titleElement.textContent = title;
-                titleElement.title = title;
-
-                const dateElement = document.createElement('p');
-                dateElement.className = 'mt-3 text-sm text-white/60 font-[\'DM_Sans\']';
-                dateElement.textContent = formattedDate;
-
-                const contentElement = document.createElement('p');
-                contentElement.className = 'mt-3 text-sm leading-relaxed text-white/80 whitespace-pre-line break-words';
-                contentElement.textContent = content;
-
-                textContainer.appendChild(titleElement);
-                textContainer.appendChild(dateElement);
-                textContainer.appendChild(contentElement);
-
-                link.appendChild(textContainer);
-                card.appendChild(link);
-
-                // Tombol Edit dan Delete mengikuti desain tombol yang sudah ada.
-                const actions = document.createElement('div');
-                actions.className = 'flex flex-1 items-end gap-3 bg-[#003135] px-5 pb-5';
-
-                const editButton = document.createElement('button');
-                editButton.type = 'button';
-                editButton.className = 'inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#10A4B0] px-3 py-2 text-sm font-medium text-white transition duration-300 hover:bg-white hover:text-[#003135]';
-                editButton.textContent = 'Edit';
-
-                editButton.addEventListener('click', function () {
-                    alert('Form edit berita belum tersedia. Tombol ini masih berupa simulasi frontend.');
-                });
-
-                const deleteButton = document.createElement('button');
-                deleteButton.type = 'button';
-                deleteButton.className = 'inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/40 px-3 py-2 text-sm font-medium text-white transition duration-300 hover:border-red-500 hover:bg-red-500';
-                deleteButton.textContent = 'Delete';
-
-                deleteButton.addEventListener('click', function () {
-                    if (confirm('Apakah kamu yakin ingin menghapus berita ini?')) {
-                        card.remove();
-                    }
-                });
-
-                actions.appendChild(editButton);
-                actions.appendChild(deleteButton);
-                card.appendChild(actions);
-
-                // Berita baru muncul tepat setelah kartu Add News.
-                addButton.insertAdjacentElement('afterend', card);
-
-                // Mengosongkan form dan menutup popup.
-                form.reset();
-                document.getElementById('news-date').value = localToday;
-
-                closeNewsModal();
-
-                alert('Berita berhasil ditambahkan ke tampilan halaman!');
-            });
-        });
-    </script>
+                @if ($banners->isNotEmpty())
+                    <div class="mt-8 border-t border-gray-200 pt-6">
+                        <h3 class="mb-4 text-lg font-bold text-[#003135]">Banner Tersimpan</h3>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            @foreach ($banners as $banner)
+                                <div class="overflow-hidden rounded-md border border-gray-200">
+                                    <img
+                                        src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($banner->image_path) }}"
+                                        alt="Banner {{ $banner->id }}"
+                                        class="h-32 w-full object-cover"
+                                    >
+                                    <div class="flex gap-3 bg-[#003135] p-3">
+                                        <button
+                                            type="button"
+                                            data-banner-edit
+                                            data-banner-id="{{ $banner->id }}"
+                                            data-update-url="{{ route('banners.update', $banner) }}"
+                                            data-image-url="{{ Illuminate\Support\Facades\Storage::disk('public')->url($banner->image_path) }}"
+                                            data-title="{{ $banner->title ?? 'Informasi Sekolah' }}"
+                                            data-published-at="{{ $banner->published_at?->toDateString() ?? now()->toDateString() }}"
+                                            data-content="{{ $banner->content ?? '' }}"
+                                            class="inline-flex flex-1 items-center justify-center rounded-md bg-[#10A4B0] px-3 py-2 text-sm font-medium text-white transition hover:bg-white hover:text-[#003135]"
+                                        >
+                                            Edit
+                                        </button>
+                                        <form
+                                            action="{{ route('banners.destroy', $banner) }}"
+                                            method="POST"
+                                            class="flex flex-1"
+                                            onsubmit="return confirm('Hapus banner ini?')"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                type="submit"
+                                                class="inline-flex w-full items-center justify-center rounded-md border border-white/40 px-3 py-2 text-sm font-medium text-white transition hover:border-red-500 hover:bg-red-500"
+                                            >
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
 
 @endsection

@@ -8,13 +8,13 @@
         <img
             src="{{ Vite::asset('resources/assets/gambarpendaf.png') }}"
             alt="Siswa Ciptaju memegang piala"
-            class="block w-full h-64 md:h-80 object-cover object-center"
+            class="block h-64 w-full object-cover object-center md:h-80"
             onerror="this.src='https://ui-avatars.com/api/?name=Siswa+Ciptaju&background=0D9488&color=fff&size=1200'"
         >
 
         <div class="px-6 py-12 md:py-16">
             <div class="mx-auto max-w-2xl">
-                <h1 class="mb-8 text-center text-2xl font-bold text-[#003135]">Register</h1>
+                <h1 class="mb-8 text-center text-2xl font-bold text-[#003135]">Student Registration</h1>
 
                 @if (session('success'))
                     <div class="mb-4 rounded-md bg-emerald-50 px-4 py-3 text-sm text-emerald-700" role="status">
@@ -33,7 +33,7 @@
 
                     <div class="grid grid-cols-1 items-center gap-x-[3%] gap-y-4 md:grid-cols-[25%_minmax(0,1fr)]">
                         <div class="contents">
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-1 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                            <div class="order-1 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
                                 <label for="school_target" class="text-[14px] text-[#003135]">School Target</label>
                                 <select id="school_target" name="school_target" required class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
                                     <option value="">Dropdown item</option>
@@ -44,35 +44,7 @@
                                 @error('school_target')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
                             </div>
 
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-3 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
-                                <label for="student_name" class="text-[14px] text-[#003135]">Student's Name</label>
-                                <input id="student_name" name="student_name" type="text" value="{{ old('student_name') }}" required class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
-                                @error('student_name')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
-                            </div>
-
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-5 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
-                                <label for="password" class="text-[14px] text-[#003135]">Make Password</label>
-                                <div class="relative">
-                                    <input id="password" name="password" type="password" required class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 py-2.5 pr-10 text-[14px] text-[#003135] opacity-100 outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
-                                    <button type="button" data-password-toggle="password" class="absolute inset-y-0 right-0 flex items-center px-3 text-[#64748b]" aria-label="Tampilkan kata sandi" aria-pressed="false">
-                                        <svg data-eye-icon="password" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                @error('password')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
-                            </div>
-
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-7 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
-                                <label for="active_number" class="text-[14px] text-[#003135]">Active Number</label>
-                                <input id="active_number" name="active_number" type="tel" value="{{ old('active_number') }}" required class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
-                                @error('active_number')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
-                            </div>
-                        </div>
-
-                        <div class="contents">
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-2 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                            <div class="order-2 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
                                 <label for="school_year" class="text-[14px] text-[#003135]">School Year</label>
                                 <select id="school_year" name="school_year" required class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
                                     <option value="">Dropdown item</option>
@@ -82,46 +54,54 @@
                                 @error('school_year')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
                             </div>
 
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-4 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
-                                <label for="email" class="text-[14px] text-[#003135]">Email Address</label>
-                                <input id="email" name="email" type="email" value="{{ old('email') }}" required class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
-                                @error('email')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
+                            <div class="order-3 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="student_name" class="text-[14px] text-[#003135]">Student's Full Name</label>
+                                <input id="student_name" name="student_name" type="text" value="{{ old('student_name') }}" required maxlength="255" class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
+                                @error('student_name')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
                             </div>
 
-                            <div class="grid grid-cols-1 items-center gap-[3%] order-6 md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
-                                <label for="password_confirmation" class="text-[14px] text-[#003135]">Re-enter Password</label>
-                                <div class="relative">
-                                    <input id="password_confirmation" name="password_confirmation" type="password" required class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 py-2.5 pr-10 text-[14px] text-[#003135] opacity-100 outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
-                                    <button type="button" data-password-toggle="password_confirmation" class="absolute inset-y-0 right-0 flex items-center px-3 text-[#64748b]" aria-label="Tampilkan konfirmasi kata sandi" aria-pressed="false">
-                                        <svg data-eye-icon="password_confirmation" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                            <div class="order-4 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="gender" class="text-[14px] text-[#003135]">Gender</label>
+                                <select id="gender" name="gender" required class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
+                                    <option value="">Dropdown item</option>
+                                    <option value="male" @selected(old('gender') === 'male')>Male</option>
+                                    <option value="female" @selected(old('gender') === 'female')>Female</option>
+                                </select>
+                                @error('gender')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
+                            </div>
+
+                            <div class="order-5 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="date_of_birth" class="text-[14px] text-[#003135]">Date of Birth</label>
+                                <input id="date_of_birth" name="date_of_birth" type="date" value="{{ old('date_of_birth') }}" required max="{{ now()->toDateString() }}" class="h-9 w-full rounded-md border border-[#7d9da0] bg-white px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
+                                @error('date_of_birth')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
+                            </div>
+
+                            <div class="order-6 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="parent_guardian_name" class="text-[14px] text-[#003135]">Parent/Guardian Name</label>
+                                <input id="parent_guardian_name" name="parent_guardian_name" type="text" value="{{ old('parent_guardian_name') }}" required maxlength="255" class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
+                                @error('parent_guardian_name')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
+                            </div>
+
+                            <div class="order-7 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="parent_guardian_phone" class="text-[14px] text-[#003135]">Parent/Guardian Phone Number</label>
+                                <input id="parent_guardian_phone" name="parent_guardian_phone" type="tel" value="{{ old('parent_guardian_phone') }}" required maxlength="30" class="h-9 w-full rounded-md border border-[#7d9da0] px-3 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">
+                                @error('parent_guardian_phone')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
+                            </div>
+
+                            <div class="order-8 grid grid-cols-1 items-center gap-[3%] md:col-span-2 md:grid-cols-[25%_minmax(0,1fr)]">
+                                <label for="home_address" class="text-[14px] text-[#003135]">Home Address</label>
+                                <textarea id="home_address" name="home_address" rows="3" required maxlength="2000" class="w-full rounded-md border border-[#7d9da0] px-3 py-2 text-[14px] text-[#003135] outline-none focus:border-[#10A4B0] focus:ring-1 focus:ring-[#10A4B0]">{{ old('home_address') }}</textarea>
+                                @error('home_address')<p class="mt-1 text-xs text-red-600 md:col-start-2">{{ $message }}</p>@enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-3 md:ml-[28%] md:w-[72%]">
-                        <button type="submit" class="w-full rounded-lg bg-[#10A4B0] px-6 py-2.5 text-base font-medium text-white transition hover:bg-[#0e8f9a] focus:outline-none focus:ring-2 focus:ring-[#10A4B0] focus:ring-offset-2">Register</button>
+                        <button type="submit" class="w-full rounded-lg bg-[#10A4B0] px-6 py-2.5 text-base font-medium text-white transition hover:bg-[#0e8f9a] focus:outline-none focus:ring-2 focus:ring-[#10A4B0] focus:ring-offset-2">Submit Registration</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-
-    <script>
-        document.querySelectorAll('[data-password-toggle]').forEach((toggleButton) => {
-            toggleButton.addEventListener('click', () => {
-                const passwordInput = document.getElementById(toggleButton.dataset.passwordToggle);
-                const isPasswordHidden = passwordInput.type === 'password';
-
-                passwordInput.type = isPasswordHidden ? 'text' : 'password';
-                toggleButton.setAttribute('aria-pressed', String(isPasswordHidden));
-                toggleButton.setAttribute('aria-label', isPasswordHidden ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
-            });
-        });
-    </script>
 </div>
 @endsection

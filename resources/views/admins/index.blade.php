@@ -13,16 +13,24 @@
                         Lihat dan kelola akun pengguna sekolah dari satu tempat.
                     </p>
                 </div>
-                <button
-                    type="button"
-                    id="user-create"
-                    class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#10A4B0] px-5 py-3 font-bold text-white shadow-sm transition hover:bg-[#0d8a95] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
-                >
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"></path>
-                    </svg>
-                    Tambah pengguna
-                </button>
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <a
+                        href="{{ route('admin.registrations.index') }}"
+                        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-[#10A4B0] px-5 py-3 font-bold text-[#003135] transition hover:bg-[#10A4B0]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
+                    >
+                        Pendaftaran murid
+                    </a>
+                    <button
+                        type="button"
+                        id="user-create"
+                        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#10A4B0] px-5 py-3 font-bold text-white shadow-sm transition hover:bg-[#0d8a95] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"></path>
+                        </svg>
+                        Tambah pengguna
+                    </button>
+                </div>
             </header>
 
             <p class="flex items-start gap-3 rounded-lg border border-[#10A4B0]/30 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm" role="status">
