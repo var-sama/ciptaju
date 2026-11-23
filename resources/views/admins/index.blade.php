@@ -38,8 +38,14 @@
                     <circle cx="12" cy="12" r="10"></circle>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"></path>
                 </svg>
-                Mode frontend: perubahan data hanya tersimpan sementara di halaman ini dan akan hilang saat halaman dimuat ulang.
+                Data akun dan aktivitas login diambil langsung dari database.
             </p>
+
+            @if (session('success'))
+                <p class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status">
+                    {{ session('success') }}
+                </p>
+            @endif
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -52,7 +58,7 @@
                             </svg>
                         </span>
                     </div>
-                    <p id="stat-total" class="mt-4 text-3xl font-bold text-[#003135]">0</p>
+                    <p id="stat-total" class="mt-4 text-3xl font-bold text-[#003135]">{{ $users->count() }}</p>
                 </article>
 
                 <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -65,7 +71,7 @@
                             </svg>
                         </span>
                     </div>
-                    <p id="stat-admin" class="mt-4 text-3xl font-bold text-[#003135]">0</p>
+                    <p id="stat-admin" class="mt-4 text-3xl font-bold text-[#003135]">{{ $adminCount }}</p>
                 </article>
 
             </div>
@@ -95,10 +101,10 @@
                             <span class="sr-only">Filter peran</span>
                             <select id="user-role-filter" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20">
                                 <option value="">Semua peran</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Guru">Guru</option>
-                                <option value="Siswa">Siswa</option>
-                                <option value="Pengguna">Pengguna</option>
+                                <option value="admin">Admin</option>
+                                <option value="teacher">Guru</option>
+                                <option value="student">Siswa</option>
+                                <option value="user">Pengguna</option>
                             </select>
                         </label>
                     </div>
@@ -110,15 +116,64 @@
                             <tr>
                                 <th scope="col" class="px-5 py-4 font-bold">Pengguna</th>
                                 <th scope="col" class="px-5 py-4 font-bold">Peran</th>
-                                <th scope="col" class="px-5 py-4 font-bold">Tanggal bergabung</th>
+                                <th scope="col" class="px-5 py-4 font-bold">Terdaftar</th>
+                                <th scope="col" class="px-5 py-4 font-bold">Login terakhir</th>
                                 <th scope="col" class="px-5 py-4 text-right font-bold">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="user-table-body" class="divide-y divide-slate-100"></tbody>
+                        <tbody id="user-table-body" class="divide-y divide-slate-100">
+                            @foreach ($users as $user)
+                                @php
+                                    $roleLabel = match ($user->role) {
+                                        'admin' => 'Admin',
+                                        'teacher' => 'Guru',
+                                        'student' => 'Siswa',
+                                        'user' => 'Pengguna',
+                                        default => ucfirst($user->role),
+                                    };
+                                    $roleClass = match ($user->role) {
+                                        'admin' => 'bg-violet-50 text-violet-700',
+                                        'teacher' => 'bg-emerald-50 text-emerald-700',
+                                        'student' => 'bg-[#10A4B0]/10 text-[#087b84]',
+                                        default => 'bg-slate-100 text-slate-700',
+                                    };
+                                @endphp
+                                <tr
+                                    data-user-row
+                                    data-user-id="{{ $user->id }}"
+                                    data-name="{{ $user->name }}"
+                                    data-email="{{ $user->email }}"
+                                    data-role="{{ $user->role }}"
+                                    data-update-url="{{ route('admin.users.update', $user) }}"
+                                    data-delete-url="{{ route('admin.users.destroy', $user) }}"
+                                    class="transition-colors hover:bg-[#F7F6F2]/70"
+                                >
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#003135] text-xs font-bold text-white">{{ collect(explode(' ', $user->name))->take(2)->map(fn ($part) => mb_substr($part, 0, 1))->implode('') }}</span>
+                                            <span class="min-w-0">
+                                                <span class="block truncate font-bold text-[#003135]">{{ $user->name }}</span>
+                                                <span class="mt-0.5 block truncate text-xs text-slate-500">{{ $user->email }}</span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4"><span class="inline-flex rounded-full px-2.5 py-1 text-xs font-bold {{ $roleClass }}">{{ $roleLabel }}</span></td>
+                                    <td class="px-5 py-4 text-slate-600">{{ $user->created_at?->format('d/m/Y H:i') ?? '—' }}</td>
+                                    <td class="px-5 py-4 text-slate-600">{{ $user->last_login_at?->format('d/m/Y H:i') ?? 'Belum pernah login' }}</td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex justify-end gap-1">
+                                            <button type="button" data-user-view class="rounded-md px-2.5 py-2 font-semibold text-[#003135] transition hover:bg-[#10A4B0]/10 hover:text-[#087b84] focus-visible:outline-2 focus-visible:outline-[#10A4B0]">Lihat</button>
+                                            <button type="button" data-user-edit class="rounded-md px-2.5 py-2 font-semibold text-[#087b84] transition hover:bg-[#10A4B0]/10 focus-visible:outline-2 focus-visible:outline-[#10A4B0]">Edit</button>
+                                            <button type="button" data-user-delete class="rounded-md px-2.5 py-2 font-semibold text-red-700 transition hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-red-600">Hapus</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
 
-                <div id="user-empty-state" class="hidden px-5 py-14 text-center">
+                <div id="user-empty-state" class="{{ $users->isEmpty() ? '' : 'hidden' }} px-5 py-14 text-center">
                     <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#10A4B0]/10 text-[#10A4B0]">
                         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -130,8 +185,8 @@
                 </div>
 
                 <div class="flex flex-col gap-2 border-t border-slate-200 px-5 py-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-                    <p id="user-count">Menampilkan 0 pengguna</p>
-                    <p>Data contoh untuk pratinjau antarmuka</p>
+                    <p id="user-count">Menampilkan {{ $users->count() }} dari {{ $users->count() }} pengguna</p>
+                    <p>Data tersimpan di database</p>
                 </div>
             </section>
         </div>
@@ -142,7 +197,8 @@
         class="m-auto w-[min(92vw,36rem)] max-w-none rounded-xl border border-[#10A4B0]/30 bg-white p-0 text-[#003135] shadow-2xl backdrop:bg-[#003135]/60"
         aria-labelledby="user-dialog-title"
     >
-        <form id="user-form" class="space-y-5 p-6 sm:p-8">
+        <form id="user-form" data-store-url="{{ route('admin.users.store') }}" class="space-y-5 p-6 sm:p-8">
+            @csrf
             <div class="flex items-start justify-between gap-4">
                 <div>
                     <h2 id="user-dialog-title" class="text-2xl font-bold">Tambah pengguna</h2>
@@ -167,14 +223,19 @@
                 <input name="email" type="email" required maxlength="255" autocomplete="email" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-normal text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20">
             </label>
 
+            <label class="block space-y-1.5 text-sm font-semibold">
+                <span>Kata sandi <span class="font-normal text-slate-500">(wajib untuk akun baru, kosongkan jika tidak ingin mengganti)</span></span>
+                <input name="password" type="password" minlength="8" autocomplete="new-password" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-normal text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20">
+            </label>
+
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label class="block space-y-1.5 text-sm font-semibold">
                     <span>Peran</span>
                     <select name="role" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-normal text-[#003135] outline-none transition focus:border-[#10A4B0] focus:ring-2 focus:ring-[#10A4B0]/20">
-                        <option value="Admin">Admin</option>
-                        <option value="Guru">Guru</option>
-                        <option value="Siswa">Siswa</option>
-                        <option value="Pengguna">Pengguna</option>
+                        <option value="admin">Admin</option>
+                        <option value="teacher">Guru</option>
+                        <option value="student" selected>Siswa</option>
+                        <option value="user">Pengguna</option>
                     </select>
                 </label>
             </div>

@@ -32,13 +32,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+            $user->forceFill(['last_login_at' => now()])->save();
 
-            if ($user->role === 'student') {
-                return redirect()->intended(route('students.index'));
-            }
-
-            // Untuk role selain student
-            return redirect()->intended(route('students.index'));
+            return redirect()->intended(
+                $user->role === 'admin' ? route('admin.users.index') : route('students.index')
+            );
         }
 
         return back()

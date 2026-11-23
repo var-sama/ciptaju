@@ -20,7 +20,7 @@ Route::name('students.')->prefix('students')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('index');
 });
 
-Route::name('admins.')->prefix('admins')->group(function () {
+Route::name('admins.')->prefix('admins')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
 });
 
@@ -37,7 +37,12 @@ Route::post('/extracurriculars', [ExtracurricularController::class, 'store'])->m
 Route::put('/extracurriculars/{extracurricular}', [ExtracurricularController::class, 'update'])->middleware('auth')->name('extracurriculars.update');
 Route::delete('/extracurriculars/{extracurricular}', [ExtracurricularController::class, 'destroy'])->middleware('auth')->name('extracurriculars.destroy');
 Route::get('/vision-mission', [VisionMissionController::class, 'index'])->name('vision-mission.index');
-Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+Route::middleware('auth')->prefix('admin/users')->name('admin.users.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::post('/', [AdminController::class, 'store'])->name('store');
+    Route::put('/{user}', [AdminController::class, 'update'])->name('update');
+    Route::delete('/{user}', [AdminController::class, 'destroy'])->name('destroy');
+});
 
 Route::middleware('auth')->prefix('admin/registrations')->name('admin.registrations.')->group(function () {
     Route::get('/', [StudentRegistrationController::class, 'index'])->name('index');

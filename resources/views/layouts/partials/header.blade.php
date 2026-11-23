@@ -19,7 +19,7 @@
         {{-- ============================= --}}
         {{-- BAGIAN KIRI: Logo & Nama      --}}
         {{-- ============================= --}}
-        <div class="flex items-center gap-3">
+        <div class="-ml-12 flex items-center gap-1">
             <img
                 src="{{ asset('assets/logo-ciptaju.png') }}"
                 alt="Sekolah Ciptaju Logo"
@@ -34,7 +34,7 @@
         {{-- ============================= --}}
         {{-- BAGIAN TENGAH: Navigasi (Desktop) --}}
         {{-- ============================= --}}
-        <nav class="hidden lg:flex items-center gap-8 xl:gap-14">
+        <nav class="hidden lg:absolute lg:left-1/2 lg:top-1/2 lg:flex lg:-translate-x-1/2 lg:-translate-y-1/2 items-center gap-8 xl:gap-14">
             <a href="{{ route('students.index') }}"
                class="text-lg font-bold font-['DM_Sans'] px-4 py-2 rounded-full transition-all duration-200 hover:bg-gray-100 active:bg-gray-200 {{ request()->routeIs('students.index') ? 'text-[#10A4B0]' : 'text-[#003135] hover:text-[#10A4B0]' }}">
                 Home
@@ -50,10 +50,19 @@
                 News
             </a>
 
-            <a href="{{ route('auth.registration') }}"
-               class="rounded-full bg-[#10A4B0] text-white border-2 border-[#10A4B0] font-bold font-['DM_Sans'] text-lg px-6 py-2 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out shadow-sm">
-                Register
-            </a>
+            <div class="flex items-center gap-3">
+                @if (Auth::check() && Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.users.index') }}"
+                       class="rounded-full bg-[#10A4B0] px-5 py-2 font-['DM_Sans'] text-lg font-bold text-white shadow-sm transition-all duration-200 hover:bg-[#0d8a95]">
+                        Dashboard
+                    </a>
+                @endif
+
+                <a href="{{ route('auth.registration') }}"
+                   class="rounded-full bg-[#10A4B0] text-white font-bold font-['DM_Sans'] text-lg px-6 py-2 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out shadow-sm">
+                    Register
+                </a>
+            </div>
         </nav>
 
         {{-- ============================= --}}
@@ -130,10 +139,19 @@
            class="block text-lg font-bold py-2.5 px-4 rounded-xl transition-all hover:bg-gray-100 active:bg-gray-200 {{ request()->routeIs('news.index') ? 'text-[#10A4B0]' : 'text-[#003135]' }}">
             News
         </a>
-        <a href="{{ route('auth.registration') }}" 
-           class="block text-center mt-2 rounded-full bg-[#10A4B0] text-white border border-[#10A4B0] font-bold text-lg px-4 py-2.5 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out mb-4">
-            Register
-        </a>
+        <div class="flex flex-col gap-1">
+            @if (Auth::check() && Auth::user()->role === 'admin')
+                <a href="{{ route('admin.users.index') }}"
+                   class="block text-center rounded-full bg-[#10A4B0] text-white font-bold text-lg px-4 py-2.5 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out shadow-sm">
+                    Dashboard
+                </a>
+            @endif
+            <a
+                href="{{ route('auth.registration') }}"
+                class="block text-center rounded-full bg-[#10A4B0] text-white font-bold text-lg px-4 py-2.5 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out shadow-sm">
+                Register
+            </a>
+        </div>
     </div>
 </header>
 
