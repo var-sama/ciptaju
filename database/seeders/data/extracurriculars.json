@@ -1,0 +1,90 @@
+[
+    {
+        "id": 1,
+        "name": "Badminton",
+        "description": "Bulu tangkis atau badminton adalah cabang olahraga raket yang dimainkan oleh dua orang (tunggal) atau dua pasangan (ganda) yang saling berlawanan dengan cara memukul kok (shuttlecock) melewati atas net ke area lawan.",
+        "image_path": "extracurriculars\/badminton.avif",
+        "sort_order": 0,
+        "is_active": 1,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 2,
+        "name": "Basket",
+        "description": "Ekstrakurikuler basket untuk mengembangkan kemampuan olahraga, kerja sama tim, dan sportivitas.",
+        "image_path": "extracurriculars\/basket.avif",
+        "sort_order": 1,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 3,
+        "name": "Voli",
+        "description": "Kegiatan olahraga beregu yang melatih kemampuan bermain voli, kerja sama tim, dan sportivitas.",
+        "image_path": "extracurriculars\/volley.jpg",
+        "sort_order": 2,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 4,
+        "name": "Musik",
+        "description": "Wadah untuk mengembangkan kreativitas dan kemampuan bermusik bersama siswa lainnya.",
+        "image_path": "extracurriculars\/music.jpg",
+        "sort_order": 3,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 5,
+        "name": "Ilmu Komputer",
+        "description": "Wadah untuk mempelajari dasar-dasar komputer, pemrograman, teknologi, dan pemecahan masalah secara kreatif.",
+        "image_path": "extracurriculars\/comp_science.jpg",
+        "sort_order": 4,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 6,
+        "name": "Matematika",
+        "description": "Kegiatan untuk memperkuat kemampuan berpikir logis, analitis, dan kreatif melalui pembelajaran matematika.",
+        "image_path": "extracurriculars\/math.png",
+        "sort_order": 5,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 7,
+        "name": "Desain",
+        "description": "Ruang untuk mengembangkan kreativitas visual dan kemampuan membuat karya desain yang komunikatif.",
+        "image_path": "extracurriculars\/design.jpg",
+        "sort_order": 6,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-17 06:40:05",
+        "updated_at": "2026-11-17 06:40:05"
+    },
+    {
+        "id": 9,
+        "name": "Ms. Lily Fan Club",
+        "description": "Komunitas eksklusif bagi para pengagum Miss Lily untuk mempererat ikatan persaudaraan, memperdalam keyakinan, serta menyebarkan ajaran dan nilai-nilai luhur yang menjadi panutan. Kesetiaan adalah kehormatan, kebersamaan adalah kekuatan.",
+        "image_path": "extracurriculars\/V2DIbE5vbg8rmtTwdz7yuFjMIK29qAuCgkcWPXbW.png",
+        "sort_order": 7,
+        "is_active": 0,
+        "flip_background": 0,
+        "created_at": "2026-11-25 05:32:35",
+        "updated_at": "2026-11-25 05:55:31"
+    }
+]

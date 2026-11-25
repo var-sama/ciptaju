@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "image_path": "banners\/linpfbQ9DJQF6bAOkD2B1kuAko4nBToKDhpX6hfN.jpg",
+        "title": "louis suka ini",
+        "published_at": "2026-11-11",
+        "content": "louis suka beliau",
+        "created_at": "2026-11-11 06:16:14",
+        "updated_at": "2026-11-11 06:34:13"
+    },
+    {
+        "id": 2,
+        "image_path": "banners\/4z5zpreUDAD1kvBxlrVqjmSCdXq8SVRyO01l54uz.jpg",
+        "title": "Momen Langka Kisaki Nyengir!?",
+        "published_at": "2026-11-11",
+        "content": "gabisa kupercaya",
+        "created_at": "2026-11-11 06:35:27",
+        "updated_at": "2026-11-11 06:35:27"
+    },
+    {
+        "id": 7,
+        "image_path": "banners\/AmSyw6JJbeULPSzUKjB7fBNweDrDFv5Xqz0VbEYM.png",
+        "title": "Pembimbing Terbaik Seluruh Yayasan",
+        "published_at": "2026-11-25",
+        "content": "Ms. Lily memotivasi dan menemani setiap murid mengikuti lomba jenjang nasional",
+        "created_at": "2026-11-25 06:11:59",
+        "updated_at": "2026-11-25 06:15:56"
+    }
+]
