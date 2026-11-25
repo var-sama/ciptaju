@@ -6,7 +6,7 @@
 <div class="min-h-screen bg-white">
     <section class="overflow-hidden">
         <img
-            src="{{ Vite::asset('resources/assets/gambarpendaf.png') }}"
+            src="{{ Vite::asset('public/assets/registration.png') }}"
             alt="Siswa Ciptaju memegang piala"
             class="block h-64 w-full object-cover object-center md:h-80"
             onerror="this.src='https://ui-avatars.com/api/?name=Siswa+Ciptaju&background=0D9488&color=fff&size=1200'"

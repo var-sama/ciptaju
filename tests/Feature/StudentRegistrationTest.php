@@ -102,13 +102,13 @@ test('student registration validates fields and keeps previous input without sav
 test('only admins can access student registration records', function () {
     StudentRegistration::create(studentRegistrationPayload());
 
-    $this->get(route('admin.registrations.index'))
+    $this->get(route('admins.registrations.index'))
         ->assertRedirect(route('auth.login'));
 
     $student = User::factory()->create(['role' => 'student']);
 
     $this->actingAs($student)
-        ->get(route('admin.registrations.index'))
+        ->get(route('admins.registrations.index'))
         ->assertForbidden();
 });
 
@@ -117,19 +117,19 @@ test('admin can view applicant details and update registration status', function
     $registration = StudentRegistration::create(studentRegistrationPayload());
 
     $this->actingAs($admin)
-        ->get(route('admin.registrations.index'))
+        ->get(route('admins.registrations.index'))
         ->assertSuccessful()
         ->assertSee('Nama Calon Murid')
-        ->assertSee(route('admin.registrations.show', $registration), false);
+        ->assertSee(route('admins.registrations.show', $registration), false);
 
-    $this->get(route('admin.registrations.show', $registration))
+    $this->get(route('admins.registrations.show', $registration))
         ->assertSuccessful()
         ->assertSee('Nama Wali')
         ->assertSee('Jalan Sekolah Nomor 10');
 
-    $this->patch(route('admin.registrations.status', $registration), [
+    $this->patch(route('admins.registrations.status', $registration), [
         'status' => StudentRegistration::STATUS_ACCEPTED,
-    ])->assertRedirect(route('admin.registrations.show', $registration));
+    ])->assertRedirect(route('admins.registrations.show', $registration));
 
     expect($registration->refresh()->status)->toBe(StudentRegistration::STATUS_ACCEPTED)
         ->and(User::query()->count())->toBe(1);
@@ -140,8 +140,123 @@ test('admin cannot set an unsupported student registration status', function () 
     $registration = StudentRegistration::create(studentRegistrationPayload());
 
     $this->actingAs($admin)
-        ->patch(route('admin.registrations.status', $registration), ['status' => 'enrolled'])
+        ->patch(route('admins.registrations.status', $registration), ['status' => 'enrolled'])
         ->assertSessionHasErrors('status');
 
     expect($registration->refresh()->status)->toBe(StudentRegistration::STATUS_PENDING);
+});
+
+test('registration dashboard shows database totals independently from search and status filters', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    StudentRegistration::create(studentRegistrationPayload([
+        'student_name' => 'Siti Pending',
+        'status' => StudentRegistration::STATUS_PENDING,
+    ]));
+    StudentRegistration::create(studentRegistrationPayload([
+        'student_name' => 'Siti Accepted',
+        'status' => StudentRegistration::STATUS_ACCEPTED,
+    ]));
+    StudentRegistration::create(studentRegistrationPayload([
+        'student_name' => 'Budi Rejected',
+        'status' => StudentRegistration::STATUS_REJECTED,
+    ]));
+
+    $response = $this->actingAs($admin)->get(route('admins.registrations.index', [
+        'search' => 'Siti',
+        'status' => StudentRegistration::STATUS_ACCEPTED,
+    ]));
+
+    $response
+        ->assertSuccessful()
+        ->assertSee('Siti Accepted')
+        ->assertDontSee('Siti Pending')
+        ->assertDontSee('Budi Rejected')
+        ->assertSee('value="Siti"', false)
+        ->assertViewHas('statistics', fn ($statistics): bool => (int) $statistics->total === 3
+            && (int) $statistics->pending === 1
+            && (int) $statistics->accepted === 1
+            && (int) $statistics->rejected === 1)
+        ->assertViewHas('registrations', fn ($registrations): bool => $registrations->total() === 1);
+});
+
+test('registration dashboard searches complete and partial applicant names', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    StudentRegistration::create(studentRegistrationPayload(['student_name' => 'Siti Nurhaliza']));
+    StudentRegistration::create(studentRegistrationPayload(['student_name' => 'Siti Aminah']));
+    StudentRegistration::create(studentRegistrationPayload(['student_name' => 'Budi Santoso']));
+
+    $this->actingAs($admin)
+        ->get(route('admins.registrations.index', ['search' => 'Siti Nurhaliza']))
+        ->assertSuccessful()
+        ->assertSee('Siti Nurhaliza')
+        ->assertDontSee('Siti Aminah')
+        ->assertDontSee('Budi Santoso');
+
+    $this->get(route('admins.registrations.index', ['search' => 'Siti']))
+        ->assertSuccessful()
+        ->assertSee('Siti Nurhaliza')
+        ->assertSee('Siti Aminah')
+        ->assertDontSee('Budi Santoso');
+
+    $this->get(route('admins.registrations.index', ['search' => 'Nama Yang Tidak Ada']))
+        ->assertSuccessful()
+        ->assertSee('Tidak ada pendaftar yang sesuai dengan pencarian atau filter.');
+});
+
+test('registration dashboard filters by every supported status', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    $registrationsByStatus = [
+        StudentRegistration::STATUS_PENDING => 'Pendaftar Pending',
+        StudentRegistration::STATUS_ACCEPTED => 'Pendaftar Diterima',
+        StudentRegistration::STATUS_REJECTED => 'Pendaftar Ditolak',
+    ];
+
+    foreach ($registrationsByStatus as $status => $studentName) {
+        StudentRegistration::create(studentRegistrationPayload([
+            'student_name' => $studentName,
+            'status' => $status,
+        ]));
+    }
+
+    foreach ($registrationsByStatus as $status => $expectedName) {
+        $response = $this->actingAs($admin)
+            ->get(route('admins.registrations.index', ['status' => $status]));
+
+        $response->assertSuccessful()->assertSee($expectedName);
+
+        foreach ($registrationsByStatus as $otherStatus => $otherName) {
+            if ($otherStatus !== $status) {
+                $response->assertDontSee($otherName);
+            }
+        }
+    }
+});
+
+test('registration pagination preserves name and status filters', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+
+    for ($index = 1; $index <= 17; $index++) {
+        StudentRegistration::create(studentRegistrationPayload([
+            'student_name' => 'Pendaftar Pagination '.$index,
+            'status' => StudentRegistration::STATUS_PENDING,
+        ]));
+    }
+
+    $query = [
+        'search' => 'Pendaftar Pagination',
+        'status' => StudentRegistration::STATUS_PENDING,
+    ];
+
+    $this->actingAs($admin)
+        ->get(route('admins.registrations.index', $query))
+        ->assertSuccessful()
+        ->assertSee('search=Pendaftar', false)
+        ->assertSee('status=pending', false)
+        ->assertSee('page=2', false);
+
+    $this->get(route('admins.registrations.index', [...$query, 'page' => 2]))
+        ->assertSuccessful()
+        ->assertViewHas('registrations', fn ($registrations): bool => $registrations->currentPage() === 2
+            && $registrations->total() === 17
+            && $registrations->count() === 2);
 });

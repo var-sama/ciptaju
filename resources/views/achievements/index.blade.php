@@ -40,10 +40,6 @@
                             <option value="{{ $tahun }}">{{ $tahun }}</option>
                         @endforeach
                     </select>
-
-                    <button id="reset-filter-prestasi" type="button" class="mt-3 w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100">
-                        Reset Filter
-                    </button>
                 </div>
             </div>
         </div>

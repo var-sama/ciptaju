@@ -17,7 +17,7 @@
         {{-- Ganti src di bawah ini dengan gambar asli (potret, subjek fokus di kanan) --}}
         <img
             id="vision-background"
-            src="{{ Vite::asset('resources/assets/landing_sub2.png')}}"
+            src="{{ Vite::asset('public/assets/landing_sub2.png')}}"
             alt="Visi & Misi background"
             class="absolute inset-0 w-full h-full scale-[1.04] object-cover object-[12%_center]"
         >

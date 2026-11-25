@@ -5,19 +5,25 @@
 @section('content')
     <section class="min-h-[70vh] bg-[#F7F6F2] px-4 py-10 font-['DM_Sans'] text-[#003135] sm:px-6 lg:px-10 lg:py-14">
         <div class="mx-auto max-w-4xl space-y-8">
-            <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div class="space-y-4">
                 <div>
+                    <a
+                        href="{{ route('admins.registrations.index') }}"
+                        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-[#003135] shadow-sm transition hover:border-[#10A4B0] hover:text-[#087f89] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Kembali
+                    </a>
+                </div>
+
+                <header>
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-[#10A4B0]">Admin dashboard</p>
                     <h1 class="mt-2 text-3xl font-bold tracking-tight text-[#003135] sm:text-4xl">Detail Pendaftaran</h1>
                     <p class="mt-3 text-sm text-slate-600">Informasi pendaftaran calon murid.</p>
-                </div>
-                <a
-                    href="{{ route('admin.registrations.index') }}"
-                    class="font-bold text-[#087f89] underline-offset-4 hover:underline"
-                >
-                    Kembali ke daftar
-                </a>
-            </header>
+                </header>
+            </div>
 
             @if (session('success'))
                 <p class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status">
@@ -65,7 +71,7 @@
 
             <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="registration-status-heading">
                 <h2 id="registration-status-heading" class="text-xl font-bold text-[#003135]">Status pendaftaran</h2>
-                <form action="{{ route('admin.registrations.status', $registration) }}" method="POST" class="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end">
+                <form action="{{ route('admins.registrations.status', $registration) }}" method="POST" class="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end">
                     @csrf
                     @method('PATCH')
                     <label class="flex-1 text-sm font-semibold text-[#003135]" for="status">

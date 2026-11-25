@@ -15,7 +15,7 @@
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row">
                     <a
-                        href="{{ route('admin.registrations.index') }}"
+                        href="{{ route('admins.registrations.index') }}"
                         class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-[#10A4B0] px-5 py-3 font-bold text-[#003135] transition hover:bg-[#10A4B0]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003135]"
                     >
                         Pendaftaran murid
@@ -144,8 +144,8 @@
                                     data-name="{{ $user->name }}"
                                     data-email="{{ $user->email }}"
                                     data-role="{{ $user->role }}"
-                                    data-update-url="{{ route('admin.users.update', $user) }}"
-                                    data-delete-url="{{ route('admin.users.destroy', $user) }}"
+                                    data-update-url="{{ route('admins.users.update', $user) }}"
+                                    data-delete-url="{{ route('admins.users.destroy', $user) }}"
                                     class="transition-colors hover:bg-[#F7F6F2]/70"
                                 >
                                     <td class="px-5 py-4">
@@ -197,7 +197,7 @@
         class="m-auto w-[min(92vw,36rem)] max-w-none rounded-xl border border-[#10A4B0]/30 bg-white p-0 text-[#003135] shadow-2xl backdrop:bg-[#003135]/60"
         aria-labelledby="user-dialog-title"
     >
-        <form id="user-form" data-store-url="{{ route('admin.users.store') }}" class="space-y-5 p-6 sm:p-8">
+        <form id="user-form" data-store-url="{{ route('admins.users.store') }}" class="space-y-5 p-6 sm:p-8">
             @csrf
             <div class="flex items-start justify-between gap-4">
                 <div>

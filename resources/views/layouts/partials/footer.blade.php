@@ -26,19 +26,13 @@
             {{-- KOLOM 1: Logo & Nama Merek    --}}
             {{-- ============================= --}}
             <div class="flex flex-col items-start">
-                {{-- Placeholder SVG Logo (lingkaran penuh, mudah diganti) --}}
-                <svg
-                    class="w-24 h-24 shrink-0"
-                    viewBox="0 0 96 96"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-label="Logo"
-                >
-                    <circle cx="48" cy="48" r="48" fill="#10A4B0" />
-                </svg>
-
-                {{-- Nama merek (opsional, tampil jika dibutuhkan) --}}
-                {{-- <span class="mt-3 text-xl font-bold text-[#ffffff]">Nama Merek</span> --}}
+                <div class="w-34 h-34 shrink-0 rounded-full bg-[#10A4B0] flex items-center justify-center overflow-hidden">
+                    <img
+                        src="{{ asset('assets/logo-ciptaju.png') }}"
+                        alt="Sekolah Ciptaju Logo"
+                        class="w-full h-full object-cover rounded-full"
+                    >
+                </div>
             </div>
 
             {{-- ============================= --}}

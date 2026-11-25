@@ -34,8 +34,8 @@ class AuthController extends Controller
             $user = Auth::user();
             $user->forceFill(['last_login_at' => now()])->save();
 
-            return redirect()->intended(
-                $user->role === 'admin' ? route('admin.users.index') : route('students.index')
+            return redirect()->route(
+                $user->role === 'admin' ? 'admins.users.index' : 'students.index'
             );
         }
 

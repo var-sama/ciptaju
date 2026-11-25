@@ -28,15 +28,38 @@ class NewsController extends Controller
             ]);
 
         $banners = Banner::query()->orderBy('id')->get();
-        $bannerSlides = $banners->map(fn (Banner $banner): array => [
-            'url' => route('news.index'),
-            'image' => Storage::disk('public')->url($banner->image_path),
-            'title' => $banner->title ?? 'Informasi Sekolah',
-            'description' => $banner->content ?? '',
-            'date' => $banner->published_at?->format('d/m/Y') ?? '',
-        ]);
+        $newsByTitle = $news->groupBy(
+            fn (News $item): string => mb_strtolower(trim($item->title)),
+        );
+        $bannerSlides = $banners->map(function (Banner $banner) use ($newsByTitle): array {
+            $newsCandidates = $newsByTitle->get(
+                mb_strtolower(trim((string) $banner->title)),
+                collect(),
+            );
+            $matchingNews = $newsCandidates->count() === 1
+                ? $newsCandidates->first()
+                : $newsCandidates->first(
+                    fn (News $item): bool => $banner->published_at !== null
+                        && $item->published_at->toDateString() === $banner->published_at->toDateString(),
+                );
+
+            return [
+                'url' => $matchingNews
+                    ? route('news.view', $matchingNews)
+                    : route('news.banner.view', $banner),
+                'image' => Storage::disk('public')->url($banner->image_path),
+                'title' => $banner->title ?? 'Informasi Sekolah',
+                'description' => $banner->content ?? '',
+                'date' => $banner->published_at?->format('d/m/Y') ?? '',
+            ];
+        });
 
         return view('news.index', compact('news', 'latestNews', 'banners', 'bannerSlides'));
+    }
+
+    public function bannerView(Banner $banner): View
+    {
+        return view('news.view', ['news' => $banner]);
     }
 
     public function view(int $id): View

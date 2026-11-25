@@ -377,10 +377,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================
 
     allSlides.forEach((slide, index) => {
-        const link = document.createElement('a');
-        link.href = slide.url;
-        link.className = 'relative block w-full h-full flex-shrink-0 cursor-pointer';
-        link.dataset.slideIndex = index;
+        const slideElement = slide.url
+            ? document.createElement('a')
+            : document.createElement('div');
+
+        if (slide.url) {
+            slideElement.href = slide.url;
+        }
+
+        slideElement.className = `relative block w-full h-full flex-shrink-0${slide.url ? ' cursor-pointer' : ''}`;
+        slideElement.dataset.slideIndex = index;
 
         const image = document.createElement('img');
         image.src = slide.image;
@@ -388,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         image.className = 'news-banner-background absolute inset-0 w-full h-full object-cover object-right';
 
         const overlay = document.createElement('div');
-        overlay.className = 'absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent';
+        overlay.className = 'pointer-events-none absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent';
 
         const content = document.createElement('div');
         content.className = 'relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10';
@@ -410,8 +416,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         text.append(title, description, date);
         content.appendChild(text);
-        link.append(image, overlay, content);
-        track.appendChild(link);
+        slideElement.append(image, overlay, content);
+        track.appendChild(slideElement);
     });
 
     // =========================================================

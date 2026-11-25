@@ -205,6 +205,81 @@ test('news index displays all records and builds its banner from latest news', f
         ->assertSee('id="news-banner"', false);
 });
 
+test('each banner links to the detail page of news with the matching title', function () {
+    Storage::fake('public');
+    $firstNews = News::factory()->create(['title' => 'Berita Pertama']);
+    $secondNews = News::factory()->create(['title' => 'Berita Kedua']);
+    News::factory()->create([
+        'published_at' => '2026-11-09',
+        'title' => 'Berita Ganda',
+    ]);
+    $matchingNewsWithDuplicateTitle = News::factory()->create([
+        'published_at' => '2026-11-10',
+        'title' => 'Berita Ganda',
+    ]);
+    Banner::create([
+        'image_path' => 'banners/first.jpg',
+        'title' => 'Berita Pertama',
+        'published_at' => $firstNews->published_at,
+    ]);
+    Banner::create([
+        'image_path' => 'banners/second.jpg',
+        'title' => 'Berita Kedua',
+        'published_at' => $secondNews->published_at,
+    ]);
+    Banner::create([
+        'image_path' => 'banners/duplicate-title.jpg',
+        'title' => 'Berita Ganda',
+        'published_at' => '2026-11-10',
+    ]);
+
+    $response = $this->get(route('news.index'))->assertSuccessful();
+    preg_match('/data-news-slides="([^"]*)"/', $response->getContent(), $matches);
+    expect($matches)->toHaveKey(1);
+
+    $slides = json_decode(
+        html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect(array_column($slides, 'url'))->toBe([
+        route('news.view', $firstNews),
+        route('news.view', $secondNews),
+        route('news.view', $matchingNewsWithDuplicateTitle),
+    ]);
+});
+
+test('a banner without matching news links to its own detail page', function () {
+    Storage::fake('public');
+    $banner = Banner::create([
+        'image_path' => 'banners/unmatched.jpg',
+        'title' => 'Tidak Ada Berita Yang Cocok',
+        'content' => 'Konten detail dari banner.',
+    ]);
+
+    $response = $this->get(route('news.index'))
+        ->assertSuccessful()
+        ->assertSee(Storage::disk('public')->url($banner->image_path), false);
+    preg_match('/data-news-slides="([^"]*)"/', $response->getContent(), $matches);
+    expect($matches)->toHaveKey(1);
+
+    $slides = json_decode(
+        html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect(array_column($slides, 'url'))->toBe([
+        route('news.banner.view', $banner),
+    ]);
+
+    $this->get(route('news.banner.view', $banner))
+        ->assertSuccessful()
+        ->assertSee($banner->title)
+        ->assertSee($banner->content);
+});
+
 test('the News seeder restores records idempotently without requiring an author', function () {
     Storage::fake('public');
 
