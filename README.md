@@ -1,5 +1,7 @@
 # Ciptaju
-![Ciptaju School Logo](public/assets/logo-ciptaju.png)
+<p align="center">
+  <img src="public/assets/logo-ciptaju.png" alt="Ciptaju School Logo" width="180">
+</p>
 **Ciptaju** is a school registration and information website developed as a school project. The website provides school information, student registration services, and content management features through an administrator dashboard.
 
 The project is built using **Laravel**, **PHP**, **MySQL**, **Laravel Blade**, and **Tailwind CSS**. It follows the Model-View-Controller (MVC) architecture to organize application logic, database interactions, and user interfaces.
