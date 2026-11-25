@@ -53,7 +53,7 @@ The current version of Ciptaju includes:
 
 Before installing the project, make sure the following software is available:
 
-- PHP 8.5 or compatible version supported by the project.
+- PHP version compatible with the project dependencies.
 - Composer.
 - MySQL or MariaDB.
 - Node.js and npm.
@@ -72,19 +72,21 @@ git clone https://github.com/var-sama/ciptaju.git
 cd ciptaju
 ```
 
-### 3. Install PHP Dependencies
+### 3. Install Dependencies
+
+Install PHP dependencies:
 
 ```bash
 composer install
 ```
 
-### 4. Install Node Dependencies
+Install frontend dependencies:
 
 ```bash
 npm install
 ```
 
-### 5. Environment Configuration
+### 4. Configure Environment Variables
 
 Copy the example environment file:
 
@@ -92,7 +94,7 @@ Copy the example environment file:
 cp .env.example .env
 ```
 
-On Windows Command Prompt, you can also use:
+On Windows Command Prompt:
 
 ```cmd
 copy .env.example .env
@@ -104,7 +106,7 @@ Generate the application key:
 php artisan key:generate
 ```
 
-### 6. Create the Database
+### 5. Configure the Database
 
 Create a new MySQL database named:
 
@@ -112,7 +114,7 @@ Create a new MySQL database named:
 ciptaju
 ```
 
-Configure the database connection inside the `.env` file:
+Configure the database connection inside `.env`:
 
 ```env
 DB_CONNECTION=mysql
@@ -125,23 +127,75 @@ DB_PASSWORD=
 
 Adjust the username and password according to your local MySQL configuration.
 
-### 7. Run Database Migrations
+### 6. Configure the Default Administrator Account
 
-Execute the following command to create the required database tables:
+The project uses environment variables to create the initial administrator account through `AdminSeeder`.
 
-```bash
-php artisan migrate
+Add the following values to your `.env` file:
+
+```env
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your_secure_password
 ```
 
-This command creates the database structure based on the migration files included in the project.
+Replace the example email and password with your own credentials.
+
+**Important:** `ADMIN_EMAIL` and `ADMIN_PASSWORD` must be configured before running the database seeders. The administrator account will be created automatically by `AdminSeeder`.
+
+Do not share your `.env` file or commit it to GitHub because it contains private configuration and credentials.
+
+### 7. Run Database Migrations and Seeders
+
+Run:
+
+```bash
+php artisan migrate --seed
+```
+
+This command performs two operations:
+
+1. **Migrations:** Creates the required database tables.
+2. **Seeders:** Populates the database with the initial project data.
+
+The `DatabaseSeeder` automatically calls:
+
+| Seeder | Initial Data |
+|---|---|
+| `AdminSeeder` | Default administrator account |
+| `NewsSeeder` | 17 news records |
+| `BannerSeeder` | 3 banner records |
+| `AchievementSeeder` | 13 achievement records |
+| `ExtracurricularSeeder` | 8 extracurricular records |
+
+The project includes JSON snapshots containing the initial records and their corresponding image files. These files are stored in:
+
+```text
+database/seeders/data/
+```
+
+The image source files are stored in:
+
+```text
+database/seeders/data/images/
+```
+
+During seeding, the application copies the required images into Laravel's public storage directory.
+
+**Important:**
+- Do not remove the JSON snapshot files or their image directories.
+- Make sure these files are included when cloning or downloading the repository.
+- The seeders populate the initial sample content; they do not transfer additional records or uploaded files created manually on another computer.
+- Running the seeders again updates the bundled sample records using their existing IDs. Configure the administrator credentials before seeding.
 
 ### 8. Create the Storage Link
 
-Run the following command to make uploaded images accessible through the public directory:
+Run:
 
 ```bash
 php artisan storage:link
 ```
+
+This creates the public storage link so uploaded and seeded images can be accessed by the website.
 
 ### 9. Build Frontend Assets
 
@@ -235,20 +289,30 @@ The project includes migrations for:
 
 ### Database Seeders
 
-The project also provides seeders for initial sample data:
+The project provides seeders for the initial application data:
 
+- `AdminSeeder`
 - `NewsSeeder`
+- `BannerSeeder`
 - `AchievementSeeder`
 - `ExtracurricularSeeder`
 - `DatabaseSeeder`
 
-To run the seeders:
+To run the seeders separately after the migrations have already been executed:
 
 ```bash
 php artisan db:seed
 ```
 
-**Note:** Seeders provide initial sample data. They do not automatically transfer manually created records, uploaded images, user accounts, or other existing database content from another computer. The required image source files must also be available for the seeders to work.
+To run a specific seeder:
+
+```bash
+php artisan db:seed --class=NewsSeeder
+```
+
+The `DatabaseSeeder` automatically executes the configured seeders.
+
+**Note:** The initial data snapshots and image sources are included in the repository. Additional records, user accounts, and uploaded images created after installation are not automatically synchronized between team members.
 
 ---
 
@@ -273,10 +337,8 @@ ciptaju/
 │   │   │   ├── StudentController.php
 │   │   │   ├── StudentRegistrationController.php
 │   │   │   └── VisionMissionController.php
-│   │   │
 │   │   └── Requests/
 │   │       └── StoreStudentRegistrationRequest.php
-│   │
 │   ├── Models/
 │   │   ├── Achievement.php
 │   │   ├── Banner.php
@@ -284,30 +346,39 @@ ciptaju/
 │   │   ├── News.php
 │   │   ├── StudentRegistration.php
 │   │   └── User.php
-│   │
 │   ├── Providers/
 │   │   └── AppServiceProvider.php
-│   │
 │   └── View/
 │       └── Components/
 │           └── alert.php
 │
-├── bootstrap/
-│
 ├── config/
+│   └── ciptaju.php
 │
 ├── database/
 │   ├── factories/
 │   │   ├── NewsFactory.php
 │   │   └── UserFactory.php
-│   │
 │   ├── migrations/
-│   │
 │   └── seeders/
 │       ├── AchievementSeeder.php
+│       ├── AdminSeeder.php
+│       ├── BannerSeeder.php
 │       ├── DatabaseSeeder.php
 │       ├── ExtracurricularSeeder.php
-│       └── NewsSeeder.php
+│       ├── NewsSeeder.php
+│       ├── Concerns/
+│       │   └── SeedsSnapshotRecords.php
+│       └── data/
+│           ├── achievements.json
+│           ├── banners.json
+│           ├── extracurriculars.json
+│           ├── news.json
+│           └── images/
+│               ├── achievements/
+│               ├── banners/
+│               ├── extracurriculars/
+│               └── news/
 │
 ├── public/
 │   ├── assets/
@@ -316,14 +387,14 @@ ciptaju/
 │   └── index.php
 │
 ├── resources/
+│   ├── assets/
 │   ├── css/
 │   │   └── app.css
-│   │
 │   ├── js/
 │   │   ├── admin-users.js
 │   │   └── app.js
-│   │
 │   └── views/
+│       ├── welcome.blade.php
 │       ├── about/
 │       ├── achievements/
 │       ├── admins/
@@ -355,7 +426,7 @@ ciptaju/
 └── README.md
 ```
 
-*Note: The structure above highlights the main application files and directories. Some Laravel framework directories and generated files have been omitted for readability.*
+*Note: The structure above highlights the main application files and directories. Some Laravel framework directories, migration filenames, image filenames, and generated files have been omitted for readability.*
 
 ---
 
@@ -388,6 +459,14 @@ The public storage link connects these files to:
 ```text
 public/storage
 ```
+
+The initial sample images are bundled in:
+
+```text
+database/seeders/data/images/
+```
+
+The snapshot seeder copies the required images into the public storage disk during database seeding.
 
 If the storage link does not exist, run:
 
