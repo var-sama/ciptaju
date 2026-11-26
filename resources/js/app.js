@@ -1,6 +1,89 @@
 import './admin-users.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.getElementById('navbar');
+    const menuButton = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!navbar || !menuButton || !mobileMenu) {
+        return;
+    }
+
+    const openIcon = menuButton.querySelector('[data-menu-icon="open"]');
+    const closeIcon = menuButton.querySelector('[data-menu-icon="close"]');
+    const desktopBreakpoint = window.matchMedia('(min-width: 1280px)');
+    let lastScrollY = window.scrollY;
+
+    const setMenuOpen = (isOpen) => {
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+        menuButton.setAttribute(
+            'aria-label',
+            isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi',
+        );
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+        mobileMenu.classList.toggle('hidden', !isOpen);
+        mobileMenu.classList.toggle('flex', isOpen);
+        openIcon?.classList.toggle('hidden', isOpen);
+        closeIcon?.classList.toggle('hidden', !isOpen);
+
+        if (isOpen) {
+            navbar.classList.remove('-translate-y-full');
+        } else {
+            lastScrollY = window.scrollY;
+        }
+    };
+
+    menuButton.addEventListener('click', () => {
+        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        setMenuOpen(!isOpen);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    document.addEventListener('click', event => {
+        if (
+            menuButton.getAttribute('aria-expanded') === 'true' &&
+            !navbar.contains(event.target)
+        ) {
+            setMenuOpen(false);
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (
+            event.key === 'Escape' &&
+            menuButton.getAttribute('aria-expanded') === 'true'
+        ) {
+            setMenuOpen(false);
+            menuButton.focus();
+        }
+    });
+
+    desktopBreakpoint.addEventListener('change', event => {
+        if (event.matches) {
+            setMenuOpen(false);
+            navbar.classList.remove('-translate-y-full');
+        }
+    });
+
+    window.addEventListener('scroll', () => {
+        if (menuButton.getAttribute('aria-expanded') === 'true') {
+            return;
+        }
+
+        if (window.scrollY > lastScrollY && window.scrollY > 80) {
+            navbar.classList.add('-translate-y-full');
+        } else {
+            navbar.classList.remove('-translate-y-full');
+        }
+
+        lastScrollY = window.scrollY;
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     const background = document.getElementById('ekskul-background');
     const backgroundAnimation = document.getElementById('ekskul-background-animation');
     const title = document.getElementById('ekskul-title');
@@ -385,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slideElement.href = slide.url;
         }
 
-        slideElement.className = `relative block w-full h-full flex-shrink-0${slide.url ? ' cursor-pointer' : ''}`;
+        slideElement.className = `news-banner-slide relative block h-full shrink-0${slide.url ? ' cursor-pointer' : ''}`;
         slideElement.dataset.slideIndex = index;
 
         const image = document.createElement('img');
@@ -397,17 +480,17 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.className = 'pointer-events-none absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-transparent';
 
         const content = document.createElement('div');
-        content.className = 'relative z-10 flex flex-col justify-center h-full px-8 md:px-16 w-full pt-10';
+        content.className = 'relative z-10 flex flex-col justify-center h-full px-6 sm:px-8 md:px-16 w-full pt-16 sm:pt-10';
 
         const text = document.createElement('div');
-        text.className = 'max-w-3xl mt-4 ml-6 md:ml-8 lg:ml-18';
+        text.className = 'max-w-3xl mt-4 ml-16 md:ml-8';
 
         const title = document.createElement('h2');
-        title.className = 'news-banner-title text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6';
+        title.className = 'news-banner-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-white mb-4 sm:mb-6';
         title.textContent = slide.title;
 
         const description = document.createElement('p');
-        description.className = 'news-banner-description line-clamp-3 max-w-2xl text-base leading-relaxed text-white/85';
+        description.className = 'news-banner-description line-clamp-3 max-w-2xl text-sm sm:text-base leading-relaxed text-white/85';
         description.textContent = slide.description;
 
         const date = document.createElement('span');

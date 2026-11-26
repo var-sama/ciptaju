@@ -16,7 +16,7 @@
     <section
         id="news-banner"
         data-news-slides="{{ json_encode($bannerSlides) }}"
-        class="relative w-full h-[500px] font-['DM_Sans'] overflow-hidden px-0 py-0"
+        class="relative w-full h-[440px] sm:h-[500px] font-['DM_Sans'] overflow-hidden px-0 py-0"
         data-autoplay="true"
         data-interval="5000"
     >
@@ -42,7 +42,7 @@
         <button
             id="news-banner-prev"
             type="button"
-            class="absolute left-4 md:left-8 lg:left-16 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-[#003135]/80 text-white hover:bg-[#10A4B0] transition-colors"
+            class="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-[#003135]/80 text-white hover:bg-[#10A4B0] transition-colors"
             aria-label="Berita sebelumnya"
         >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@
         <button
             id="news-banner-next"
             type="button"
-            class="absolute right-4 md:right-8 lg:right-16 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-[#003135]/80 text-white hover:bg-[#10A4B0] transition-colors"
+            class="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-[#003135]/80 text-white hover:bg-[#10A4B0] transition-colors"
             aria-label="Berita berikutnya"
         >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

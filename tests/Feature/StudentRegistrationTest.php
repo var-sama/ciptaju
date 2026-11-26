@@ -38,7 +38,40 @@ test('student registration schema stores application fields separately from user
     ])->and(Schema::hasColumn('users', 'student_name'))->toBeFalse();
 });
 
+test('guest is redirected from the student registration button to login and returned after login', function () {
+    $student = User::factory()->create([
+        'email' => 'student@example.com',
+        'password' => 'password',
+        'role' => 'student',
+    ]);
+
+    $this->get(route('students.index'))
+        ->assertSuccessful()
+        ->assertSee(route('auth.registration'), false);
+
+    $this->get(route('auth.registration'))
+        ->assertRedirect(route('auth.login'))
+        ->assertSessionHas('url.intended', route('auth.registration'));
+
+    $this->post(route('auth.login.submit'), [
+        'email' => $student->email,
+        'password' => 'password',
+    ])->assertRedirect(route('auth.registration'));
+
+    $this->assertAuthenticatedAs($student);
+
+    $this->get(route('auth.registration'))
+        ->assertSuccessful();
+});
+
 test('student registration form contains application fields and no account credentials', function () {
+    $student = User::factory()->create(['role' => 'student']);
+
+    $this->actingAs($student)
+        ->get(route('students.index'))
+        ->assertSuccessful()
+        ->assertSee(route('auth.registration'), false);
+
     $this->get(route('auth.registration'))
         ->assertSuccessful()
         ->assertSee('name="_token"', false)
@@ -55,15 +88,18 @@ test('student registration form contains application fields and no account crede
         ->assertDontSee('Email Address');
 });
 
-test('public student registration is stored in its own table without creating a user', function () {
-    $this->post(route('auth.registration.store'), studentRegistrationPayload())
+test('authenticated student registration is stored in its own table without creating another user', function () {
+    $student = User::factory()->create(['role' => 'student']);
+
+    $this->actingAs($student)
+        ->post(route('auth.registration.store'), studentRegistrationPayload())
         ->assertRedirect(route('auth.registration'))
         ->assertSessionHas('success', 'Pendaftaran berhasil dikirim.');
 
     $registration = StudentRegistration::query()->firstOrFail();
 
     $this->assertModelExists($registration);
-    $this->assertDatabaseCount('users', 0);
+    $this->assertDatabaseCount('users', 1);
     expect($registration->school_target)->toBe('SMP')
         ->and($registration->school_year)->toBe('2026/2027')
         ->and($registration->student_name)->toBe('Nama Calon Murid')
@@ -75,8 +111,18 @@ test('public student registration is stored in its own table without creating a 
         ->and($registration->status)->toBe(StudentRegistration::STATUS_PENDING);
 });
 
+test('guest cannot submit the student registration form', function () {
+    $this->post(route('auth.registration.store'), studentRegistrationPayload())
+        ->assertRedirect(route('auth.login'));
+
+    expect(StudentRegistration::query()->count())->toBe(0);
+});
+
 test('student registration validates fields and keeps previous input without saving an invalid record', function () {
-    $this->from(route('auth.registration'))
+    $student = User::factory()->create(['role' => 'student']);
+
+    $this->actingAs($student)
+        ->from(route('auth.registration'))
         ->post(route('auth.registration.store'), studentRegistrationPayload([
             'school_target' => 'TK',
             'school_year' => '2025/2026',

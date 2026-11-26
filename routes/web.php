@@ -90,10 +90,12 @@ Route::name('auth.')->prefix('auth')->group(function () {
         ->name('view');
 
     Route::get('/registration', [AuthController::class, 'registration'])
-        ->name('registration');
+        ->name('registration')
+        ->middleware('auth');
 
     Route::post('/registration', [AuthController::class, 'storeRegistration'])
-        ->name('registration.store');
+        ->name('registration.store')
+        ->middleware('auth');
 });
 
 Route::get('/', function () {

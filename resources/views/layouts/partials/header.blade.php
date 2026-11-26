@@ -34,7 +34,7 @@
         {{-- ============================= --}}
         {{-- BAGIAN TENGAH: Navigasi (Desktop) --}}
         {{-- ============================= --}}
-        <nav class="hidden lg:absolute lg:left-1/2 lg:top-1/2 lg:flex lg:-translate-x-1/2 lg:-translate-y-1/2 items-center gap-4 xl:gap-8">
+        <nav class="hidden xl:absolute xl:left-1/2 xl:top-1/2 xl:flex xl:-translate-x-1/2 xl:-translate-y-1/2 items-center gap-4 xl:gap-8">
             <a href="{{ route('students.index') }}"
                class="text-lg font-bold font-['DM_Sans'] px-4 py-2 rounded-full transition-all duration-200 hover:bg-gray-100 active:bg-gray-200 {{ request()->routeIs('students.index') ? 'text-[#10A4B0]' : 'text-[#003135] hover:text-[#10A4B0]' }}">
                 Home
@@ -70,15 +70,40 @@
         {{-- ============================= --}}
         
         {{-- Profile / Login / Logout --}}
-        @if (Auth::check())
-            <form action="{{ route('auth.logout') }}" method="POST">
-                @csrf
+        <div class="hidden xl:block">
+            @if (Auth::check())
+                <form action="{{ route('auth.logout') }}" method="POST">
+                    @csrf
 
-                <button
-                    type="submit"
+                    <button
+                        type="submit"
+                        class="flex items-center justify-center bg-[#10A4B0] rounded-full w-10 h-10 lg:w-11 lg:h-11 hover:bg-[#0d8a95] active:scale-95 transition-all shadow-sm"
+                        aria-label="Logout"
+                        title="Logout"
+                    >
+                        <svg
+                            class="w-5 h-5 lg:w-6 lg:h-6"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#003135"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <path d="M16 17l5-5-5-5" />
+                            <path d="M21 12H9" />
+                        </svg>
+                    </button>
+                </form>
+            @else
+                <a
+                    href="{{ route('auth.login') }}"
                     class="flex items-center justify-center bg-[#10A4B0] rounded-full w-10 h-10 lg:w-11 lg:h-11 hover:bg-[#0d8a95] active:scale-95 transition-all shadow-sm"
-                    aria-label="Logout"
-                    title="Logout"
+                    aria-label="Login"
+                    title="Login"
                 >
                     <svg
                         class="w-5 h-5 lg:w-6 lg:h-6"
@@ -91,42 +116,35 @@
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
                     >
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                        <path d="M16 17l5-5-5-5" />
-                        <path d="M21 12H9" />
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
                     </svg>
-                </button>
-            </form>
-        @else
-            <a
-                href="{{ route('auth.login') }}"
-                class="flex items-center justify-center bg-[#10A4B0] rounded-full w-10 h-10 lg:w-11 lg:h-11 hover:bg-[#0d8a95] active:scale-95 transition-all shadow-sm"
-                aria-label="Login"
-                title="Login"
-            >
-                <svg
-                    class="w-5 h-5 lg:w-6 lg:h-6"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#003135"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                </svg>
-            </a>
-        @endif
+                </a>
+            @endif
+        </div>
+
+        <button
+            id="hamburger-btn"
+            type="button"
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-[#10A4B0] text-[#003135] shadow-sm transition hover:bg-[#0d8a95] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003135] focus-visible:ring-offset-2 xl:hidden"
+            aria-label="Buka menu navigasi"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+        >
+            <svg data-menu-icon="open" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg data-menu-icon="close" class="hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+        </button>
 
     </div>
 
     {{-- ============================= --}}
     {{-- MOBILE MENU (Dropdown)        --}}
     {{-- ============================= --}}
-    <div id="mobile-menu" class="hidden lg:hidden w-full bg-white border-t border-gray-100 shadow-lg absolute left-0 top-full flex-col px-6 py-4 gap-2 max-h-[80vh] overflow-y-auto">
+    <nav id="mobile-menu" aria-label="Navigasi seluler" aria-hidden="true" class="hidden xl:hidden w-full bg-white border-t border-gray-100 shadow-lg absolute left-0 top-full flex-col px-6 py-4 gap-2 max-h-[80vh] overflow-y-auto">
         <a href="{{ route('students.index') }}" 
            class="block text-lg font-bold py-2.5 px-4 rounded-xl transition-all hover:bg-gray-100 active:bg-gray-200 {{ request()->routeIs('students.index') ? 'text-[#10A4B0]' : 'text-[#003135]' }}">
             Home
@@ -151,34 +169,25 @@
                 class="block text-center rounded-full bg-[#10A4B0] text-white font-bold text-lg px-4 py-2.5 hover:bg-white hover:text-[#10A4B0] active:scale-95 transition-all duration-300 ease-in-out shadow-sm">
                 Register
             </a>
+
+            @if (Auth::check())
+                <form action="{{ route('auth.logout') }}" method="POST">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="block w-full rounded-full border border-[#10A4B0] px-4 py-2.5 text-center text-lg font-bold text-[#003135] transition hover:bg-gray-100"
+                    >
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a
+                    href="{{ route('auth.login') }}"
+                    class="block rounded-full border border-[#10A4B0] px-4 py-2.5 text-center text-lg font-bold text-[#003135] transition hover:bg-gray-100"
+                >
+                    Login
+                </a>
+            @endif
         </div>
-    </div>
+    </nav>
 </header>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const navbar = document.getElementById("navbar");
-        const hamburgerBtn = document.getElementById("hamburger-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-        
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener("scroll", () => {
-            if (!mobileMenu.classList.contains("hidden")) return;
-
-            if (window.scrollY > lastScrollY && window.scrollY > 80) {
-                navbar.classList.add("-translate-y-full");
-            } else {
-                navbar.classList.remove("-translate-y-full");
-            }
-            lastScrollY = window.scrollY;
-        });
-
-        hamburgerBtn.addEventListener("click", () => {
-            const isExpanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-            hamburgerBtn.setAttribute("aria-expanded", !isExpanded);
-            mobileMenu.classList.toggle("hidden");
-            mobileMenu.classList.toggle("flex");
-        });
-    });
-</script>

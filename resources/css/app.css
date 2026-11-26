@@ -311,6 +311,17 @@
     position: relative;
 }
 
+#news-banner-track {
+    display: flex;
+    width: 100%;
+    will-change: transform;
+}
+
+.news-banner-slide {
+    flex: 0 0 100%;
+    width: 100%;
+}
+
 #news-banner-image {
     will-change: transform;
 }
