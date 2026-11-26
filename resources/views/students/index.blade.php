@@ -16,7 +16,7 @@
         {{-- Ganti src di bawah ini dengan gambar asli (portrait close-up, subjek fokus di kanan) --}}
         <img
             id="hero-background"
-            src="{{ Vite::asset('public/assets/landing.jpg') }}"
+            src="{{ asset('assets/landing.jpg') }}"
             alt="Hero background"
             class="absolute inset-0 w-full h-full origin-left scale-[1.2] object-cover object-[65%_center]"
         >
@@ -67,7 +67,7 @@
             {{-- Kartu 1: Pilihan Exkul Sekolah --}}
             <a href="{{ route('extracurriculars.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
-                    src="{{ Vite::asset('public/assets/landing_sub1.png') }}"
+                    src="{{ asset('assets/landing_sub1.png') }}"
                     alt="Pilihan Ekskul Sekolah"
                     class="w-full h-72 scale-[1.03] object-cover"
                 >
@@ -82,7 +82,7 @@
             {{-- Kartu 2: Visi & Misi --}}
             <a href="{{ route('vision-mission.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
-                    src="{{ Vite::asset('public/assets/landing_sub2.png') }}"
+                    src="{{ asset('assets/landing_sub2.png') }}"
                     alt="Visi & Misi"
                     class="w-full h-72 scale-[1.03] object-cover"
                 >
@@ -96,7 +96,7 @@
             {{-- Kartu 3: Prestasi --}}
             <a href="{{ route('achievements.index') }}" class="group relative block rounded-lg overflow-hidden border border-white/10 transition-transform duration-300 ease-out hover:-translate-y-2.5">
                 <img
-                    src="{{ Vite::asset('public/assets/landing_sub3.png') }}"
+                    src="{{ asset('assets/landing_sub3.png') }}"
                     alt="Prestasi"
                     class="w-full h-72 scale-[1.03] object-cover"
                 >
