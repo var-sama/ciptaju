@@ -99,7 +99,7 @@ Route::name('auth.')->prefix('auth')->group(function () {
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('students.index');
 });
 
 Route::name('about.')->prefix('about')->group(function () {
